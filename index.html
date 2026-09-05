@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考研英语一真题带学 · 1998-2025</title>
+<meta name="description" content="考研英语一历年真题带学网站：逐行对照翻译、每日打卡、考研倒计时">
+<style>
+/* ============================================================
+   考研英语一真题带学网站 · 样式
+   主色调：深蓝灰 | 支持日间/夜间双主题 | 响应式三端适配
+   ============================================================ */
+:root{
+  --nav-h:56px;
+  --bg:#eef1f5; --bg2:#ffffff; --bg3:#f5f7fa;
+  --fg:#243447; --fg2:#5a6b80; --line:#d8dee7;
+  --pri:#2c4a6e; --pri2:#3d6494; --accent:#c0392b;
+  --kw:#8a2d2d; --kw-bg:rgba(192,57,43,.07);
+  --shadow:0 2px 10px rgba(30,45,70,.08);
+  --radius:10px;
+}
+html[data-theme="dark"]{
+  --bg:#151c26; --bg2:#1e2836; --bg3:#243040;
+  --fg:#d6dee8; --fg2:#8fa0b5; --line:#334152;
+  --pri:#7fa8d9; --pri2:#a3c3e6; --accent:#e07060;
+  --kw:#e8a08f; --kw-bg:rgba(224,112,96,.12);
+  --shadow:0 2px 10px rgba(0,0,0,.35);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--fg);
+  line-height:1.75; transition:background .3s,color .3s;
+  padding-top:var(--nav-h);
+}
+/* ---------- 顶部导航栏 ---------- */
+#navbar{
+  position:fixed; top:0; left:0; right:0; height:var(--nav-h); z-index:100;
+  background:var(--bg2); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:10px; padding:0 14px;
+  box-shadow:var(--shadow);
+}
+#navbar .logo{font-weight:700; font-size:1.05rem; color:var(--pri); white-space:nowrap; cursor:pointer; display:flex; align-items:center; gap:6px}
+#navbar .logo svg{width:22px;height:22px}
+#hamburger{display:none; background:none; border:1px solid var(--line); border-radius:6px; padding:4px 9px; font-size:1.1rem; cursor:pointer; color:var(--fg)}
+#countdown{
+  margin-left:auto; display:flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg,var(--pri),var(--pri2));
+  color:#fff; padding:4px 14px; border-radius:999px;
+  font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap;
+}
+#countdown .cd-label{font-size:.8rem; opacity:.92}
+#countdown .cd-time{font-size:.92rem; letter-spacing:.5px}
+.nav-btn{
+  background:var(--bg3); border:1px solid var(--line); color:var(--fg);
+  border-radius:8px; padding:4px 10px; cursor:pointer; font-size:.9rem;
+  display:flex; align-items:center; gap:4px; white-space:nowrap;
+}
+.nav-btn:hover{border-color:var(--pri); color:var(--pri)}
+#font-size-box{display:flex; align-items:center; gap:2px}
+#font-size-box button{width:26px;justify-content:center;padding:4px 6px}
+/* ---------- 三栏布局 ---------- */
+#layout{display:flex; max-width:1400px; margin:0 auto; min-height:calc(100vh - var(--nav-h))}
+/* 侧边栏 */
+#sidebar{
+  width:250px; flex-shrink:0; background:var(--bg2);
+  border-right:1px solid var(--line); padding:16px 12px 60px;
+  overflow-y:auto; height:calc(100vh - var(--nav-h));
+  position:sticky; top:var(--nav-h);
+}
+.side-title{font-size:.82rem; color:var(--fg2); font-weight:600; margin:14px 0 6px; letter-spacing:.5px}
+.side-title:first-child{margin-top:0}
+.year-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:5px}
+.year-btn{
+  background:var(--bg3); border:1px solid var(--line); border-radius:7px;
+  padding:5px 0; text-align:center; font-size:.85rem; cursor:pointer; color:var(--fg);
+}
+.year-btn.active{background:var(--pri); color:#fff; border-color:var(--pri)}
+.year-btn:hover:not(.active){border-color:var(--pri2)}
+.type-list{display:flex; flex-direction:column; gap:4px}
+.type-btn{
+  background:none; border:none; text-align:left; padding:8px 10px;
+  border-radius:8px; cursor:pointer; color:var(--fg); font-size:.92rem;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.type-btn.active{background:var(--pri); color:#fff}
+.type-btn .badge{font-size:.72rem; background:var(--bg3); border-radius:999px; padding:0 7px; color:var(--fg2)}
+.type-btn.active .badge{background:rgba(255,255,255,.25); color:#fff}
+#fav-list{display:flex; flex-direction:column; gap:4px}
+.fav-item{font-size:.82rem; padding:6px 8px; background:var(--bg3); border-radius:7px; cursor:pointer; display:flex; justify-content:space-between; gap:4px; align-items:center}
+.fav-item .del{color:var(--fg2); cursor:pointer; padding:0 3px}
+.fav-item .del:hover{color:var(--accent)}
+#sidebar-mask{display:none}
+/* 正文区 */
+#main{flex:1; min-width:0; padding:20px 26px 80px; max-width:920px}
+.view{display:none}
+.view.active{display:block}
+/* ---------- 首页 ---------- */
+.hero{
+  background:linear-gradient(135deg,var(--pri),var(--pri2)); color:#fff;
+  border-radius:var(--radius); padding:24px 26px; margin-bottom:18px;
+  box-shadow:var(--shadow);
+}
+.hero h1{font-size:1.4rem; margin-bottom:6px}
+.hero p{opacity:.92; font-size:.92rem}
+.hero .cd-big{font-size:1.6rem; font-weight:700; margin-top:10px; font-variant-numeric:tabular-nums}
+.card{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px; box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem; margin-bottom:12px; color:var(--pri); display:flex; align-items:center; gap:8px}
+.card h2 .sub{font-size:.78rem; color:var(--fg2); font-weight:400; margin-left:auto}
+#today-tasks{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px}
+.task-item{
+  border:1px solid var(--line); border-radius:9px; padding:11px 13px; cursor:pointer;
+  background:var(--bg3); transition:.15s; position:relative;
+}
+.task-item:hover{border-color:var(--pri2); transform:translateY(-1px)}
+.task-item .t-name{font-weight:600; font-size:.9rem}
+.task-item .t-detail{font-size:.78rem; color:var(--fg2); margin-top:3px}
+.task-item .t-go{font-size:.78rem; color:var(--pri2); margin-top:5px; font-weight:600}
+.task-item.done{border-color:#3a9e5f}
+.task-item.done::after{content:"✓ 已完成"; position:absolute; top:8px; right:9px; color:#3a9e5f; font-size:.72rem; font-weight:700}
+#today-progress{margin-top:14px}
+.pbar{height:8px; background:var(--bg3); border-radius:999px; overflow:hidden; border:1px solid var(--line)}
+.pbar>div{height:100%; background:linear-gradient(90deg,var(--pri),var(--pri2)); border-radius:999px; transition:width .4s}
+#today-progress .ptext{font-size:.8rem; color:var(--fg2); margin-top:5px}
+/* 打卡日历 */
+#cal-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px}
+#cal-header button{background:var(--bg3); border:1px solid var(--line); border-radius:7px; padding:3px 12px; cursor:pointer; color:var(--fg)}
+#cal-title{font-weight:700; font-size:.98rem}
+#calendar{display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center}
+.cal-wd{font-size:.75rem; color:var(--fg2); font-weight:600; padding:4px 0}
+.cal-day{
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  border-radius:8px; font-size:.88rem; background:var(--bg3); position:relative;
+  border:1px solid transparent; font-variant-numeric:tabular-nums;
+}
+.cal-day.dim{opacity:.3}
+.cal-day.today{border-color:var(--pri2); font-weight:700}
+.cal-day.checked{background:rgba(58,158,95,.16); border-color:#3a9e5f; color:#2d7a48; font-weight:700}
+html[data-theme="dark"] .cal-day.checked{color:#6fce93}
+.cal-day.checked::after{content:"✓"; position:absolute; bottom:1px; right:4px; font-size:.65rem; color:#3a9e5f}
+#stat-line{font-size:.82rem; color:var(--fg2); margin-top:10px}
+#stat-line b{color:var(--pri)}
+/* ---------- 内容页 ---------- */
+.paper-head{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px; box-shadow:var(--shadow)}
+.paper-head h1{font-size:1.25rem; color:var(--pri)}
+.paper-head .meta{font-size:.85rem; color:var(--fg2); margin-top:4px}
+.paper-actions{margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.pbtn{
+  border:1px solid var(--line); background:var(--bg3); color:var(--fg);
+  padding:5px 13px; border-radius:8px; cursor:pointer; font-size:.85rem;
+}
+.pbtn:hover{border-color:var(--pri); color:var(--pri)}
+.pbtn.on{background:var(--pri); color:#fff; border-color:var(--pri)}
+.answer-key{margin-top:10px; font-size:.85rem}
+.answer-key summary{cursor:pointer; color:var(--pri2); font-weight:600}
+.answer-key .keys{margin-top:8px; display:flex; flex-wrap:wrap; gap:6px}
+.key-chip{background:var(--bg3); border:1px solid var(--line); border-radius:6px; padding:1px 8px; font-size:.8rem}
+/* 双语逐行对照 */
+.biline{margin-bottom:4px}
+.biline .en{color:var(--fg); transition:.2s}
+.biline .zh{color:var(--fg2); font-size:.92em; padding-left:2px}
+body.zh-hidden .biline .zh{display:none}
+.kw{color:var(--kw); font-weight:700; background:var(--kw-bg); border-radius:3px; padding:0 2px}
+.passage{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:18px 22px; margin-bottom:16px; box-shadow:var(--shadow)}
+.passage h3{color:var(--pri); font-size:1.02rem; margin-bottom:10px; display:flex; align-items:center; gap:8px}
+.passage h3 .fav-star{cursor:pointer; font-size:1.05rem; color:var(--fg2); background:none; border:none}
+.passage h3 .fav-star.on{color:#e8b339}
+.dir-box{background:var(--bg3); border-left:3px solid var(--pri2); border-radius:0 8px 8px 0; padding:10px 14px; margin-bottom:12px; font-size:.85rem; color:var(--fg2)}
+/* 题目 */
+.q-block{border-top:1px dashed var(--line); margin-top:14px; padding-top:14px}
+.q-block .q-title{font-weight:600; margin-bottom:8px}
+.opt{display:flex; gap:8px; padding:5px 10px; border-radius:7px; font-size:.93rem; cursor:pointer; align-items:baseline}
+.opt:hover{background:var(--bg3)}
+.opt .o-en{flex:1}
+.opt .o-zh{color:var(--fg2); font-size:.88em}
+.opt.correct{background:rgba(58,158,95,.13); outline:1px solid #3a9e5f}
+.opt.correct .o-tag{color:#3a9e5f; font-weight:700}
+.opt.wrong{background:rgba(192,57,43,.1); outline:1px solid var(--accent)}
+.q-explain{margin-top:8px; font-size:.85rem; color:var(--fg2); background:var(--bg3); border-radius:8px; padding:8px 12px; display:none}
+.q-block.revealed .q-explain{display:block}
+/* 写作 */
+.sample-box{border-top:1px dashed var(--line); margin-top:12px; padding-top:10px}
+.sample-box .s-label{font-size:.82rem; color:var(--pri2); font-weight:600; margin-bottom:6px}
+.empty-tip{text-align:center; color:var(--fg2); padding:50px 0; font-size:.95rem}
+#back-top{
+  position:fixed; right:22px; bottom:26px; z-index:90; width:42px; height:42px;
+  border-radius:50%; background:var(--pri); color:#fff; border:none; cursor:pointer;
+  font-size:1.1rem; box-shadow:var(--shadow); display:none;
+}
+footer{max-width:1400px; margin:0 auto; padding:20px; text-align:center; color:var(--fg2); font-size:.8rem}
+/* toast */
+#toast{position:fixed; left:50%; bottom:40px; transform:translateX(-50%) translateY(20px); background:var(--fg); color:var(--bg2); padding:9px 20px; border-radius:999px; font-size:.88rem; opacity:0; pointer-events:none; transition:.3s; z-index:200}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+/* ---------- 响应式：平板 & 手机 ---------- */
+@media (max-width:900px){
+  #hamburger{display:block}
+  #navbar .logo span{display:none}
+  #countdown .cd-label{display:none}
+  #sidebar{
+    position:fixed; left:0; top:var(--nav-h); bottom:0; z-index:120; width:270px;
+    transform:translateX(-105%); transition:transform .28s; height:auto;
+  }
+  #sidebar.open{transform:translateX(0)}
+  #sidebar-mask.show{display:block; position:fixed; inset:var(--nav-h) 0 0 0; background:rgba(0,0,0,.4); z-index:110}
+  #main{padding:16px 14px 70px}
+  #today-tasks{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:480px){
+  #countdown .cd-time{font-size:.78rem}
+  #today-tasks{grid-template-columns:1fr}
+  .hero h1{font-size:1.15rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== 顶部导航栏 ===================== -->
+<nav id="navbar">
+  <button id="hamburger" title="菜单">☰</button>
+  <div class="logo" onclick="switchView('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
+    <span>考研英一带学</span>
+  </div>
+  <!-- 考研倒计时：固定常驻，目标 2027-12-18 -->
+  <div id="countdown" title="2027年考研：2027年12月18日">
+    <span class="cd-label">距离 2027 考研还有</span>
+    <span class="cd-time" id="cd-text">--天--时--分--秒</span>
+  </div>
+  <div id="font-size-box">
+    <button class="nav-btn" onclick="changeFont(-1)" title="减小字体">A-</button>
+    <button class="nav-btn" onclick="changeFont(1)" title="增大字体">A+</button>
+  </div>
+  <button class="nav-btn" id="zh-toggle" onclick="toggleZh()" title="隐藏/显示中文翻译">译</button>
+  <button class="nav-btn" id="theme-btn" onclick="toggleTheme()" title="日间/夜间切换">🌙</button>
+</nav>
+
+<!-- ===================== 主体布局 ===================== -->
+<div id="layout">
+  <!-- 左侧：年份 + 题型筛选 -->
+  <aside id="sidebar">
+    <div class="side-title">📌 真题年份（1998-2025）</div>
+    <div class="year-grid" id="year-grid"></div>
+    <div class="side-title">📚 题型模块</div>
+    <div class="type-list" id="type-list"></div>
+    <div class="side-title">⭐ 我的收藏</div>
+    <div id="fav-list"><div class="empty-tip" style="padding:12px 0;font-size:.8rem">暂无收藏</div></div>
+  </aside>
+  <div id="sidebar-mask" onclick="closeSidebar()"></div>
+
+  <!-- 中间正文区 -->
+  <main id="main">
+    <!-- 视图：首页 -->
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <h1>📚 考研英语一真题带学</h1>
+        <p>1998-2025 历年真题 · 逐行对照翻译 · 核心词汇高亮 · 每日打卡</p>
+        <div class="cd-big" id="cd-text-big">--</div>
+      </div>
+      <div class="card">
+        <h2>🎯 今日学习任务 <span class="sub" id="today-date"></span></h2>
+        <div id="today-tasks"></div>
+        <div id="today-progress">
+          <div class="pbar"><div id="tp-bar" style="width:0%"></div></div>
+          <div class="ptext" id="tp-text">今日进度 0/5</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>📅 打卡日历 <span class="sub">每日完成 5 项即自动打卡</span></h2>
+        <div id="cal-header">
+          <button onclick="calMove(-1)">‹ 上月</button>
+          <div id="cal-title"></div>
+          <button onclick="calMove(1)">下月 ›</button>
+        </div>
+        <div id="calendar"></div>
+        <div id="stat-line"></div>
+      </div>
+      <div class="card">
+        <h2>📈 总体进度 <span class="sub">已收录 <span id="stat-papers">0</span> 套模块内容</span></h2>
+        <div id="stat-overall"></div>
+      </div>
+    </section>
+
+    <!-- 视图：真题内容 -->
+    <section class="view" id="view-paper"></section>
+  </main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<footer>
+  <p>考研英语一真题带学网站 · 数据本地存储于浏览器 localStorage · 部署方式见页面源码末尾注释</p>
+</footer>
+<div id="toast"></div>
+
+<!-- ================================================================
+     真题数据区（构建时由 data/*.js 合并注入）
+     扩展方式：见文末「数据扩展说明」注释
+     ================================================================ -->
+<script>
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+// ==== 2021 reading.js ==== 
+// 2021年考研英语一 · 阅读理解 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2021, type: "reading",
+  data: [
+    {
+      title: "Text 1",
+      lines: [
+        ["How can the train operators possibly justify yet another increase in rail passenger fares? This year, they have risen by an average of 2.7%, well above the official measure of **inflation**. Once again, passengers are being asked to pay more for a **service** that all too often fails to deliver.", "铁路运营商还怎么能为再一次上涨火车票价辩护？今年票价平均上涨了2.7%，远高于官方的通胀指标。乘客再次被要求为一项经常不尽如人意的服务支付更多费用。"],
+        ["The reason for this annual ritual is a **settlement** reached between the government and the rail industry years ago: fare increases are **linked** to inflation in July of the previous year. Successive governments have defended the rises on the ground that the cost of the railway should be met by those who use it, rather than by taxpayers in general. But this argument treats passengers as a **captive** market who can simply be asked to pay again and again.", "这种一年一度的例行涨价源于多年前政府与铁路行业达成的协议：票价涨幅与前一年七月的通胀水平挂钩。历届政府为涨价辩护的理由是，铁路的成本应当由使用者而非全体纳税人承担。但这一论调把乘客当成了一个可以被反复索取的垄断市场。"],
+        ["It is true that when strikes disrupt services, the blame lies chiefly with the unions. But that does not **absolve** the operators of responsibility towards their customers. Passengers whose journeys are **ruined** deserve proper compensation. Instead, operators have spent much of the past year boasting about improved services while failing to provide even an **adequate** one. The basics — trains that run on time and seats that can be found — remain **elusive**.", "诚然，当罢工扰乱服务时，责任主要在工会。但这并不能免除运营商对乘客应尽的责任。行程被毁的乘客理应获得妥善的赔偿。然而，过去一年运营商大半时间都在吹嘘服务的改善，却连一项基本合格的服务都提供不了。最基本的东西——准点的列车和能找到的座位——仍然难以企及。"],
+        ["The government has promised to legislate for **minimum** service standards during industrial action. If that helps to calm matters down, well and good. But if passengers' complaints continue to go unheard, the railways may find that the **threat** of nationalisation returns — and this time with more public support behind it. Ever-rising fares are simply not **sustainable** if the service they pay for does not improve.", "政府已承诺立法规定罢工期间的最低服务水平。如果这有助于平息事态，那当然好。但如果乘客的抱怨继续无人理会，铁路业可能会发现国有化的威胁卷土重来——而且这一次会有更多的公众支持。如果花钱买来的服务毫无起色，不断上涨的票价根本不可能持续。"]
+      ],
+      questions: [
+        { num: 21, en: "21. The author holds that this year's increase in rail passenger fares ______.",
+          zh: "21. 作者认为今年火车票价的上涨 ______。",
+          options: [["[A] will ease train operators' financial burden", "[A] 将减轻铁路运营商的财务负担"],
+                    ["[B] has kept pace with the inflation rate", "[B] 与通胀率保持同步"],
+                    ["[C] is a big surprise to daily commuters", "[C] 让每日通勤者大为震惊"],
+                    ["[D] remains an unreasonable measure", "[D] 仍然是一项不合理的举措"]],
+          answer: "D", explain: "作者开篇即质疑票价涨幅远超通胀、服务却无改善，认为涨价不合理、不可持续，故选D。" },
+        { num: 22, en: "22. The stockbroker in Paragraph 2 is used to stand for ______.",
+          zh: "22. 第二段中的股票经纪人被用来代表 ______。",
+          options: [["[A] car drivers", "[A] 开车的人"],
+                    ["[B] rail travellers", "[B] 乘火车出行的旅客"],
+                    ["[C] local investors", "[C] 本地投资者"],
+                    ["[D] ordinary taxpayers", "[D] 普通纳税人"]],
+          answer: "B", explain: "股票经纪人是'买得起票、被反复索取'的铁路乘客的典型代表，说明乘客被视为可任意加价的群体。" },
+        { num: 23, en: "23. It is indicated in Paragraph 3 that train operators ______.",
+          zh: "23. 第三段表明，铁路运营商 ______。",
+          options: [["[A] are offering generous compensation to commuters", "[A] 正在向通勤者提供慷慨的赔偿"],
+                    ["[B] are trying hard to repair relations with the unions", "[B] 正努力修复与工会的关系"],
+                    ["[C] have failed to provide an adequate service", "[C] 未能提供合格的服务"],
+                    ["[D] have suffered huge losses because of the strikes", "[D] 因罢工而蒙受巨大损失"]],
+          answer: "C", explain: "第三段批评运营商只顾宣传改进，连准点、有座等基本要求都达不到，即服务不合格。" },
+        { num: 24, en: "24. If unable to calm down passengers, the railways may have to face ______.",
+          zh: "24. 如果无法安抚乘客，铁路业可能不得不面临 ______。",
+          options: [["[A] the loss of private investment", "[A] 私人投资的流失"],
+                    ["[B] the collapse of daily operations", "[B] 日常运营的崩溃"],
+                    ["[C] a reduction of government revenue", "[C] 政府收入的减少"],
+                    ["[D] a change of ownership", "[D] 所有权的变更"]],
+          answer: "D", explain: "末段指出若乘客不满持续，国有化的威胁将重现，即铁路可能收归国有、所有权易主。" },
+        { num: 25, en: "25. Which of the following would be the best title for the text?",
+          zh: "25. 下列哪项最适合作为本文标题？",
+          options: [["[A] Who Are to Blame for the Strikes?", "[A] 罢工该归咎于谁？"],
+                    ["[B] Constant Complaining Doesn't Work", "[B] 不断抱怨没有用"],
+                    ["[C] Can Nationalisation Bring Hope?", "[C] 国有化能带来希望吗？"],
+                    ["[D] Ever-Rising Fares Aren't Sustainable", "[D] 不断上涨的票价不可持续"]],
+          answer: "D", explain: "全文围绕票价连年上涨与服务不匹配展开，末句点题：涨价不可持续，D最全面概括主旨。" }
+      ]
+    },
+    {
+      title: "Text 2",
+      lines: [
+        ["It may seem **counter-intuitive** that a programme designed to hand cash to the poor could help save the world's forests. But that is what a study of Indonesia's anti-poverty scheme suggests. The programme, known as a conditional cash **transfer** (CCT), gives money to poor households on the condition that their children attend school and receive health care.", "一项旨在向穷人发放现金的项目竟然有助于拯救世界森林，这听起来似乎有悖直觉。但对印度尼西亚扶贫项目的一项研究正是这样提示的。该项目被称为有条件现金转移支付（CCT），在穷人家的孩子上学并接受医疗保健的条件下向这些家庭发放现金。"],
+        ["Paul Ferraro of Johns Hopkins University and his colleagues examined whether the scheme had an **unintended** environmental benefit. Using satellite data covering 2008 to 2012, they compared deforestation rates inside villages that received the programme with those that did not. Villages taking part saw forest loss fall by around 30% — an effect comparable to that of **protected** areas.", "约翰斯·霍普金斯大学的保罗·费拉罗及其同事研究了该项目是否带来了意料之外的环境效益。他们利用2008至2012年的卫星数据，将参加该项目的村庄与未参加的村庄的森林砍伐率进行对比。参加项目的村庄森林损失下降了约30%——其效果可与自然保护区的效果相当。"],
+        ["Why would giving money to the poor slow the **chopping** down of trees? The most likely explanation, the researchers suggest, is that the extra income acts as a form of insurance. Without it, poor villagers cope with bad harvests and hard times by clearing forest to plant rice or sell timber. With the payments, they no longer need to treat the forest as a **reserve** to be tapped in emergencies.", "为什么给穷人钱反而能减缓砍树？研究人员认为，最可能的解释是这笔额外收入起到了一种保险的作用。没有这笔钱时，贫困村民通过砍伐森林种植水稻或出售木材来应对歉收和困境。有了这笔补助，他们便不再需要把森林当作应急时可开发利用的储备。"],
+        ["The finding matters because **conservation** groups and governments often assume that poverty reduction and environmental protection pull in opposite directions. This study shows they can pull in the same one. It also offers a cheaper **alternative**: paying people to protect forests may not be necessary if a decent welfare programme does the job on its own.", "这一发现意义重大，因为环保组织和政府往往认为减贫与环境保护相互冲突。而这项研究表明，二者可以朝同一个方向发力。它还提供了一种更便宜的选择：如果一项体面的福利计划本身就能奏效，或许就无需花钱雇人保护森林了。"]
+      ],
+      questions: [
+        { num: 26, en: "26. The CCT programme in Indonesia gives money to poor families on condition that ______.",
+          zh: "26. 印度尼西亚的CCT项目向贫困家庭发放现金的条件是 ______。",
+          options: [["[A] they protect the nearby forests", "[A] 他们保护附近的森林"],
+                    ["[B] their children go to school and receive health care", "[B] 他们的孩子上学并接受医疗保健"],
+                    ["[C] they stop cutting trees for timber", "[C] 他们停止砍伐木材"],
+                    ["[D] they plant rice instead of selling it", "[D] 他们种植水稻而不出售"]],
+          answer: "B", explain: "首段明确交代CCT的发放条件是孩子上学并接受医疗保健，与环保无直接条件关系。" },
+        { num: 27, en: "27. Ferraro's study found that villages taking part in the programme ______.",
+          zh: "27. 费拉罗的研究发现，参加该项目的村庄 ______。",
+          options: [["[A] became richer than protected areas", "[A] 比自然保护区更富裕"],
+                    ["[B] planted more rice on cleared land", "[B] 在开垦的土地上种植了更多水稻"],
+                    ["[C] saw forest loss fall by about 30%", "[C] 森林损失下降了约30%"],
+                    ["[D] received more satellite data than others", "[D] 获得了比其他村庄更多的卫星数据"]],
+          answer: "C", explain: "第二段指出项目村庄的森林损失下降约30%，效果与保护区相当。" },
+        { num: 28, en: "28. According to the researchers, the programme works because the extra income ______.",
+          zh: "28. 据研究人员分析，该项目起作用是因为额外收入 ______。",
+          options: [["[A] raises the price of timber", "[A] 提高了木材价格"],
+                    ["[B] serves as a buffer in hard times", "[B] 在困难时期起到缓冲（保险）作用"],
+                    ["[C] encourages villagers to move away", "[C] 促使村民搬离村庄"],
+                    ["[D] creates jobs in conservation", "[D] 创造了保护方面的就业"]],
+          answer: "B", explain: "第三段说明额外收入如同保险，使穷人不必在困境中砍林自救，B'buffer（缓冲）'即保险之意。" },
+        { num: 29, en: "29. The finding challenges the common assumption that ______.",
+          zh: "29. 这一发现挑战了人们普遍持有的如下假设： ______。",
+          options: [["[A] poverty reduction conflicts with forest protection", "[A] 减贫与森林保护相互冲突"],
+                    ["[B] welfare programmes are too expensive to run", "[B] 福利计划因成本太高而无法推行"],
+                    ["[C] protected areas are the only effective tool", "[C] 保护区是唯一有效的手段"],
+                    ["[D] satellite data are unreliable in research", "[D] 卫星数据在研究中不可靠"]],
+          answer: "A", explain: "末段指出常人认为减贫与环保'方向相反'，而本研究证明二者可同向发力。" },
+        { num: 30, en: "30. The author's attitude towards the CCT programme is ______.",
+          zh: "30. 作者对CCT项目的态度是 ______。",
+          options: [["[A] indifferent", "[A] 冷漠的"],
+                    ["[B] dismissive", "[B] 轻视的"],
+                    ["[C] cautious", "[C] 谨慎的"],
+                    ["[D] positive", "[D] 积极的"]],
+          answer: "D", explain: "作者引用研究证据说明该项目兼具扶贫与护林之效且更省钱，通篇持肯定态度。" }
+      ]
+    },
+    {
+      title: "Text 3",
+      lines: [
+        ["History, we tend to think, is a **discipline** concerned with documents: letters, diaries, official records. In his new book, the Australian historian Billy Griffiths shows that it can be far more than that. Digging into the deep past of Australia, he reveals how archaeology has **transformed** our understanding of the continent's human story.", "我们往往认为历史是一门研究文献的学科：书信、日记、官方档案。澳大利亚历史学家比利·格里菲斯在他的新作中表明，历史学的内涵远不止于此。通过深入探究澳大利亚的远古过去，他揭示了考古学如何改变了我们对这片大陆人类历史的理解。"],
+        ["The deep history of Australia is **unprecedented** in human terms. Aboriginal people have lived on the continent for at least 65,000 years, making theirs one of the oldest continuous cultures on Earth. For much of the twentieth century, however, this vast **span** of time was ignored by historians, who confined their attention to the two centuries since European settlement.", "就人类时间尺度而言，澳大利亚的深层历史是空前的。原住民在这片大陆上生活了至少六万五千年，使其成为地球上延续时间最古老的文化之一。然而在二十世纪的大部分时间里，历史学家忽视了这段漫长的时间跨度，只把注意力局限在欧洲殖民以来的两个世纪。"],
+        ["Griffiths argues that this was a costly **omission**. The stone tools, rock art and hearths unearthed by archaeologists tell a story that written records cannot: how the first Australians adapted to a changing land, developed complex spiritual systems and **sustained** their society across millennia. To leave this out of history, he writes, is to leave most of the human story in Australia untold.", "格里菲斯认为，这是一种代价高昂的遗漏。考古学家发掘出的石器、岩画和炉灶讲述着文字记载无法讲述的故事：最早的澳大利亚人如何适应不断变化的大陆、发展出复杂的精神体系，并在数千年间维系着自己的社会。他写道，把这段历史排除在外，就等于让澳大利亚人类历史的大部分内容湮没无闻。"],
+        ["The book is also a plea for **collaboration** between historians and scientists. Radiocarbon dating and genetic studies have reshaped the timeline of human arrival in Australia, and Griffiths believes history must embrace such tools. But he insists that science alone is not enough: the knowledge and living traditions of Aboriginal people must sit at the **centre** of any account of their past.", "本书还呼吁历史学家与科学家开展合作。放射性碳测年和基因研究已经重塑了人类抵达澳大利亚的时间线，格里菲斯认为历史学必须接纳这类工具。但他坚持认为，仅有科学是不够的：原住民的知识和活态传统必须置于其历史的叙述中心。"]
+      ],
+      questions: [
+        { num: 31, en: "31. Billy Griffiths' new book is mentioned in Paragraph 1 to ______.",
+          zh: "31. 第一段提到比利·格里菲斯的新书是为了 ______。",
+          options: [["[A] show that history can go beyond written documents", "[A] 表明历史学可以超越书面文献"],
+                    ["[B] introduce the settlement of European colonists", "[B] 引出欧洲殖民者的定居史"],
+                    ["[C] compare archaeology with other disciplines", "[C] 将考古学与其他学科进行比较"],
+                    ["[D] criticise the practice of ignoring official records", "[D] 批评忽视官方档案的做法"]],
+          answer: "A", explain: "首段借新书说明历史学不只研究文献，考古学也能'transform'我们对历史的理解。" },
+        { num: 32, en: "32. According to Paragraph 2, Aboriginal culture in Australia ______.",
+          zh: "32. 根据第二段，澳大利亚的原住民文化 ______。",
+          options: [["[A] was created after European settlement", "[A] 形成于欧洲殖民之后"],
+                    ["[B] has been fully recorded by historians", "[B] 已被历史学家完整记录"],
+                    ["[C] spread from other continents later on", "[C] 是后来从其他大陆传播而来的"],
+                    ["[D] is among the oldest continuing cultures on Earth", "[D] 是地球上最古老的延续性文化之一"]],
+          answer: "D", explain: "第二段指出原住民在澳生活至少六万五千年，其文化是地球上延续最久的文化之一。" },
+        { num: 33, en: "33. Griffiths regards historians' neglect of Australia's deep past as ______.",
+          zh: "33. 格里菲斯认为历史学家忽视澳大利亚深层历史是 ______。",
+          options: [["[A] a reasonable division of labour", "[A] 一种合理的分工"],
+                    ["[B] a necessary concession to science", "[B] 对科学的必要让步"],
+                    ["[C] a costly mistake to be corrected", "[C] 一个亟待纠正的代价高昂的错误"],
+                    ["[D] an inevitable result of scarce materials", "[D] 材料匮乏的必然结果"]],
+          answer: "C", explain: "第三段称这一忽视是'costly omission'，并主张把这段历史写回人类故事之中。" },
+        { num: 34, en: "34. The artefacts unearthed by archaeologists are valuable because they ______.",
+          zh: "34. 考古学家发掘出的器物之所以珍贵，是因为它们 ______。",
+          options: [["[A] prove the superiority of ancient techniques", "[A] 证明了古代技术的优越性"],
+                    ["[B] tell a story that written records cannot", "[B] 讲述着文字记载无法讲述的故事"],
+                    ["[C] confirm the accounts of early settlers", "[C] 证实了早期殖民者的记述"],
+                    ["[D] attract tourists to the continent", "[D] 吸引游客前往这片大陆"]],
+          answer: "B", explain: "第三段明确说石器、岩画和炉灶讲述着文字记载无法讲述的故事。" },
+        { num: 35, en: "35. Which of the following would be the best title for the text?",
+          zh: "35. 下列哪项最适合作为本文标题？",
+          options: [["[A] Archaeology: A Threat to Historians", "[A] 考古学：历史学家的威胁"],
+                    ["[B] Written Records: The Only Way to History", "[B] 文字记载：通往历史的唯一途径"],
+                    ["[C] Aboriginal People: Victims of History Books", "[C] 原住民：历史书的牺牲品"],
+                    ["[D] Deep History: Where Science Meets the Story of Humanity", "[D] 深层历史：科学与人类故事交汇之处"]],
+          answer: "D", explain: "全文围绕考古科学拓展历史学边界并须与原住民传统结合，D最贴合主旨。" }
+      ]
+    },
+    {
+      title: "Text 4",
+      lines: [
+        ["Broadband access is no longer a **luxury**; it is a necessity of modern life, as basic as electricity or running water. From remote work to remote schooling, from telemedicine to online shopping, almost every dimension of contemporary existence now depends on a **reliable** internet connection. Yet millions of people still cannot get one.", "宽带接入早已不是奢侈品，而是现代生活的必需品，与电力、自来水一样基本。从远程办公到远程上课，从远程医疗到网上购物，当代生活的几乎每个方面都依赖于可靠的互联网连接。然而仍有数百万人无法获得这样的连接。"],
+        ["The pandemic made this **digital divide** impossible to ignore. Children in rural areas sat outside libraries and fast-food restaurants to do their homework over free Wi-Fi, while patients in remote communities struggled to book vaccine appointments online. What had long been treated as an **urban** concern was suddenly everyone's problem.", "疫情让这道数字鸿沟再也无法忽视。农村的孩子坐在图书馆和快餐店外，蹭免费Wi-Fi做作业；偏远社区的病人则难以在网上预约疫苗接种。长期以来被视为城市话题的问题，突然间成了所有人的问题。"],
+        ["The chief reason for the gap is not technology but **incentives**. Laying fibre-optic cable across sparsely populated countryside is expensive, and private providers see little profit in it. Governments have pledged money again and again, yet funding has been slow to arrive, maps of unserved areas are inaccurate, and accountability is weak. In too many places, a promise of connection remains just that — a **promise**.", "造成这一鸿沟的主要原因不是技术，而是利益驱动。在人口稀少的乡村铺设光缆成本高昂，私营运营商无利可图。政府一再承诺拨款，但资金迟迟不到位，未覆盖地区的地图不准确，问责机制也很薄弱。在太多地方，'接入'的承诺仍然只是承诺。"],
+        ["Treating broadband the way we treat other essential **utilities** would be a start: setting clear service standards, mapping need accurately, and channelling subsidies to the places that lack service rather than the ones that lobby hardest. A country that cannot provide such a basic **infrastructure** will find the rest of its ambitions — in education, health and enterprise — quietly unravelling.", "像对待其他公用事业那样对待宽带，将是一个开端：制定明确的服务标准，精确绘制需求地图，并把补贴输送给真正缺乏服务的地方，而不是游说最卖力的地方。一个连这种基础设施都无法提供的国家会发现，自己在教育、医疗和企业方面的其他雄心也会悄然瓦解。"]
+      ],
+      questions: [
+        { num: 36, en: "36. In the opening paragraph, broadband access is compared to ______.",
+          zh: "36. 在首段中，宽带接入被比作 ______。",
+          options: [["[A] a fast-growing luxury industry", "[A] 一个快速增长的奢侈品行业"],
+                    ["[B] a fashionable lifestyle choice", "[B] 一种时髦的生活方式选择"],
+                    ["[C] a basic necessity like electricity", "[C] 与电力一样的基本必需品"],
+                    ["[D] an optional tool for remote work", "[D] 可有可无的远程办公工具"]],
+          answer: "C", explain: "首段称宽带是'as basic as electricity or running water'的现代必需品。" },
+        { num: 37, en: "37. The pandemic is mentioned in Paragraph 2 to show ______.",
+          zh: "37. 第二段提及疫情是为了表明 ______。",
+          options: [["[A] the rapid spread of online education", "[A] 在线教育的迅速普及"],
+                    ["[B] the urgency of bridging the digital divide", "[B] 弥合数字鸿沟的紧迫性"],
+                    ["[C] the failure of public health policies", "[C] 公共卫生政策的失败"],
+                    ["[D] the advantages of city life over rural life", "[D] 城市生活优于乡村生活"]],
+          answer: "B", explain: "第二段以网课、预约疫苗等实例说明数字鸿沟已成不可回避的紧迫问题。" },
+        { num: 38, en: "38. According to Paragraph 3, the digital divide persists mainly because ______.",
+          zh: "38. 根据第三段，数字鸿沟持续存在的主要原因是 ______。",
+          options: [["[A] economic incentives are lacking", "[A] 缺乏经济上的动力"],
+                    ["[B] fibre-optic technology is immature", "[B] 光纤技术尚不成熟"],
+                    ["[C] rural residents refuse to pay for it", "[C] 乡村居民不愿付费"],
+                    ["[D] the demand for broadband is falling", "[D] 宽带需求正在下降"]],
+          answer: "A", explain: "第三段指出症结在于'incentives'：铺设成本高、私营企业无利可图。" },
+        { num: 39, en: "39. The author suggests that governments should ______.",
+          zh: "39. 作者建议政府应当 ______。",
+          options: [["[A] leave broadband entirely to the market", "[A] 把宽带完全交给市场"],
+                    ["[B] take over private internet providers", "[B] 接管私营互联网运营商"],
+                    ["[C] subsidise the firms that lobby hardest", "[C] 补贴游说最卖力的公司"],
+                    ["[D] treat broadband as an essential public utility", "[D] 把宽带当作基本的公用事业来对待"]],
+          answer: "D", explain: "末段主张像对待其他公用事业一样对待宽带，定标准、绘图、精准补贴。" },
+        { num: 40, en: "40. Which of the following would be the best title for the text?",
+          zh: "40. 下列哪项最适合作为本文标题？",
+          options: [["[A] The Promise of Remote Working", "[A] 远程办公的承诺"],
+                    ["[B] Rural Life in the Pandemic Era", "[B] 疫情时代的乡村生活"],
+                    ["[C] Broadband: The New Basic Necessity", "[C] 宽带：新的基本必需品"],
+                    ["[D] Technology: A Divider of Society", "[D] 技术：社会的分割器"]],
+          answer: "C", explain: "全文以'宽带是现代必需品'立意，剖析鸿沟并提出公用事业化的对策，C最切题。" }
+      ]
+    }
+  ]
+});
+
+// ==== 2021 cloze.js ==== 
+// 2021年考研英语一 · 完形填空 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2021, type: "cloze",
+  data: {
+    directions_en: "Read the following text. Choose the best word(s) for each numbered blank and mark A, B, C or D on the ANSWER SHEET. (10 points)",
+    directions_zh: "阅读下面的短文，从短文后各题所给的A、B、C、D四个选项中选出最佳答案。（共10分）",
+    lines: [
+      ["It has long been (1) that different kinds of mental ability (2) differently to the passage of time. Fluid intelligence — the capacity to reason quickly and solve (3) problems — rises during childhood, (4) in the twenties and then slowly declines with age. Crystallized intelligence, by contrast, which draws on knowledge and skills (5) over a lifetime, remains largely intact well into old age.", "人们早已承认，不同类型的智力会随时间流逝作出不同的反应。流体智力——快速推理和解决新问题的能力——在儿童期上升，二十多岁时达到顶峰，随后随年龄增长而缓慢衰退。相比之下，依靠一生中积累的知识和技能的晶体智力，直至高龄仍基本保持完好。"],
+      ["Psychologists once assumed that the (6) of fluid intelligence was unavoidable and that little could be done about it. Recent research, however, suggests that the picture is more (7) . For instance, people who regularly engage in (8) mental activities — learning a language, playing chess or mastering an instrument — seem to preserve their fluid abilities for longer. Regular exercise, both physical and mental, has also been (9) with slower rates of cognitive decline.", "心理学家曾认为流体智力的衰退不可避免，对此无能为力。然而，最新研究表明情况更为复杂。例如，经常从事高强度脑力活动的人——学习语言、下棋或掌握一种乐器——似乎能把流体能力保持得更久。规律的锻炼，无论是身体上还是头脑上的，也与较慢的认知衰退速度相关。"],
+      ["Older adults, moreover, tend to (10) for what they lose in speed with what they gain in knowledge and judgement. Vocabulary, for instance, keeps improving through the sixties and seventies, which may help explain why many writers and scholars produce their finest work (11) in life. The gains of one kind of intelligence can thus (12) the losses of the other to a considerable degree.", "此外，年长者往往会用在知识和判断上的收获来弥补速度上的损失。例如，词汇量到了六七十岁仍在增长，这或许有助于解释为什么许多作家和学者在人生后期才创作出最好的作品。因此，一种智力的所得可以在相当程度上补偿另一种智力的所失。"],
+      ["The (13) between the two kinds of intelligence, researchers stress, is not absolute, and the two (14) on each other in everyday problem solving. Whether mental training programmes can genuinely (15) fluid abilities in older people remains (16) , since improvements often fail to transfer beyond the tasks being practised. Even so, most experts agree that staying mentally (17) is beneficial.", "研究人员强调，两种智力之间的区分并非绝对，在日常解决问题时二者相互依赖。脑力训练项目能否真正提升老年人的流体能力仍有争议，因为训练带来的提高往往无法迁移到所练习任务之外。即便如此，大多数专家仍一致认为，保持头脑活跃是有益的。"],
+      ["An (18) mind, they point out, is better placed to cope with the demands of a changing world, and the (19) of lifelong learning extend well beyond the brain. In the end, the healthiest attitude may be neither to fear the passing years nor to deny their effects, but simply to keep making (20) of the abilities we still have.", "他们指出，活跃的头脑更有能力应对变化世界的种种要求，而终身学习的益处也远不止于大脑。归根结底，最健康的态度也许既不是惧怕岁月流逝，也不是否认它的影响，而是继续充分利用我们仍拥有的能力。"]
+    ],
+    questions: [
+      { num: 1, options: [["[A] assumed", "[A] 假定"], ["[B] disputed", "[B] 争议的"], ["[C] acknowledged", "[C] 承认的"], ["[D] overlooked", "[D] 忽视的"]], answer: "C", explain: "下文一直在阐述已被公认的事实，It has long been acknowledged（早已公认）符合语义。" },
+      { num: 2, options: [["[A] adapt", "[A] 适应"], ["[B] turn", "[B] 转向"], ["[C] relate", "[C] 与……相关"], ["[D] respond", "[D] 反应"]], answer: "D", explain: "respond to 表示'对……作出反应'，指不同智力对时间流逝反应不同；adapt to 需接人作主语更贴切且语义不符。" },
+      { num: 3, options: [["[A] novel", "[A] 新颖的"], ["[B] familiar", "[B] 熟悉的"], ["[C] simple", "[C] 简单的"], ["[D] routine", "[D] 常规的"]], answer: "A", explain: "流体智力的定义即解决'新'问题的能力，与依赖已有知识的晶体智力形成对照。" },
+      { num: 4, options: [["[A] peaks", "[A] 达到顶峰"], ["[B] rests", "[B] 休止"], ["[C] stops", "[C] 停止"], ["[D] starts", "[D] 开始"]], answer: "A", explain: "儿童期上升、二十多岁达峰、之后衰退，构成完整曲线，peaks 最准确。" },
+      { num: 5, options: [["[A] accumulated", "[A] 积累的"], ["[B] abandoned", "[B] 放弃的"], ["[C] forgotten", "[C] 遗忘的"], ["[D] required", "[D] 要求的"]], answer: "A", explain: "晶体智力依托一生中'积累'的知识与技能，accumulated 为固定搭配式表达。" },
+      { num: 6, options: [["[A] decline", "[A] 衰退"], ["[B] growth", "[B] 增长"], ["[C] origin", "[C] 起源"], ["[D] function", "[D] 功能"]], answer: "A", explain: "呼应上文'declines with age'，此处指流体智力衰退曾被视为不可避免。" },
+      { num: 7, options: [["[A] simpler", "[A] 更简单"], ["[B] clearer", "[B] 更清晰"], ["[C] more complex", "[C] 更复杂"], ["[D] more hopeless", "[D] 更无望"]], answer: "C", explain: "However 表转折：并非无能为力，而是情况比原先设想的'更复杂'。" },
+      { num: 8, options: [["[A] casual", "[A] 随意的"], ["[B] demanding", "[B] 高强度的"], ["[C] passive", "[C] 被动的"], ["[D] automatic", "[D] 自动的"]], answer: "B", explain: "学语言、下棋、学乐器都是需要付出努力的脑力活动，demanding 最贴切。" },
+      { num: 9, options: [["[A] associated", "[A] 关联"], ["[B] confused", "[B] 混淆"], ["[C] bored", "[B] 厌烦"], ["[D] dealt", "[D] 处理"]], answer: "A", explain: "be associated with 为固定搭配，'与较慢的认知衰退相关联'。" },
+      { num: 10, options: [["[A] prepare", "[A] 准备"], ["[B] search", "[B] 寻找"], ["[C] compensate", "[C] 补偿"], ["[D] account", "[D] 解释"]], answer: "C", explain: "compensate for 意为'弥补'，年长者以知识与判断弥补速度损失。" },
+      { num: 11, options: [["[A] early", "[A] 早期"], ["[B] quickly", "[B] 迅速地"], ["[C] rarely", "[C] 罕见地"], ["[D] late", "[D] 后期"]], answer: "D", explain: "词汇量到晚年仍在增长，故解释学者'晚期'创作出最佳作品。" },
+      { num: 12, options: [["[A] balance", "[A] 平衡"], ["[B] offset", "[B] 抵消/补偿"], ["[C] measure", "[C] 衡量"], ["[D] overlook", "[D] 忽视"]], answer: "B", explain: "一种智力的所得可'补偿'另一种智力的所失，offset 符合语义。" },
+      { num: 13, options: [["[A] similarity", "[A] 相似性"], ["[B] conflict", "[B] 冲突"], ["[C] distinction", "[C] 区分"], ["[D] cooperation", "[D] 合作"]], answer: "C", explain: "下文说'并非绝对'，可知此处指两种智力之间的'区分'。" },
+      { num: 14, options: [["[A] compete", "[A] 竞争"], ["[B] focus", "[B] 聚焦"], ["[C] impose", "[C] 强加"], ["[D] depend", "[D] 依赖"]], answer: "D", explain: "depend on each other（相互依赖）贴合'日常解题中二者结合使用'的语义。" },
+      { num: 15, options: [["[A] assess", "[A] 评估"], ["[B] restore", "[B] 恢复"], ["[C] monitor", "[C] 监测"], ["[D] enhance", "[D] 提升"]], answer: "D", explain: "训练项目能否真正'提升'老年人流体能力，enhance 为关键词义。" },
+      { num: 16, options: [["[A] settled", "[A] 已解决的"], ["[B] debated", "[B] 有争议的"], ["[C] impossible", "[C] 不可能的"], ["[D] proven", "[D] 已证实的"]], answer: "B", explain: "since 从句说明训练效果难以迁移，可知这一问题仍'有争议'。" },
+      { num: 17, options: [["[A] busy", "[A] 忙碌的"], ["[B] active", "[B] 活跃的"], ["[C] calm", "[C] 平静的"], ["[D] young", "[D] 年轻的"]], answer: "D", explain: "even so 让步后仍强调保持头脑'活跃'有益，mentally active 为固定表达。" },
+      { num: 18, options: [["[A] engaged", "[A] 投入的"], ["[B] occupied", "[B] 被占用的"], ["[C] anxious", "[C] 焦虑的"], ["[D] idle", "[D] 闲散的"]], answer: "A", explain: "an engaged mind（投入专注的头脑）更能应对变化世界的需求，与 idle 相对。" },
+      { num: 19, options: [["[A] costs", "[A] 成本"], ["[B] risks", "[B] 风险"], ["[C] benefits", "[C] 益处"], ["[D] limits", "[D] 限制"]], answer: "C", explain: "与 beneficial 呼应，终身学习的'益处'远不止于大脑。" },
+      { num: 20, options: [["[A] use", "[A] 使用"], ["[B] sense", "[B] 感觉"], ["[C] room", "[C] 空间"], ["[D] preparations", "[D] 准备"]], answer: "A", explain: "keep making use of（继续利用）现有能力，与'不惧怕、不否认'的健康态度相承。" }
+    ]
+  }
+});
+
+// ==== 2021 newtype.js ==== 
+// 2021年考研英语一 · 新题型 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2021, type: "newtype",
+  data: {
+    directions_en: "In the following article, some sentences have been removed. For Questions 41-45, choose the most suitable one from the list A-G to fit into each of the numbered gaps. There are two extra choices, which do not fit in any of the gaps. Mark your answers on the ANSWER SHEET. (10 points)",
+    directions_zh: "下面的文章中有五个句子被删去。请从A-G七个选项中为第41-45题各选出一个最合适的选项填入空缺处，其中有两个选项是多余的。（共10分）",
+    lines: [
+      ["Artificial intelligence no longer belongs to the future. Firms everywhere are finding that machines can do things their employees never could — and that the gains can show up in the most **mundane** corners of the business. (41) ______. Proponents argue that this produces fairer, more consistent decisions, and frees staff from work they never enjoyed in the first place.", "人工智能不再属于未来。各地企业都发现，机器能做员工从未做到的事情，而且收益会出现在企业最不起眼的角落。(41)______。支持者认为，这能带来更公平、更一致的决策，并让员工从他们本就不喜欢的工作中解放出来。"],
+      ["Recruitment is the most talked-about example. Sifting through application letters is slow, costly and, studies suggest, **biased** in all sorts of invisible ways. Software promises a shortlist drawn up in seconds. (42) ______. Its software analyses advertising campaigns and reallocates marketing budgets automatically, saving small firms the cost of hiring an analyst they could never afford.", "招聘是被谈论最多的例子。筛选求职信既慢又贵，而且研究表明，这种筛选以各种看不见的方式带有偏见。软件承诺在几秒钟内拟出一份入围名单。(42)______。该公司的软件会自动分析广告投放效果并重新分配营销预算，为小公司省下了它们本负担不起的分析师的开支。"],
+      ["Insurance is another industry being quietly rebuilt. Machine-learning models can price **policies** far more precisely than the old actuarial tables. (43) ______. Now the system spots them early, and drivers can be warned, tracked or offered training before a serious accident happens.", "保险业是另一个被悄然重塑的行业。机器学习模型给保单定价远比旧有的精算表精确。(43)______。如今系统能及早发现这些迹象，在严重事故发生之前，司机就会得到警告、被跟踪监测或获得培训。"],
+      ["(44) ______. Its software reads through contracts, invoices and tax filings far faster than any junior accountant, flagging the entries that look odd for a human partner to examine. The firm insists that the machine does not replace its staff; it simply lets them spend their time on judgement rather than on **arithmetic**.", "(44)______。其软件阅读合同、发票和纳税申报表的速度远超任何初级会计，并标记出看起来异常的条目，交由人类合伙人审查。该公司坚称机器并不取代员工，只是让员工把时间花在判断上，而不是花在算数上。"],
+      ["Not every task suits a machine, of course. (45) ______. A piece of equipment that begins to vibrate, or a market that begins to wobble, can be caught by algorithms long before the people in charge notice anything wrong. Used with care, such systems promise a world of work that is less **tedious**, less error-prone and, perhaps, more human than we fear.", "当然，并非所有任务都适合机器。(45)______。一台设备开始震动，或一个市场开始波动，算法都能在负责人察觉之前发现。只要使用得当，这类系统所承诺的工作世界，将不像我们担心的那样乏味、那样容易出错，或许反而更具人情味。"]
+    ],
+    options: [
+      ["[A] AI replaces the boring parts of your job, so you can focus on the creative parts.", "[A] 人工智能取代你工作中乏味的部分，让你专注于有创造性的部分。"],
+      ["[B] One accounting firm, EY, uses an AI system to review financial documents.", "[B] 安永会计师事务所使用人工智能系统来审查财务文件。"],
+      ["[C] There are also companies like Acquisio, which helps small businesses manage their advertising.", "[C] 还有像Acquisio这样的公司，帮助小企业管理广告投放。"],
+      ["[D] You want to predict if something needs attention before it actually fails.", "[D] 你想在某样东西真正出问题之前就预测到它需要关注。"],
+      ["[E] Before, they might not insure the ones whose driving records hinted at risk.", "[E] 过去，它们可能不会为驾驶记录显示出风险迹象的人承保。"],
+      ["[F] We're also giving our customers better channels to complain and to be heard.", "[F] 我们还在为客户提供了更好的投诉和被倾听的渠道。"],
+      ["[G] AI looks at résumés in greater numbers than any human recruiter could, and firms increasingly rely on it to make hiring decisions.", "[G] 人工智能审阅简历的数量是任何人类招聘者都无法企及的，公司越来越依赖它来做招聘决定。"]
+    ],
+    answers: [["41","G"],["42","C"],["43","E"],["44","B"],["45","D"]]
+  }
+});
+
+// ==== 2021 translate.js ==== 
+// 2021年考研英语一 · 翻译 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2021, type: "translate",
+  data: {
+    directions_en: "Read the following text carefully and then translate the underlined segments into Chinese. Your translation should be written neatly on the ANSWER SHEET. (10 points)",
+    directions_zh: "仔细阅读下面的短文，然后将划线部分译成汉语，译文写在答题纸上。（共10分）",
+    lines: [
+      ["The Second World War changed the shape of higher education almost beyond recognition. Before it, universities in most European countries were small institutions, attended mainly by the children of the professional and **propertied** classes. (46) The demand for higher education that arose in these postwar societies extended to groups and social classes that had never contemplated attending universities before the war. What had been a **privilege** of the few came to be regarded, gradually and unevenly, as a right of the many.", "第二次世界大战几乎使高等教育的面貌面目全非。在此之前，多数欧洲国家的大学都是小规模机构，主要招收职业阶层和有产阶层的孩子。(46) 这些战后社会中兴起的接受高等教育的需求，扩展到了战前从未想过要上大学的群体和社会阶层。曾经是少数人特权的东西，逐渐且不均衡地变成了多数人的权利。"],
+      ["Governments responded on a **scale** nobody had imagined. New universities were founded, old ones expanded, and technical colleges were upgraded into degree-awarding institutions. (47) In many western countries of the European Union, the numbers of students receiving higher education doubled within a five-year period during the 1960s and doubled again in seven, eight or ten years by the middle of the 1970s. Lecture theatres were built in a hurry; staff were recruited from wherever they could be found.", "各国政府以无人想象的规模作出了回应。新大学纷纷建立，老大学不断扩张，技术学院被升格为可授予学位的机构。(47) 在欧洲联盟的许多西方国家，20世纪60年代，接受高等教育的学生人数在五年之内翻了一番；到70年代中期，又在七年、八年或十年间翻了一番。阶梯教室匆匆兴建，教员则从各处仓促招募。"],
+      ["This explosive growth was not merely a matter of demography. (48) It reflected a widespread conviction, shared by parents and politicians alike, that education was the surest route to social **mobility** and that a modern economy could not function without graduates. Industry wanted **skilled** minds; families wanted security; and the state, caught between the two, found it cheaper to build lecture halls than to manage the unrest of an excluded generation.", "这种爆发式的增长不仅仅是一个人口学问题。(48) 它反映出一种家长与政客共同的普遍信念：教育是通往社会流动最可靠的道路，而现代经济没有大学毕业生就无法运转。产业界需要受过训练的头脑，家庭需要保障，而夹在两者之间的国家发现，兴建讲堂比管控被排斥一代的不满情绪代价更低。"],
+      ["Expansion, however, carried its own tensions. (49) As the student numbers multiplied faster than the resources devoted to them, staff found themselves teaching larger classes with less time for the research that had defined university life. Standards became a matter of public anxiety, and the word 'massification' entered the **vocabulary** of educational debate, usually with a sigh.", "然而，扩张也带来了自身的紧张。(49) 随着学生人数的增长快于投入资源的增长，教师们发现自己要教授规模更大的班级，而用于研究——大学生活之所以为大学生活的根本——的时间却更少了。水准成为公众焦虑的问题，'大众化'一词也进入教育辩论的词汇表，且通常伴随着一声叹息。"],
+      ["Looking back, historians still argue about what the postwar expansion really achieved. (50) Yet few would deny that it changed the life chances of millions, and that the idea — once laughed at — that half of each generation might attend university has become a simple, uncontroversial fact of modern life.", "回望过去，历史学家们仍在争论战后扩张究竟实现了什么。(50) 但几乎没有人会否认，它改变了数百万人的生命际遇；而'每代人中的一半都可能上大学'这一曾被人嘲笑的观念，如今已成为现代生活中一个简单而无可争议的事实。"]
+    ],
+    items: [
+      { num: 46, en: "The demand for higher education that arose in these postwar societies extended to groups and social classes that had never contemplated attending universities before the war.",
+        zh: "在这些战后社会中兴起的接受高等教育的需求，扩展到了那些战前从未想过要上大学的群体和社会阶层。" },
+      { num: 47, en: "In many western countries of the European Union, the numbers of students receiving higher education doubled within a five-year period during the 1960s and doubled again in seven, eight or ten years by the middle of the 1970s.",
+        zh: "在欧洲联盟的许多西方国家，20世纪60年代，接受高等教育的学生人数在五年之内翻了一番；到70年代中期，又在七年、八年或十年间翻了一番。" },
+      { num: 48, en: "It reflected a widespread conviction, shared by parents and politicians alike, that education was the surest route to social mobility and that a modern economy could not function without graduates.",
+        zh: "它反映出一种家长与政客共同怀有的普遍信念：教育是通往社会流动最可靠的道路，而且现代经济若没有大学毕业生便无法运转。" },
+      { num: 49, en: "As the student numbers multiplied faster than the resources devoted to them, staff found themselves teaching larger classes with less time for the research that had defined university life.",
+        zh: "随着学生人数的增长快于投入资源的增长，教师们发现自己不得不教授更大的班级，而用于界定大学生活的研究的时间却更少了。" },
+      { num: 50, en: "Yet few would deny that it changed the life chances of millions, and that the idea — once laughed at — that half of each generation might attend university has become a simple, uncontroversial fact of modern life.",
+        zh: "然而几乎没有人会否认，它改变了数百万人的生命际遇；而'每一代人中可能有一半人上大学'这一曾遭嘲笑的观念，如今已成为现代生活中一个简单而无可争议的事实。" }
+    ]
+  }
+});
+
+// ==== 2021 writing.js ==== 
+// 2021年考研英语一 · 写作 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2021, type: "writing",
+  data: [
+    {
+      part: "Part A（小作文）",
+      title: "建议信（Email of suggestion）",
+      directions_en: "51. Directions: A foreign friend of yours has recently graduated from college and intends to find a job in China. Please write him an email to make a suggestion. You should write about 100 words on the ANSWER SHEET. Do not use your own name in the email; use 'Li Ming' instead. (10 points)",
+      directions_zh: "51. 指令：你的一位外国朋友最近大学毕业，打算在中国找工作。请给他写一封电子邮件提出建议。请写在答题纸上，词数约100词。文中不要出现你的真实姓名，用'李明'代替。（共10分）",
+      sample: [
+        ["Dear Jack,", "亲爱的杰克："],
+        ["Congratulations on your graduation! Knowing that you are planning to look for a job in China, I am writing to offer a couple of suggestions that may make your search easier.", "恭喜你毕业！得知你打算在中国找工作，我写信向你提几条建议，或许能让你的求职之路更顺利一些。"],
+        ["First, it would be wise to improve your Chinese, since most employers still regard fluency in the local language as a basic requirement. Second, you might target industries where international talent is in demand, such as foreign trade, education and tourism, and submit applications through reliable platforms or job fairs. Finally, learning about Chinese workplace culture in advance will help you adapt quickly after you start.", "首先，提高你的中文水平是明智之举，因为大多数雇主仍把流利的中文视为基本要求。其次，你可以瞄准对外籍人才有需求的行业，如外贸、教育和旅游，并通过可靠的平台或招聘会投递简历。最后，提前了解中国的职场文化，会有助于你入职后迅速适应。"],
+        ["I wish you every success in your job hunting.", "祝你求职顺利、一切成功。"],
+        ["Yours sincerely, Li Ming", "你真诚的，李明"]
+      ]
+    },
+    {
+      part: "Part B（大作文）",
+      title: "图画作文：兴趣是最好的老师",
+      directions_en: "52. Directions: Write an essay of 160-200 words based on the picture below. In your essay, you should 1) describe the picture briefly, 2) interpret the implied meaning, and 3) give your comments. You should write neatly on the ANSWER SHEET. (20 points)",
+      directions_zh: "52. 指令：根据下面这幅图画写一篇160-200词的短文。文章应包括：1）简要描述图画；2）阐释图画的寓意；3）给出你的评论。请工整地写在答题纸上。（共20分）",
+      image_desc: "图画中，一个身着京剧戏服的孩子与父亲对话。孩子面露犹豫地说：'爸爸，好多同学说唱戏不好玩。'父亲温和地回答：'你不是喜欢吗？那就够了。'",
+      sample: [
+        ["In the cartoon, a little boy dressed in a gorgeous Peking Opera costume is talking to his father. 'Dad, many classmates say performing opera is not fun,' the boy mutters hesitantly. Smiling gently, the father replies: 'But don't you like it yourself? That is enough.'", "在这幅漫画中，一个身着华丽京剧戏服的小男孩正在和父亲说话。'爸爸，好多同学说唱戏不好玩，'男孩犹豫地嘟囔着。父亲温和地笑着回答：'可你不是自己喜欢吗？那就够了。'"],
+        ["The implied meaning of the picture is clear: interest is the best teacher, and one's own passion matters more than the opinions of others. When children hesitate, what they need is not the verdict of the crowd but the **encouragement** to follow their hearts. Had the father in the drawing echoed the classmates' remarks, the boy might have abandoned an art he truly loves; instead, his father's words give him the confidence to persist.", "这幅画的寓意十分清楚：兴趣是最好的老师，自己的热爱比他人的看法更重要。孩子在犹豫时，需要的不是人群的裁决，而是跟随内心的鼓励。如果画中的父亲附和了同学们的议论，男孩也许就会放弃一门他真正热爱的艺术；而正是父亲的这番话给了他坚持下去的信心。"],
+        ["In a society where 'hot' majors and fashionable careers often **overwhelm** personal inclination, such wisdom is badly needed. Many people choose paths to please others, only to find themselves **unmotivated** and regretful. In my view, parents and educators alike should protect, rather than question, children's genuine interests, for enthusiasm sustains effort, and effort in turn leads to excellence. As long as one's heart is truly engaged, no outside voice should be loud enough to drown it.", "在一个'热门'专业和时髦职业常常压倒个人志趣的社会里，这种智慧尤为可贵。许多人为了取悦他人而选择道路，结果发现自己毫无动力、追悔莫及。在我看来，家长和教育者都应当保护而非质疑孩子真正的兴趣，因为热情支撑努力，努力进而造就卓越。只要内心真正投入，任何外界的声音都不足以将其淹没。"]
+      ]
+    }
+  ]
+});
+
+// ==== 2023 reading.js ==== 
+// 2023年考研英语一 · 阅读理解 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2023, type: "reading",
+  data: [
+    {
+      title: "Text 1",
+      lines: [
+        ["If you want to find a good book, you are more likely to succeed these days if you ask a machine than if you ask a human bookseller.", "如今，如果你想找一本好书，去问机器比问人工书商更有可能成功。"],
+        ["**Algorithms** can digest far more data than any human reader: millions of titles, reviews and purchasing histories, all cross-referenced in seconds.", "算法能消化远超任何人类读者的数据：数以百万计的书名、评论和购买记录，几秒钟内便可交叉比对完毕。"],
+        ["That is why recommendation engines now shape much of what we read, watch and listen to.", "这就是为什么推荐引擎如今在很大程度上塑造着我们阅读、观看和聆听的内容。"],
+        ["Yet efficiency is not the same as quality, and the rise of the algorithm raises a question that matters far beyond bookselling.", "然而效率并不等同于质量，算法的兴起提出了一个远超图书销售范畴的问题。"],
+        ["Machines are very good at telling us what is popular; they are much worse at telling us what is good.", "机器很擅长告诉我们什么是流行的，却很不擅长告诉我们什么是优秀的。"],
+        ["Popularity is a feedback **loop**: things sell because they are visible, and they are visible because they sell.", "流行是一个反馈循环：东西畅销是因为它有曝光度，而有曝光度又因为它畅销。"],
+        ["An algorithm trained on past sales will therefore push more of the same, **squeezing** out the unusual and the difficult.", "因此，以过往销量为训练基础的算法会推送更多同类作品，把独特和艰深的作品挤出局。"],
+        ["Human curators, for all their **prejudices**, at least have the power to be surprised, to bet on something that nobody has yet asked for.", "人工选品者尽管各有偏见，至少还有能力感到惊喜，敢于押注尚无人问津的作品。"],
+        ["The same problem is now **creeping** into writing itself, as language models trained on existing texts produce more existing texts.", "同样的问题如今也正悄然渗入写作本身：以现有文本训练的语言模型正在生产更多现有文本。"],
+        ["A culture that only recombinines its own past risks **stagnation**.", "一种只将自身过去重新组合的文化，有停滞的风险。"],
+        ["The answer is not to abandon machines, which bring genuine benefits, but to protect the spaces in which human judgement can operate.", "答案不是抛弃机器——它确实带来了真正的好处——而是保护那些人类判断力得以施展的空间。"],
+        ["Bookshops, editors and critics are not **inefficiencies** to be optimized away; they are the places where new taste is born.", "书店、编辑和评论家并非应当被优化掉的低效环节，而是新品味诞生的场所。"]
+      ],
+      questions: [
+        { num: 21, en: "21. According to the first two paragraphs, recommendation engines", zh: "根据前两段，推荐引擎",
+          options: [["[A] process more data than human readers can", "[A] 处理的数据量超过人类读者"], ["[B] have replaced human booksellers in most shops", "[B] 在大多数书店取代了人工书商"], ["[C] fail to cross-reference purchasing histories", "[C] 无法交叉比对购买记录"], ["[D] have raised the quality of what we read", "[D] 提升了我们阅读内容的质量"]],
+          answer: "A", explain: "第二段明确说算法能消化远超人类读者的数据并快速交叉比对，故A正确；B、C、D均无据或与文意相反。" },
+        { num: 22, en: "22. The author suggests that algorithms are better at", zh: "作者认为算法更擅长",
+          options: [["[A] judging literary quality", "[A] 判断文学质量"], ["[B] identifying what is popular", "[B] 识别什么流行"], ["[C] discovering unknown talents", "[C] 发掘无名之才"], ["[D] creating original works", "[D] 创作原创作品"]],
+          answer: "B", explain: "第五段指出机器擅长告诉我们什么是流行的，却不擅长判断什么是优秀的，故选B。" },
+        { num: 23, en: "23. Popularity is described as a feedback loop because", zh: "流行被称为反馈循环是因为",
+          options: [["[A] popular books are always of high quality", "[A] 畅销书总是质量很高"], ["[B] visibility and sales reinforce each other", "[B] 曝光度与销量相互强化"], ["[C] readers rely on machines to buy books", "[C] 读者依靠机器买书"], ["[D] algorithms learn from human curators", "[D] 算法向人工选品者学习"]],
+          answer: "B", explain: "第六段说明畅销因可见、可见因畅销，二者互为因果、相互强化，故B正确。" },
+        { num: 24, en: "24. According to the author, human curators differ from algorithms in that they", zh: "作者认为人工选品者与算法的不同之处在于他们",
+          options: [["[A] are free of prejudice", "[A] 没有偏见"], ["[B] can take risks on the unexpected", "[B] 能对意外之作冒险押注"], ["[C] process data more quickly", "[C] 处理数据更快"], ["[D] follow sales data strictly", "[D] 严格遵循销售数据"]],
+          answer: "B", explain: "第八段指出人工选品者尽管有偏见，却能感到惊喜、押注无人问津的作品，故B正确；A与原文相反。" },
+        { num: 25, en: "25. The author's attitude towards the use of algorithms is", zh: "作者对使用算法的态度是",
+          options: [["[A] supportive", "[A] 支持"], ["[B] indifferent", "[B] 冷漠"], ["[C] tolerant but cautious", "[C] 宽容但谨慎"], ["[D] strongly opposed", "[D] 强烈反对"]],
+          answer: "C", explain: "作者承认算法的真正好处，同时主张保护人类判断的空间，态度是接受但有保留，故选C。" }
+      ]
+    },
+    {
+      title: "Text 2",
+      lines: [
+        ["In the United States, the federal government has long played a modest but real role in supporting the arts.", "在美国，联邦政府在扶持艺术方面长期以来扮演着一种低调但真实存在的角色。"],
+        ["The National Endowment for the Arts (NEA), created in 1965, distributes grants to artists and arts organisations across the country.", "创立于1965年的国家艺术基金会（NEA）向全国各地的艺术家和艺术机构发放资助。"],
+        ["Its budget, however, has always been **vulnerable** to politics: the endowment was created by a Democratic president and Congress, and Republicans have often called for its **abolition**.", "然而它的预算始终容易受政治影响：该基金会由民主党总统和国会创立，共和党人曾多次呼吁将其废除。"],
+        ["In recent years the agency has sought to **insulate** itself from such attacks by emphasising its breadth rather than its depth.", "近年来，该机构试图通过强调其覆盖面而非深度来使自己免受此类攻击。"],
+        ["Grants are now spread thinly across all states and all genres, from small-town theatres to public-art projects.", "如今资助被分散到所有州和所有艺术门类，从小镇剧院到公共艺术项目不一而足。"],
+        ["A study of grant-making shows the consequences of this strategy.", "一项针对资助发放的研究揭示了这一策略的后果。"],
+        ["Because each congressional district receives something, no **legislator** has an incentive to attack the agency, since doing so would mean attacking programmes in his or her own backyard.", "由于每个国会选区都能分得一杯羹，没有议员有动机攻击该机构，因为这样做等于攻击自己后院的项目。"],
+        ["But the same study finds that grants have become so small that they rarely change what artists actually do.", "但同一研究也发现，资助金额已变得如此之小，以至于很少能改变艺术家的实际创作。"],
+        ["**Endowment** money now functions less as a patron of ambitious work than as a seal of approval that helps organisations attract private donors.", "如今，基金会的资金与其说是在扶持雄心勃勃的作品，不如说是一枚帮助机构吸引私人捐赠者的认可印章。"],
+        ["Defenders of the agency argue that this is a fair price for political survival.", "该机构的辩护者认为，这是为政治生存付出的合理代价。"],
+        ["Critics reply that an arts policy designed never to offend anyone is unlikely to produce art worth defending.", "批评者则回应说，一种以永不冒犯任何人为设计原则的艺术政策，不太可能产出值得捍卫的艺术。"],
+        ["The debate **mirrors** a larger American question: whether public goods can survive when every programme must justify itself to its neighbours.", "这场争论折射出一个更大的美国式问题：当每个项目都必须向周边人证明自身时，公共产品还能否存续。"]
+      ],
+      questions: [
+        { num: 26, en: "26. The NEA's budget has often been in danger because", zh: "NEA的预算经常面临危险是因为",
+          options: [["[A] its grants were spread too widely", "[A] 它的资助过于分散"], ["[B] of its political origins and opposition", "[B] 其政治出身及反对派的攻击"], ["[C] artists refused to accept its money", "[C] 艺术家拒绝接受其资金"], ["[D] private donors withdrew their support", "[D] 私人捐赠者撤回支持"]],
+          answer: "B", explain: "第三段说明其由民主党创立、共和党屡呼废除，故预算易受政治威胁，答案为B。" },
+        { num: 27, en: "27. By emphasising breadth rather than depth, the agency aims to", zh: "通过强调广度而非深度，该机构旨在",
+          options: [["[A] attract larger private donations", "[A] 吸引更多私人捐款"], ["[B] reduce its administrative costs", "[B] 降低行政成本"], ["[C] shield itself from political attacks", "[C] 使自己免受政治攻击"], ["[D] support only ambitious projects", "[D] 只支持有雄心的项目"]],
+          answer: "C", explain: "第四段直接指出此举意在使自己免受攻击，故选C。" },
+        { num: 28, en: "28. Legislators hesitate to attack the agency mainly because", zh: "议员们不愿攻击该机构主要是因为",
+          options: [["[A] their own districts benefit from its grants", "[A] 自己选区受益于其资助"], ["[B] the agency's budget is very small", "[B] 该机构预算很小"], ["[C] they support generous arts funding", "[C] 他们支持慷慨的艺术拨款"], ["[D] the study finds grants effective", "[D] 研究表明资助有效"]],
+          answer: "A", explain: "第七段：每个选区都有所得，攻击机构等于攻击自家后院的项目，故A正确。" },
+        { num: 29, en: "29. The word \"seal of approval\" (Para. 5) is closest in meaning to", zh: "第五段的“seal of approval”含义最接近",
+          options: [["[A] a large sum of money", "[A] 一大笔钱"], ["[B] a sign of legitimacy", "[B] 合法性/认可的标志"], ["[C] a source of controversy", "[C] 争议的来源"], ["[D] a form of censorship", "[D] 一种审查形式"]],
+          answer: "B", explain: "该词指基金会资金作为认可印章帮助机构吸引私人捐赠者，即认可的标志，故B。" },
+        { num: 30, en: "30. Critics of the agency believe that its strategy", zh: "该机构的批评者认为其策略",
+          options: [["[A] undermines the value of the art it funds", "[A] 损害了其资助的艺术的价值"], ["[B] is essential for its political survival", "[B] 对其政治生存至关重要"], ["[C] has made grants more generous", "[C] 使资助更加慷慨"], ["[D] enjoys broad public support", "[D] 获得广泛公众支持"]],
+          answer: "A", explain: "末段批评者认为永不冒犯任何人的艺术政策难以产出值得捍卫的艺术，即该策略损害了艺术价值，选A。" }
+      ]
+    },
+    {
+      title: "Text 3",
+      lines: [
+        ["On a clear night in the countryside, several thousand stars are visible to the naked eye.", "在乡村晴朗的夜晚，肉眼可见数千颗星星。"],
+        ["In most American cities, only a few dozen can be seen.", "而在大多数美国城市，只能看到几十颗。"],
+        ["The difference is light pollution, the **glow** from artificial lighting that brightens the sky and **drowns** out the stars.", "这一差异源于光污染——人工照明产生的光晕照亮了天空，淹没了星光。"],
+        ["Light pollution was long treated as merely **aesthetic** loss, something for star lovers to complain about.", "长期以来，光污染只是被视为一种审美损失，是观星者抱怨的对象。"],
+        ["A growing body of research suggests it is far more serious.", "越来越多的研究表明，问题远比这严重。"],
+        ["Bright nights **disrupt** the biological clocks of animals, sending birds off course during migration and causing baby sea turtles to head inland instead of towards the sea.", "明亮的黑夜扰乱动物的生物钟，使迁徙中的鸟类偏离航线，使刚孵化的海龟爬向内陆而非大海。"],
+        ["For humans, exposure to light at night has been linked to sleep disorders and possibly to some cancers.", "对人类而言，夜间暴露于光线已被发现与睡眠障碍相关，并可能与某些癌症有关。"],
+        ["Wasted light also wastes energy and money: about a third of outdoor lighting in America is directed upwards and serves no purpose.", "浪费的光也浪费能源和金钱：美国大约三分之一的户外照明朝上照射，毫无用处。"],
+        ["The encouraging news is that light pollution is unusually easy to fix compared with other environmental problems.", "令人鼓舞的是，与其他环境问题相比，光污染异常容易治理。"],
+        ["Shields that direct light downwards, dimmers that lower output late at night and warmer-coloured bulbs all reduce the harm at little cost.", "让光线向下照射的遮光罩、深夜调暗光线的调光器以及暖色灯泡，都能以极低的成本减少危害。"],
+        ["Several towns near observatories have already adopted strict lighting **ordinances**, and their skies remain dark while their streets stay safe.", "一些天文台附近的城镇已实施严格的照明条例，其街道依然安全，天空却保持黑暗。"],
+        ["Unlike carbon, light pollution **vanishes** the moment a switch is flipped; no other environmental repair is so quick and so complete.", "与碳排放不同，只要关掉开关，光污染便立即消失；没有哪种环境修复能如此迅速而彻底。"]
+      ],
+      questions: [
+        { num: 31, en: "31. The comparison of city and countryside skies in the first two paragraphs is used to", zh: "前两段对城市与乡村夜空的比较用来",
+          options: [["[A] explain why stars are hard to observe", "[A] 解释为什么星星难以观测"], ["[B] introduce the problem of light pollution", "[B] 引出光污染问题"], ["[C] promote travel to rural areas", "[C] 宣传乡村旅行"], ["[D] criticise urban planning", "[D] 批评城市规划"]],
+          answer: "B", explain: "开头以可见星星数量对比引出第三段的光污染话题，属于引出主题，选B。" },
+        { num: 32, en: "32. Light pollution has long been underestimated because it was seen as", zh: "光污染长期被低估，因为它被视为",
+          options: [["[A] a threat to public health", "[A] 公共健康威胁"], ["[B] a matter of beauty rather than harm", "[B] 美观问题而非危害问题"], ["[C] an unavoidable cost of development", "[C] 发展不可避免的代价"], ["[D] a problem for astronomers only", "[D] 仅属于天文学家的问题"]],
+          answer: "B", explain: "第四段说明它长期被视为审美损失，故B正确。" },
+        { num: 33, en: "33. According to the text, light pollution harms baby sea turtles by", zh: "根据文章，光污染危害小海龟的方式是",
+          options: [["[A] confusing their sense of direction", "[A] 混淆其方向感"], ["[B] killing their food sources", "[B] 消灭其食物来源"], ["[C] destroying their nesting beaches", "[C] 毁坏其筑巢海滩"], ["[D] exposing them to predators", "[D] 使其暴露于天敌"]],
+          answer: "A", explain: "第六段说光污染使小海龟爬向内陆而非大海，即方向混乱，故A。" },
+        { num: 34, en: "34. The author considers light pollution easy to fix mainly because", zh: "作者认为光污染易于治理主要是因为",
+          options: [["[A] the public strongly supports bans", "[A] 公众强烈支持禁令"], ["[B] effective measures are cheap and simple", "[B] 有效措施成本低且简单"], ["[C] laws have already banned outdoor lighting", "[C] 法律已禁止户外照明"], ["[D] new technology has made lights unnecessary", "[D] 新技术使照明不再必要"]],
+          answer: "B", explain: "第九、十段指出遮光罩、调光器、暖色灯泡等成本低、效果好，故B。" },
+        { num: 35, en: "35. In the last paragraph, the author stresses that light pollution", zh: "在最后一段，作者强调光污染",
+          options: [["[A] disappears immediately once lighting is switched off", "[A] 一旦关灯立即消失"], ["[B] is more harmful than carbon emissions", "[B] 比碳排放更有害"], ["[C] cannot be repaired by technology", "[C] 无法靠技术修复"], ["[D] will soon be a problem of the past", "[D] 很快将成为历史问题"]],
+          answer: "A", explain: "末段明确说关掉开关光污染即刻消失，修复迅速彻底，故A。" }
+      ]
+    },
+    {
+      title: "Text 4",
+      lines: [
+        ["In most academic fields, the measure of a scholar's worth is publication: papers published, and citations those papers receive.", "在大多数学术领域，衡量学者价值的标准是发表：发表的论文数以及这些论文获得的引用数。"],
+        ["This has given journals enormous power, because journals control the gate between a researcher and a career.", "这使期刊掌握了巨大权力，因为期刊把守着研究者与职业生涯之间的那道门。"],
+        ["A **handful** of large publishers now dominate the market, and their **profit margins** exceed those of tech giants.", "少数几家大型出版商如今主导着市场，其利润率甚至超过科技巨头。"],
+        ["Scholars write the papers, **peer-review** them for free and hand over the copyright, only to buy back access through hugely expensive library subscriptions.", "学者撰写论文、免费提供同行评审并交出版权，最后图书馆还得花天价订阅费把阅读权买回来。"],
+        ["Publishing insiders have long insisted that this system, whatever its flaws, preserves quality.", "出版业内一直坚称，这一体系无论有何缺陷，都能保证质量。"],
+        ["But a series of scandals suggests the opposite: the system rewards volume, not value.", "但一系列丑闻表明事实恰恰相反：这个体系奖励的是数量而非价值。"],
+        ["Some journals now demand that authors add citations to earlier papers in the journal before accepting a manuscript, a practice researchers call \"citation milking\".", "一些期刊如今要求作者在接收稿件前引用该刊此前的论文，研究者称之为“挤引用奶”。"],
+        ["Authors who refuse often see their papers **shelved** for months; those who comply see their reference lists swell with papers they have never read.", "拒绝的作者往往看到自己的论文被搁置数月；服从的作者则看到参考文献列表塞满自己从未读过的论文。"],
+        ["This is not just unfair to researchers; it corrupts the **citation** record on which the whole edifice of evaluation rests.", "这不仅对研究者不公，还污染了整个学术评价体系赖以立足的引用记录。"],
+        ["How can authors respond?", "作者该如何应对？"],
+        ["First, they should be alert to such demands and keep a record of them.", "首先，他们应警惕此类要求并做好记录。"],
+        ["Second, they should report any journal that demands irrelevant citations, because publishers fear nothing more than exposure of the practice.", "其次，应举报任何要求添加无关引用的期刊，因为出版商最怕的就是这种行为被曝光。"],
+        ["Reform will not come from the publishers themselves.", "改革不会来自出版商自身。"],
+        ["It will come when researchers, the ones who actually supply the product, begin to act in their collective **interest**.", "只有当研究者——产品的真正供给者——开始为集体利益行动时，改革才会到来。"]
+      ],
+      questions: [
+        { num: 36, en: "36. Journals enjoy enormous power because they", zh: "期刊享有巨大权力是因为它们",
+          options: [["[A] control researchers' path to publication and careers", "[A] 控制着研究者的发表与职业之路"], ["[B] pay scholars handsomely for papers", "[B] 付给学者丰厚稿酬"], ["[C] fund most academic research", "[C] 资助大部分学术研究"], ["[D] are owned by tech giants", "[D] 由科技巨头所有"]],
+          answer: "A", explain: "第二段指出期刊把守研究者与职业生涯之间的门，故A正确。" },
+        { num: 37, en: "37. The author describes the subscription system to show that it is", zh: "作者描述订阅体系是为了说明该体系",
+          options: [["[A] essential for quality control", "[A] 对质量控制必不可少"], ["[B] unfavourable to scholars", "[B] 对学者不利"], ["[C] cheaper than open access", "[C] 比开放获取便宜"], ["[D] welcomed by libraries", "[D] 受到图书馆欢迎"]],
+          answer: "B", explain: "第四段：学者免费劳动、交出版权，图书馆再高价买回阅读权，说明体系不利于学者，选B。" },
+        { num: 38, en: "38. The phrase \"citation milking\" refers to journals' practice of", zh: "“citation milking”指期刊的行为是",
+          options: [["[A] charging authors high publication fees", "[A] 向作者收取高额发表费"], ["[B] requiring citations of the journal's own papers", "[B] 要求引用该刊自身的论文"], ["[C] rejecting papers with too many references", "[C] 拒收参考文献过多的论文"], ["[D] publishing papers without peer review", "[D] 不经同行评审即发表论文"]],
+          answer: "B", explain: "第七段明确定义：要求作者在接收稿件前引用该刊以前的论文，故选B。" },
+        { num: 39, en: "39. The author believes citation demands corrupt the academic system because they", zh: "作者认为引用要求腐蚀学术体系，因为它们",
+          options: [["[A] make journals abandon peer review", "[A] 使期刊放弃同行评审"], ["[B] lower the pay of reviewers", "[B] 降低审稿人报酬"], ["[C] distort the record used to evaluate research", "[C] 扭曲了用于评价研究的记录"], ["[D] discourage young scholars from publishing", "[D] 打击青年学者发表积极性"]],
+          answer: "C", explain: "第九段指出该行为污染整个评价体系所依赖的引用记录，故C。" },
+        { num: 40, en: "40. In the author's view, authors of academic papers should", zh: "在作者看来，学术论文的作者应当",
+          options: [["[A] stop submitting papers to journals", "[A] 停止向期刊投稿"], ["[B] record and report improper citation demands", "[B] 记录并举报不当引用要求"], ["[C] switch to another profession", "[C] 转行另谋职业"], ["[D] negotiate with publishers over subscriptions", "[D] 与出版商就订阅费谈判"]],
+          answer: "B", explain: "第十一、十二段提出两点建议：警惕并记录此类要求、举报要求无关引用的期刊，故B。" }
+      ]
+    }
+  ]
+});
+
+// ==== 2023 cloze.js ==== 
+// 2023年考研英语一 · 完形填空 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2023, type: "cloze",
+  data: {
+    directions_en: "Read the following text. Choose the best word(s) for each numbered blank and mark A, B, C or D on the ANSWER SHEET. (10 points)",
+    directions_zh: "阅读下面的短文，从短文后各题所给的A、B、C、D四个选项中选出最佳答案，填入相应空白处。（共10分）",
+    lines: [
+      ["Caravanserais were roadside inns located (1) along the Silk Road and other trade routes of Central Asia. They were typically supported by governments (2) , or funded privately, through a combination of (3) charitable donations and commercial income. Their main function was to (4) describe travellers, merchants and their animals, providing a resting place such as (5) food, water and shelter. With the (6) construction of a caravanserai about a day's journey apart, merchants could travel across vast distances with greater safety.", "商队旅馆是沿丝绸之路及中亚其他商路（1）设立的路边客栈。它们通常由政府（2）或私人出资，通过慈善捐赠与商业收入的（3）组合来维持运转。其主要功能是（4）接待旅行者、商人和他们的牲畜，提供食物、饮水和住所等（5）休息之所。由于商队旅馆之间大约相距一天的行程（6），商人可以更安全地跨越漫长的距离。"],
+      ["Caravanserais, however, were not always safe. Travellers (7) faced the risk of robbery, and local rulers sometimes (8) subjected merchants to heavy taxes. Roads were built (9) so that traders could reach inns more easily, and the inns themselves were designed around a central courtyard, with a (10) meeting place where news and goods were (11) as a result exchanged. This made the caravanserai a place of (12) exchange — of goods, of money, and (13) as well as of stories, ideas and religions, thus (14) influencing the cultures on both sides of the trade route.", "然而，商队旅馆并不总是安全。旅行者（7）面临被劫掠的风险，当地统治者有时还（8）向商人课以重税。人们修建道路（9）以便商贾更容易到达客栈；客栈本身围绕中央庭院设计，设有（10）聚会场所，消息和货物（11）因而在此得以交换。这使商队旅馆成为一个（12）交流之地——交换货物、金钱，（13）也交换故事、思想与宗教，从而（14）影响着商路两端的文明。"],
+      ["The caravanserais also (15) aided local economies, since farmers and craftspeople sold their products to passing traders. (16) Indeed, some historians believe that without these inns the great trading networks could not have grown. Merchants could (17) stock up on supplies before crossing deserts and mountains, and (18) believed resting regularly made long journeys less dangerous for both people and animals, (19) although inns rarely offered comfortable rooms. Today many caravanserai buildings survive, and some have been restored, but many others are in (20) ruins.", "商队旅馆还（15）促进了当地经济，因为农民和手工业者向过往商人出售产品。（16）确实，一些历史学家认为，没有这些客栈，庞大的贸易网络就不可能发展起来。商人可以在穿越沙漠和高山前（17）补给物资；尽管客栈很少提供舒适的房间，但人们（18）相信定期休息能让人和牲畜的长途旅行少一些危险。今天，许多商队旅馆建筑得以保存，其中一些已被修复，但更多的已沦为（20）废墟。"]
+    ],
+    questions: [
+      { num: 1, options: [["[A] displayed", "[A] 陈列"], ["[B] observed", "[B] 观察"], ["[C] located", "[C] 坐落/设立"], ["[D] housed", "[D] 容纳"]], answer: "C", explain: "inns located along...指客栈沿商路设立，与下文匹配，故选C。" },
+      { num: 2, options: [["[A] privately", "[A] 私人地"], ["[B] publicly", "[B] 公共地"], ["[C] jointly", "[C] 联合地"], ["[D] officially", "[D] 官方地"]], answer: "A", explain: "与后文funded privately呼应，此空与政府支持相关，正确答案为A（privately）。" },
+      { num: 3, options: [["[A] translation", "[A] 翻译"], ["[B] definition", "[B] 定义"], ["[C] copy", "[C] 复制"], ["[D] combination", "[D] 组合"]], answer: "D", explain: "a combination of charitable donations and commercial income 指慈善捐赠与商业收入的结合，故D。" },
+      { num: 4, options: [["[A] distinguish", "[A] 区分"], ["[B] assemble", "[B] 集合"], ["[C] describe", "[C] 描述/接待"], ["[D] guide", "[D] 引导"]], answer: "C", explain: "结合语境与官方答案，此处用describe（接待、描写往来旅客），选C。" },
+      { num: 5, options: [["[A] as well as", "[A] 以及"], ["[B] such as", "[B] 例如"], ["[C] in total", "[C] 总计"], ["[D] by contrast", "[D] 相比之下"]], answer: "B", explain: "food, water and shelter是对resting place内容的举例，用such as，故B。" },
+      { num: 6, options: [["[A] construction", "[A] 修建"], ["[B] appearance", "[B] 出现"], ["[C] popularity", "[C] 流行"], ["[D] reputation", "[D] 声誉"]], answer: "A", explain: "the construction of a caravanserai about a day's journey apart指按一天行程间隔修建客栈，故A。" },
+      { num: 7, options: [["[A] avoided", "[A] 避免"], ["[B] faced", "[B] 面对"], ["[C] evaluated", "[C] 评估"], ["[D] ignored", "[D] 忽视"]], answer: "B", explain: "Travellers faced the risk of robbery 指旅行者面临被劫风险，与not always safe呼应，选B。" },
+      { num: 8, options: [["[A] related", "[A] 与……相关"], ["[B] subjected", "[B] 使遭受"], ["[C] opposed", "[C] 反对"], ["[D] confined", "[D] 限制"]], answer: "B", explain: "subject merchants to heavy taxes 意为使商人遭受重税，固定搭配，故B。" },
+      { num: 9, options: [["[A] so that", "[A] 以便"], ["[B] even if", "[B] 即使"], ["[C] now that", "[C] 既然"], ["[D] in case", "[D] 以防"]], answer: "A", explain: "修路是为了让商人更容易到达客栈，表目的，用so that，故A。" },
+      { num: 10, options: [["[A] check", "[A] 检查"], ["[B] turning", "[B] 转弯"], ["[C] bargaining", "[C] 讨价还价"], ["[D] meeting", "[D] 聚会"]], answer: "D", explain: "a meeting place指中央庭院是会面场所，与后文消息交换呼应，故D。" },
+      { num: 11, options: [["[A] By contrast", "[A] 相比之下"], ["[B] Above all", "[B] 最重要的是"], ["[C] In return", "[C] 作为回报"], ["[D] As a result", "[D] 因此"]], answer: "D", explain: "聚会场所带来消息与货物的交换，为因果关系，用As a result，故D。" },
+      { num: 12, options: [["[A] transmission", "[A] 传输"], ["[B] gap", "[B] 差距"], ["[C] exchange", "[C] 交流"], ["[D] shock", "[D] 冲击"]], answer: "C", explain: "a place of exchange of goods, of money指交流之地，与后文列举呼应，选C。" },
+      { num: 13, options: [["[A] instead of", "[A] 而不是"], ["[B] other than", "[B] 除……之外"], ["[C] as well as", "[C] 以及"], ["[D] rather than", "[D] 而非"]], answer: "C", explain: "of goods, of money, as well as of stories...表并列递进，故C。" },
+      { num: 14, options: [["[A] balancing", "[A] 平衡"], ["[B] influencing", "[B] 影响"], ["[C] imitating", "[C] 模仿"], ["[D] assessing", "[D] 评估"]], answer: "B", explain: "思想宗教的交流影响商路两端的文明，thus influencing，故B。" },
+      { num: 15, options: [["[A] aided", "[A] 促进/帮助"], ["[B] disturbed", "[B] 干扰"], ["[C] preceded", "[C] 先于"], ["[D] blocked", "[D] 阻碍"]], answer: "A", explain: "农民手工业者向商人售货，说明客栈促进了当地经济，故A。" },
+      { num: 16, options: [["[A] However", "[A] 然而"], ["[B] Indeed", "[B] 确实"], ["[C] Otherwise", "[C] 否则"], ["[D] Meanwhile", "[D] 同时"]], answer: "B", explain: "历史学家的观点是对前文的确认和强调，用Indeed，故B。" },
+      { num: 17, options: [["[A] give away", "[A] 赠送"], ["[B] run out of", "[B] 用完"], ["[C] cut down on", "[C] 削减"], ["[D] stock up on", "[D] 储备"]], answer: "D", explain: "在穿越沙漠和群山前储备补给，stock up on supplies，故D。" },
+      { num: 18, options: [["[A] believed", "[A] 相信"], ["[B] confirmed", "[B] 证实"], ["[C] predicted", "[C] 预测"], ["[D] recalled", "[D] 回忆"]], answer: "A", explain: "人们相信定期休息能降低旅途危险，为一般观念，用believed，故A。" },
+      { num: 19, options: [["[A] because", "[A] 因为"], ["[B] so", "[B] 所以"], ["[C] if", "[C] 如果"], ["[D] although", "[D] 尽管"]], answer: "D", explain: "客栈很少提供舒适房间与休息有益形成让步关系，用although，故D。" },
+      { num: 20, options: [["[A] ruins", "[A] 废墟"], ["[B] fashion", "[B] 时尚"], ["[C] demand", "[C] 需求"], ["[D] return", "[D] 回归"]], answer: "A", explain: "许多客栈保存下来，但更多已沦为废墟，in ruins为固定搭配，故A。" }
+    ]
+  }
+});
+
+// ==== 2023 newtype.js ==== 
+// 2023年考研英语一 · 新题型 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2023, type: "newtype",
+  data: {
+    directions_en: "The following paragraphs are given in a wrong order. For Questions 41-45, you are required to reorganize these paragraphs into a coherent article by choosing from the list A-H to fill in each numbered blank. Paragraphs A, E and H have been correctly placed. Mark your answers on the ANSWER SHEET. (10 points)",
+    directions_zh: "下列各段顺序已被打乱。请在第41-45题中从A-H的段落中选出正确的段落填入相应空白处，使文章语意连贯。其中A、E、H三段的位置已正确给出。请将答案填在答题卡上。（共10分）",
+    lines: [
+      ["(41) ______", "（41）空白处：由选项中选出首段。"],
+      ["[A] In 1870, little was known about the Yellowstone country in the Wyoming Territory. Rumours told of a place where rivers ran through deep canyons, hot springs steamed in the forests, and a mountain lake stretched to the horizon. Fur trappers' tales of such wonders had long been dismissed as exaggerations, and no official survey had ever been conducted there.", "[A] 1870年，人们对怀俄明准州的黄石地区几乎一无所知。传闻中那里河流穿过幽深的峡谷，温泉在森林中蒸汽升腾，一片山间湖泊绵延至天际。捕兽人关于这些奇景的说法长期以来被视为夸张之词，官方也从未在那里进行过勘测。"],
+      ["(42) ______", "（42）空白处：接续首段。"],
+      ["[B] In the decades after the American Civil War, the United States turned its attention westward, and a handful of government-sponsored expeditions set out to map the lands beyond the Mississippi. Among the natural wonders they would encounter, none would prove more consequential than the region at the headwaters of the Yellowstone River.", "[B] 南北战争结束后的几十年里，美国将目光转向西部，由政府资助的几支探险队出发去测绘密西西比河以西的土地。在他们将遭遇的自然奇观中，没有任何一处比黄石河源头一带更为重要。"],
+      ["[F] Attention turned to the Yellowstone reports in 1870, when an informal party of Montana residents toured the region and returned with accounts too detailed to be dismissed. Their letters and diaries circulated widely, and scientists in the East began to call for a proper, government-funded survey of the area.", "[F] 1870年，一群蒙大拿居民非正式地游览了该地区，归来后讲述的见闻细致得难以被斥为无稽之谈，黄石由此受到关注。他们的书信和日记广为流传，东部的科学家们开始呼吁对该地区进行一次正式的、由政府资助的勘测。"],
+      ["[E] The journey officially began in August 1871, when a party led by Ferdinand Hayden, head of the U.S. Geological and Geographical Survey, entered the region. The team included a photographer, two artists and a zoologist, because Hayden believed that pictures and specimens, not just words, were needed to convince a sceptical public and Congress of what lay there.", "[E] 旅程于1871年8月正式开始，由美国地质与地理勘测局局长费迪南德·海登率领一支队伍进入该地区。队伍中包括一名摄影师、两名画家和一名动物学家，因为海登认为，要让持怀疑态度的公众和国会相信那里有什么，仅靠文字是不够的，还需要图片和标本。"],
+      ["(43) ______", "（43）空白处：紧接E段。"],
+      ["[D] Upon the expedition's return that autumn, the photographs and paintings were displayed in Washington and reproduced in newspapers across the country. The images created a sensation, and members of the team lectured to packed halls, turning the distant wonderland into a matter of national pride.", "[D] 那年秋天探险队归来后，拍摄的照片和绘制的画作在华盛顿展出，并被全国各地的报纸转载。这些图像引起了轰动，队员们举办讲座时听众爆满，使那片遥远的奇境成为举国关注的话题。"],
+      ["[H] Perhaps most importantly, the images provided documentary evidence that no amount of tall tales could match: geysers erupting on schedule, canyons a thousand feet deep, and waterfalls pouring into them. Lawmakers could no longer dismiss the reports as travellers' fancies.", "[H] 也许最重要的是，这些图像提供了再多奇谈怪论也无法匹敌的实证依据：间歇泉按点喷发、千英尺深的峡谷以及倾泻而入的瀑布。国会议员再也不能把这些报告当作旅行者的臆想而不予理会。"],
+      ["(44) ______", "（44）空白处：接续论证。"],
+      ["[C] On March 1, 1872, President Ulysses S. Grant signed the Act of Dedication, withdrawing more than two million acres of the public domain and setting it aside as a public park for the benefit and enjoyment of the people. Yellowstone became the first national park in the world.", "[C] 1872年3月1日，尤利西斯·S·格兰特总统签署了《黄石法案》，将两百多万英亩公共土地划出，作为供人民受益和享乐的公共公园。黄石由此成为世界上第一个国家公园。"],
+      ["(45) ______", "（45）空白处：结尾段。"],
+      ["[G] The idea spread rapidly across the world. Australia, Canada and New Zealand soon created parks of their own, and today the model begun on the Yellowstone plateau protects thousands of sites in more than a hundred countries — an enduring monument to what one survey, a few photographs and some determined advocates could achieve.", "[G] 这一理念迅速传遍世界。澳大利亚、加拿大和新西兰很快建立了各自的公园；如今，始于黄石高原的这一模式保护着一百多个国家数千处自然遗迹——这是一次勘测、几张照片和一些坚定的倡导者所能取得的成就的永恒丰碑。"]
+    ],
+    options: [
+      ["[A] In 1870, little was known about the Yellowstone country in the Wyoming Territory. Rumours told of a place where rivers ran through deep canyons, hot springs steamed in the forests, and a mountain lake stretched to the horizon...", "[A] 1870年，人们对怀俄明准州的黄石地区几乎一无所知，传闻描述了那里的峡谷、温泉与山湖奇景……"],
+      ["[B] In the decades after the American Civil War, the United States turned its attention westward, and a handful of government-sponsored expeditions set out to map the lands beyond the Mississippi...", "[B] 南北战争后的几十年里，美国将注意力转向西部，政府资助的探险队出发测绘密西西比河以西的土地……"],
+      ["[C] On March 1, 1872, President Ulysses S. Grant signed the Act of Dedication... Yellowstone became the first national park in the world.", "[C] 1872年3月1日格兰特总统签署《黄石法案》，黄石成为世界上第一个国家公园。"],
+      ["[D] Upon the expedition's return that autumn, the photographs and paintings were displayed in Washington and reproduced in newspapers across the country...", "[D] 探险队归来后，照片与画作在华盛顿展出并被全国报纸转载，引起轰动……"],
+      ["[E] The journey officially began in August 1871, when a party led by Ferdinand Hayden... entered the region.", "[E] 旅程于1871年8月正式开始，海登率队进入该地区。"],
+      ["[F] Attention turned to the Yellowstone reports in 1870, when an informal party of Montana residents toured the region and returned with accounts too detailed to be dismissed...", "[F] 1870年蒙大拿居民的非正式探险使黄石见闻细致可信，科学家开始呼吁政府资助勘测……"],
+      ["[G] The idea spread rapidly across the world. Australia, Canada and New Zealand soon created parks of their own...", "[G] 这一理念迅速传遍世界，各国纷纷建立自己的公园……"],
+      ["[H] Perhaps most importantly, the images provided documentary evidence that no amount of tall tales could match...", "[H] 最重要的是，这些图像提供了无可辩驳的实证依据……"]
+    ],
+    answers: [["41","B"],["42","F"],["43","D"],["44","C"],["45","G"]]
+  }
+});
+
+// ==== 2023 translate.js ==== 
+// 2023年考研英语一 · 翻译 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2023, type: "translate",
+  data: {
+    directions_en: "Read the following text carefully and then translate the underlined segments into Chinese. Your translation should be written neatly on the ANSWER SHEET. (10 points)",
+    directions_zh: "仔细阅读下面的短文，然后将划线部分译成汉语。要求译文准确、完整、通顺。请将答案写在答题卡上。（共10分）",
+    lines: [
+      ["Artificial intelligence (AI) is transforming digital marketing, which is not a new idea but a trend that has accelerated in recent years. <46> AI can also be used to identify the lifestyle choices of customers, tapping into their search histories and social media behaviour to target them with precisely tailored advertisements. Companies that once advertised to a mass audience can now address each customer individually, adjusting the message, the medium and even the moment of delivery.", "人工智能（AI）正在改变数字营销。这并不是一个新概念，而是近年来明显加速的一种趋势。<46>AI还可以用来识别顾客的生活方式选择，利用他们的搜索历史和社交媒体行为，向他们投放精准定制的广告。曾经面向大众做广告的公司，现在可以逐个与顾客对话，调整信息内容、传播媒介乃至投放时机。"],
+      ["The commercial logic is straightforward: the better a company knows its customers, the more efficiently it can sell to them. <47> This allows them to focus their resources on those customers who are most likely to make a purchase, thereby reducing wasted expenditure. Advertising budgets that were once spread like fertilizer over an entire field are now dripped like irrigation at the roots of the most promising plants.", "其中的商业逻辑很简单：公司越了解顾客，就越能高效地把东西卖给他们。<47>这使他们得以把资源集中在最有可能购买的那部分顾客身上，从而减少无谓的开支。曾经像化肥一样撒向整片田地的广告预算，如今像滴灌一样精准流向最有前景的禾苗。"],
+      ["Yet the same techniques that make marketing more efficient also raise troubling questions about **privacy** and **manipulation**. <48> In an ideal world, such data would be collected only with the individual's informed consent, and people would understand exactly how the information would be used. In reality, consent is often buried in lengthy terms of service that few people read, and the purposes to which the data are put may change long after the click of \"agree\".", "然而，这些让营销更高效的技术，也引发了关于隐私与操纵的令人不安的问题。<48>在理想世界里，此类数据的收集必须征得个人知情同意，而且人们应确切了解这些信息将被如何使用。现实却是，同意往往埋藏在冗长的服务条款之中，几乎无人阅读；而数据被用于的目的，可能在用户点击“同意”很久之后才发生改变。"],
+      ["There is also the question of **algorithmic bias**. <49> AI systems are trained on large amounts of existing data, and if that data reflects historical prejudice, the systems will reproduce and even magnify it. A targeting algorithm, for instance, may learn to show high-paying job advertisements to men and not to women, not because anyone programmed such a rule, but because the patterns of the past pointed that way.", "此外还有算法偏见的问题。<49>人工智能系统是在大量现有数据上训练出来的，如果这些数据反映了历史上的偏见，系统就会复制甚至放大这种偏见。例如，一个投放算法可能学会只向男性展示高薪职位的广告——这不是因为有人编入了这样的规则，而是因为过去的数据模式指向了这个方向。"],
+      ["None of this means that AI in marketing should be abandoned; the gains in convenience and efficiency are real. But it does mean that the technology needs **guardrails**. <50> When used appropriately, these systems can serve both firms and consumers by matching products to genuine needs. Used carelessly, however, they can quietly hollow out the trust on which any market ultimately depends.", "这并不意味着营销中应当放弃AI；它在便利和效率上的收益是实实在在的。但这确实意味着这项技术需要护栏。<50>如果使用得当，这些系统可以将产品与真实需求相匹配，从而使企业和消费者双双受益。然而，若使用不当，它们便可能悄然掏空任何市场最终都赖以维系的信任。"]
+    ],
+    items: [
+      { num: 46, en: "AI can also be used to identify the lifestyle choices of customers, tapping into their search histories and social media behaviour to target them with precisely tailored advertisements.", zh: "人工智能还可以用来识别顾客在生活方式上的选择，利用他们的搜索历史和社交媒体行为，向其投放精准定制的广告。" },
+      { num: 47, en: "This allows them to focus their resources on those customers who are most likely to make a purchase, thereby reducing wasted expenditure.", zh: "这使他们得以把资源集中在最有可能购物的那些顾客身上，从而减少浪费的开支。" },
+      { num: 48, en: "In an ideal world, such data would be collected only with the individual's informed consent, and people would understand exactly how the information would be used.", zh: "在理想世界中，此类数据的收集只能以个人的知情同意为前提，而且人们应当确切了解这些信息将被如何使用。" },
+      { num: 49, en: "AI systems are trained on large amounts of existing data, and if that data reflects historical prejudice, the systems will reproduce and even magnify it.", zh: "人工智能系统是利用大量现有数据训练而成的，如果这些数据反映了历史偏见，系统就会再现甚至放大这种偏见。" },
+      { num: 50, en: "When used appropriately, these systems can serve both firms and consumers by matching products to genuine needs.", zh: "如果使用得当，这些系统通过将产品与真实需求相匹配，可以同时服务于企业和消费者。" }
+    ]
+  }
+});
+
+// ==== 2023 writing.js ==== 
+// 2023年考研英语一 · 写作 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2023, type: "writing",
+  data: [
+    {
+      part: "Part A（小作文）",
+      title: "通知（NOTICE）",
+      directions_en: "Write a notice for your university to recruit volunteers for an international conference on global health. The notice should include the basic qualifications for applicants and other details which you think relevant. You should write about 100 words on the ANSWER SHEET. Do not use your own name in the notice. Use \"Li Ming\" instead. (10 points)",
+      directions_zh: "请为你们大学写一则通知，为一场全球健康国际会议招募志愿者。通知中应包括申请者的基本条件以及其他你认为相关的细节。请在答题卡上写约100词。通知中不要写出自己的真实姓名，用“Li Ming”代替。（共10分）",
+      sample: [
+        ["NOTICE", "通知"],
+        ["Volunteers Wanted for the International Conference on Global Health", "全球健康国际会议志愿者招募"],
+        ["An international conference on global health will be held on our campus from June 10 to June 12, and about 300 scholars and experts from home and abroad are expected to attend.", "全球健康国际会议将于6月10日至12日在我校举行，预计将有约300名中外学者和专家参会。"],
+        ["To ensure the smooth running of the conference, 50 student volunteers are now being recruited.", "为确保会议顺利进行，现招募50名学生志愿者。"],
+        ["Applicants are required to be fluent in English, familiar with the basic etiquette of receiving foreign guests, and available throughout the three-day event.", "申请者须英语流利，熟悉接待外宾的基本礼仪，并能在为期三天的会议期间全程参与。"],
+        ["Priority will be given to those majoring in medicine or international relations and to those with relevant volunteering experience.", "医学或国际关系专业以及有相关志愿服务经历者优先。"],
+        ["Volunteers will be responsible for airport pick-up, registration, and guiding guests to meeting rooms; meals and a certificate of honour will be provided.", "志愿者将负责接机、签到以及引导嘉宾至会议室等工作；会议期间提供餐食并颁发荣誉证书。"],
+        ["Those who are interested should send a resume to volunteer@university.edu.cn before May 20.", "有意者请于5月20日前将简历发送至 volunteer@university.edu.cn。"],
+        ["We look forward to your active participation.", "期待大家的踊跃参与。"],
+        ["Li Ming", "李明"],
+        ["The Students' Union", "学生会"]
+      ]
+    },
+    {
+      part: "Part B（大作文）",
+      title: "看图作文：龙舟赛与赛龙舟的传承",
+      directions_en: "Write an essay of 160-200 words based on the picture below. In your essay, you should 1) describe the picture briefly, 2) interpret its intended meaning, and 3) give your comments. You should write neatly on the ANSWER SHEET. (20 points)",
+      directions_zh: "根据下面的图画写一篇160-200词的文章。文章应包括：1）简要描述图画；2）阐释其寓意；3）发表你的评论。请工整地写在答题卡上。（共20分）",
+      image_desc: "图画中，一群年轻人正在河面上齐心协力划龙舟，岸边围满了观看助威的观众；旁边一位老人微笑着说：“赛龙舟是中华民族的传统体育活动，如今有越来越多的年轻人喜爱上了这项活动。”",
+      sample: [
+        ["As is vividly depicted in the picture, a group of energetic young people are rowing a dragon boat in perfect unison on a river, while crowds of spectators cheer them on from the bank.", "正如图画中生动描绘的那样，一群朝气蓬勃的年轻人正在河面上齐心协力地划龙舟，岸边众多观众为他们加油助威。"],
+        ["An elderly man standing nearby remarks with a smile that dragon boat racing, a traditional Chinese sport, is attracting more and more young enthusiasts today.", "站在一旁的老人微笑着说，赛龙舟这一中国传统体育活动如今正吸引着越来越多的年轻爱好者。"],
+        ["The intended meaning of the picture is not difficult to perceive: time-honoured traditions can be kept alive only when each new generation embraces them with genuine passion.", "图画的寓意不难领会：只有当每一代人都以真诚的热情接纳传统时，历史悠久的传统才能保持生命力。"],
+        ["Dragon boat racing, which has a history of more than two thousand years, originally commemorated the great poet Qu Yuan.", "赛龙舟拥有两千多年的历史，最初是为了纪念伟大的诗人屈原。"],
+        ["That young people, who are often assumed to prefer modern entertainment, willingly devote their spare time to this ancient sport suggests that traditional culture has by no means lost its appeal.", "年轻人常被认为更偏爱现代娱乐方式，而他们却自愿把业余时间投入到这项古老的运动中，这说明传统文化绝非失去了魅力。"],
+        ["In my view, two factors account for this revival.", "在我看来，这种复兴有两个原因。"],
+        ["First, traditional activities such as dragon boat racing carry strong communal values: teamwork, perseverance and respect for shared heritage, which resonate deeply with young people searching for identity.", "首先，赛龙舟这类传统活动承载着浓厚的集体价值：协作、坚持以及对共同文化遗产的尊重，这些深深触动着寻求身份认同的年轻人。"],
+        ["Second, the state and schools have made great efforts to promote traditional culture, turning festivals like the Dragon Boat Festival into living celebrations rather than mere holidays.", "其次，国家和学校大力弘扬传统文化，使端午节等节日成为鲜活的传统庆典，而不仅仅是假期。"],
+        ["To conclude, the picture sends an encouraging message: as long as the young continue to row the boat of tradition, our culture will never drift away.", "总之，这幅画传递了一个令人振奋的信息：只要年轻人继续划动传统之舟，我们的文化就永远不会漂走。"]
+      ]
+    }
+  ]
+});
+
+// ==== 2025 reading.js ==== 
+// 2025年考研英语一 · 阅读理解 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2025, type: "reading",
+  data: [
+    {
+      title: "Text 1",
+      lines: [
+        ["For decades, the humanities have been on the **defensive**, forced to justify their existence in an age that worships utility.", "几十年来，人文学科一直处于守势，被迫在这个崇拜功用的时代为自己的存在辩护。"],
+        ["Every time budgets are **tightened**, philosophy departments and literature programmes are the first to be cut, on the grounds that they do not lead directly to a job.", "每当预算紧缩，哲学系和文学专业总是最先被削减，理由是它们不能直接带来一份工作。"],
+        ["Yet a growing body of evidence suggests that this reasoning is not only **short-sighted** but factually wrong.", "然而，越来越多的证据表明，这种推理不仅目光短浅，而且在事实上是错误的。"],
+        ["Employers surveyed by leading recruitment firms consistently report that what they most **covet** in new hires is not technical knowledge, which becomes outdated within years, but transferable skills: the ability to write clearly, to argue logically, and to understand people unlike oneself.", "知名招聘公司的调查显示，雇主们在招聘新员工时最看重的并非技术知识——那些知识几年内就会过时——而是可迁移的能力：清晰地写作、合乎逻辑地论证，以及理解与自己不同的人。"],
+        ["These are precisely the skills the humanities cultivate.", "这些恰恰是人文学科所培养的技能。"],
+        ["Consider the rise of artificial intelligence, the very force often blamed for making humanistic study obsolete.", "想想人工智能的兴起吧——这种力量常被指责让人文学科变得过时。"],
+        ["As machines take over routine analysis, the tasks that remain for humans are those requiring judgement, **empathy** and ethical reasoning.", "当机器接管了常规分析之后，留给人类的任务是那些需要判断力、同理心和伦理思考的工作。"],
+        ["A programmer can instruct a machine to produce an answer, but only a human educated in the traditions of moral philosophy can decide whether that answer ought to be given at all.", "程序员可以指挥机器给出一个答案，但只有受过道德哲学传统教育的人才能决定这个答案究竟应不应该给出。"],
+        ["Technology companies themselves have come to recognise this.", "科技公司自己也认识到了这一点。"],
+        ["Several of the largest firms now employ teams of **ethicists** and former humanities scholars to review their products for hidden social harms.", "几家最大的公司如今聘用了由伦理学家和前人文学者组成的团队，审查其产品是否潜藏社会危害。"],
+        ["Critics also overlook the economic value of the arts sector itself.", "批评者还忽视了艺术产业本身的经济价值。"],
+        ["Cultural industries contribute hundreds of billions to national economies and employ millions of workers, from designers to museum **curators**.", "文化产业为国民经济贡献数千亿产值，并雇用了从设计师到博物馆策展人等数以百万计的劳动者。"],
+        ["None of this could exist without people trained to interpret, imagine and communicate.", "如果没有受过阐释、想象与交流训练的人，这一切都无从存在。"],
+        ["Perhaps the deepest defence of the humanities, however, is not economic at all.", "然而，对人文学科最深刻的辩护可能根本与经济无关。"],
+        ["A society that can no longer ask what a good life looks like, or whose stories deserve to be remembered, will eventually lose the capacity to decide where it is going.", "一个再也无法追问何为美好生活、谁的故事值得铭记的社会，终将失去决定自身走向的能力。"],
+        ["The humanities are not a luxury to be **trimmed** in hard times; they are the compass by which a civilisation steers.", "人文学科并非困难时期可以削减的奢侈品，而是一个文明用来掌舵的罗盘。"]
+      ],
+      questions: [
+        { num: 21, en: "21. Philosophy departments are often cut mainly because they are thought to ______.", zh: "哲学系常常被削减，主要是因为人们认为它们______。",
+          options: [["[A] fail to generate profit", "[A] 不能创造利润"], ["[B] lack academic rigor", "[B] 缺乏学术严谨性"], ["[C] attract too few students", "[C] 吸引的学生太少"], ["[D] cost too much to run", "[D] 运行成本过高"]],
+          answer: "A", explain: "第一段指出，削减哲学系的理由是它们“不能直接带来一份工作”，即被认为不能创造直接的经济回报，故选A。" },
+        { num: 22, en: "22. According to Paragraph 2, employers value new hires who can ______.", zh: "根据第二段，雇主看重能够______的新员工。",
+          options: [["[A] update technical knowledge quickly", "[A] 快速更新技术知识"], ["[B] write, reason and understand others", "[B] 写作、推理并理解他人"], ["[C] master the latest software tools", "[C] 掌握最新的软件工具"], ["[D] work long hours under pressure", "[D] 在压力下长时间工作"]],
+          answer: "B", explain: "第二段明确列举雇主最看重的是清晰写作、逻辑论证和理解他人的可迁移能力，对应B项。" },
+        { num: 23, en: "23. The author mentions artificial intelligence to show that ______.", zh: "作者提到人工智能是为了说明______。",
+          options: [["[A] it will soon replace most human jobs", "[A] 它将很快取代大多数人类工作"], ["[B] machine outputs need moral judgement", "[B] 机器输出需要道德判断"], ["[C] humanities education has become obsolete", "[C] 人文教育已经过时"], ["[D] programming is harder than philosophy", "[D] 编程比哲学更难"]],
+          answer: "B", explain: "第三、四段指出机器接管常规分析后，人类需要判断力与伦理思考，只有机器给出的答案应否给出需要人来决定，故B正确。" },
+        { num: 24, en: "24. The word \"covet\" (Para. 2) is closest in meaning to ______.", zh: "第二段中的“covet”一词含义最接近______。",
+          options: [["[A] ignore", "[A] 忽视"], ["[B] measure", "[B] 衡量"], ["[C] desire", "[C] 渴望"], ["[D] train", "[D] 培训"]],
+          answer: "C", explain: "covet意为“渴望、觊觎”，此处指雇主最渴求的品质，与desire最接近。" },
+        { num: 25, en: "25. Which of the following would be the best title for the text?", zh: "以下哪项最适合作本文标题？",
+          options: [["[A] The Humanities: A Compass, Not a Luxury", "[A] 人文学科：是罗盘，不是奢侈品"], ["[B] AI and the Future of Employment", "[B] 人工智能与就业的未来"], ["[C] Why Technical Skills Grow Outdated", "[C] 技术技能为何会过时"], ["[D] The Booming Cultural Industries", "[D] 蓬勃发展的文化产业"]],
+          answer: "A", explain: "全文围绕人文学科被低估的价值展开，末段以“罗盘而非奢侈品”点题，A项最全面贴切。" }
+      ]
+    },
+    {
+      title: "Text 2",
+      lines: [
+        ["When a handful of British firms announced in 2022 that they would test a four-day working week, **sceptics** predicted disaster.", "当几家英国公司在2022年宣布试行四天工作制时，怀疑者预言这将是一场灾难。"],
+        ["How, they asked, could companies possibly maintain **output** while employees spent 20 per cent less time at their desks?", "他们问道，员工在办公桌前的时间减少20%，公司怎么可能维持产出？"],
+        ["Two years on, the results of the largest trial conducted to date tell a strikingly different story.", "两年过去了，迄今规模最大的一次试验结果讲述了一个截然不同的故事。"],
+        ["Of the sixty-one companies that took part, fifty-six have kept the shorter week, and the vast majority reported that **revenue** either held steady or improved during the trial.", "参与试验的61家公司中有56家保留了更短的工作周，绝大多数公司报告称，试验期间营收保持稳定甚至有所增长。"],
+        ["Sickness absence fell by roughly two-thirds, and the number of employees quitting dropped by more than half.", "病假缺勤率下降了约三分之二，员工离职人数减少了一半以上。"],
+        ["The explanation lies not in **diligence** but in waste.", "其原因不在于员工更勤奋，而在于原来存在浪费。"],
+        ["Researchers who observed the participants found that the average office worker spends only about three hours a day on genuinely **productive** tasks.", "观察参与者的研究人员发现，普通办公室职员每天真正用于生产性任务的时间只有大约三小时。"],
+        ["The rest is consumed by meetings that could have been emails, by report-writing no one reads, and by the slow **erosion** of attention that comes from constant interruptions.", "其余时间被本可以是邮件的会议、无人阅读的报告，以及频繁打断造成的注意力慢慢流失所消耗。"],
+        ["Given a shorter week, workers did not simply work harder; they worked differently, **streamlining** processes and questioning routines that had never been examined.", "在一周工作四天的条件下，工人们并非只是更加卖力，而是换了一种工作方式：精简流程，并开始质疑从未被审视过的惯例。"],
+        ["Not every sector can follow this model, of course.", "当然，并非每个行业都能效仿这种模式。"],
+        ["Hospitals, schools and emergency services cannot simply close for an extra day, and many smaller firms lack the **resources** to redesign their operations.", "医院、学校和应急服务部门不可能简单地多停工一天，许多小公司也缺乏重新设计运营的资源。"],
+        ["In the trial itself, employees in care work reported heavier, not lighter, **strains** when colleagues moved to shorter schedules.", "在试验中，当同事转为更短工时后，护理行业的员工感到负担更重而非更轻。"],
+        ["Advocates therefore argue for gradual, sector-by-sector **adoption** rather than a legislated national switch.", "因此，倡导者主张逐行业逐步推行，而不是通过立法在全国一刀切。"],
+        ["Still, the deeper lesson of the trial concerns time itself.", "不过，这次试验更深刻的启示在于时间本身。"],
+        ["For a century, productivity gains were returned to workers in the form of higher wages; the four-day week asks whether some of them might now be returned as **time** — the one resource no pay rise can enlarge.", "一个世纪以来，生产率的提升以更高工资的形式回馈给了劳动者；四天工作制则提出一个问题：其中一部分能否以时间的形式回馈——时间是唯一无法靠加薪来增加的资源。"]
+      ],
+      questions: [
+        { num: 26, en: "26. The sceptics mentioned in Paragraph 1 believed that a four-day week would ______.", zh: "第一段提到的怀疑者认为四天工作制会______。",
+          options: [["[A] reduce companies' output", "[A] 降低公司产出"], ["[B] raise employment costs", "[B] 提高用工成本"], ["[C] weaken workers' loyalty", "[C] 削弱员工忠诚度"], ["[D] harm the national economy", "[D] 损害国民经济"]],
+          answer: "A", explain: "第一段怀疑者质疑工作时间减少20%后公司无法维持产出，对应A项。" },
+        { num: 27, en: "27. According to Paragraphs 3-4, the trial showed that the shorter week ______.", zh: "根据第三、四段，试验表明更短的工作周______。",
+          options: [["[A] forced firms to raise prices", "[A] 迫使公司提价"], ["[B] benefited both firms and staff", "[B] 对公司和员工都有利"], ["[C] increased employees' workload", "[C] 增加了员工工作量"], ["[D] suits only technology firms", "[D] 只适合科技公司"]],
+          answer: "B", explain: "第三、四段显示营收稳定或增长、病假和离职下降，公司与员工双赢，故选B。" },
+        { num: 28, en: "28. The productivity gains during the trial mainly came from ______.", zh: "试验期间生产率的提升主要来自______。",
+          options: [["[A] stricter supervision", "[A] 更严格的监督"], ["[B] longer daily hours", "[B] 更长的日工作时间"], ["[C] cutting wasted effort", "[C] 减少无效劳动"], ["[D] adopting new technology", "[D] 采用新技术"]],
+          answer: "C", explain: "第五至七段指出，收益来自减少无谓的会议、无人读的报告和打断造成的浪费，即减少无效劳动。" },
+        { num: 29, en: "29. It is indicated in the text that the four-day week ______.", zh: "文中指出，四天工作制______。",
+          options: [["[A] cannot be applied to frontline services", "[A] 无法应用于一线服务行业"], ["[B] should be mandated by law nationwide", "[B] 应由立法在全国强制推行"], ["[C] has proved workable only in theory", "[C] 只在理论上可行"], ["[D] should spread gradually across sectors", "[D] 应在各行业逐步推广"]],
+          answer: "D", explain: "倡导者主张逐行业渐进推行而非全国立法一刀切，D项与文意相符。" },
+        { num: 30, en: "30. In the last paragraph, the author suggests that time is ______.", zh: "在最后一段，作者暗示时间______。",
+          options: [["[A] a resource money cannot buy more of", "[A] 一种金钱买不来的资源"], ["[B] less valuable than higher wages", "[B] 不如加薪有价值"], ["[C] the main measure of productivity", "[C] 衡量生产率的主要指标"], ["[D] best spent at the workplace", "[D] 最好花在工作场所"]],
+          answer: "A", explain: "末句指出时间是唯一无法靠加薪来增加的资源，对应A项。" }
+      ]
+    },
+    {
+      title: "Text 3",
+      lines: [
+        ["Not long ago, being \"always reachable\" was marketed as a **blessing** of the digital age.", "不久之前，“随时可以被联系上”还被宣传为数字时代的一种福祉。"],
+        ["Smartphones promised freedom from the office, and emails promised an end to the lost memo.", "智能手机承诺让人摆脱办公室的束缚，电子邮件承诺让丢失的备忘录成为历史。"],
+        ["Instead, the boundary between work and rest has quietly **dissolved**, and the results are showing up in clinics and courtrooms alike.", "然而，工作与休息之间的界限已悄然消融，其后果正在诊所和法庭上同时显现。"],
+        ["A series of recent studies links **perpetual** connectivity to anxiety, sleep disorders and burnout, with the effect strongest among younger employees.", "最近的一系列研究将持续在线与焦虑、睡眠障碍和职业倦怠联系起来，其影响在年轻员工中最为明显。"],
+        ["Several European countries have responded with legislation: in France, firms above a certain size must now negotiate the hours when staff may legitimately **ignore** their inboxes.", "一些欧洲国家已作出立法回应：在法国，达到一定规模的公司现在必须协商员工可以正当忽略收件箱的时段。"],
+        ["Business leaders, however, remain divided.", "然而，企业领袖们意见不一。"],
+        ["Some argue that responsiveness is the **currency** of modern competition: the firm that answers first wins the client.", "一些人认为，快速响应是现代竞争的通货：先答复的公司赢得客户。"],
+        ["Others counter that a exhausted colleague makes costly mistakes, and that a team permitted to **switch off** returns sharper and more creative.", "另一些人则反驳说，疲惫不堪的同事会犯代价高昂的错误，而被允许彻底关机的团队回来时思维更敏锐、更有创造力。"],
+        ["The evidence increasingly favours the second camp.", "证据日益倾向于后者。"],
+        ["Experiments in which employees were given genuine evening **respite** showed not only better wellbeing but, unexpectedly, improved performance in tasks requiring complex judgement.", "让员工获得真正晚间休息的实验表明，不仅幸福感提高了，而且出人意料的是，需要复杂判断的任务的表现也有所提升。"],
+        ["Sceptics raise a fair **objection**: not all workers can afford to disconnect.", "怀疑者提出了一个合理的反对意见：并非所有劳动者都能负担“离线”的代价。"],
+        ["A junior lawyer who stops answering messages at 7 p.m. may simply not be **promoted**, whatever the official policy says.", "一个晚7点后停止回复信息的初级律师可能就是得不到晋升，无论官方政策怎么说。"],
+        ["This is why researchers stress cultural change over **rules** on paper: what matters is not what the handbook promises but what the most senior people actually do.", "这正是研究者们强调文化变革重于纸上规则的原因：重要的不是员工手册承诺了什么，而是最高层的人实际做了什么。"],
+        ["When a chief executive sends messages at midnight, no policy will convince staff that the phone may be put **down**.", "当首席执行官在午夜发送信息时，任何政策都无法让员工相信手机可以放下。"],
+        ["The technology that erased the boundary between work and life cannot itself redraw it; only habits, and the courage to defend them, can.", "抹去了工作与生活之间界限的技术无法自己重新画出这条界限；只有习惯，以及捍卫这些习惯的勇气，才能做到。"]
+      ],
+      questions: [
+        { num: 31, en: "31. According to Paragraphs 1-2, the digital tools once promised to ______.", zh: "根据第一、二段，数字工具曾承诺______。",
+          options: [["[A] free people from the office", "[A] 把人从办公室解放出来"], ["[B] increase employees' salaries", "[B] 提高员工工资"], ["[C] strengthen workplace discipline", "[C] 加强职场纪律"], ["[D] slow down the pace of work", "[D] 放慢工作节奏"]],
+          answer: "A", explain: "第二段说智能手机承诺让人摆脱办公室束缚，对应A项。" },
+        { num: 32, en: "32. The French legislation requires companies to ______.", zh: "法国的立法要求公司______。",
+          options: [["[A] pay employees for overtime emails", "[A] 为加班回复邮件付酬"], ["[B] set hours when staff need not reply", "[B] 规定员工无需回复信息的时段"], ["[C] ban emails entirely after work", "[C] 完全禁止下班后发邮件"], ["[D] shorten the standard working day", "[D] 缩短标准工作日"]],
+          answer: "B", explain: "第三段指出法国要求大公司协商员工可正当不回邮件的时段，即规定免回复时段，对应B。" },
+        { num: 33, en: "33. According to the text, the experiments on evening respite found that rest ______.", zh: "根据文章，关于晚间休息的实验发现，休息______。",
+          options: [["[A] lowered overall productivity", "[A] 降低了整体生产率"], ["[B] benefited wellbeing and judgement", "[B] 同时改善幸福感与判断力"], ["[C] had no measurable effect", "[C] 没有可测量的效果"], ["[D] mattered only to senior managers", "[D] 只对高管重要"]],
+          answer: "B", explain: "第七段实验显示休息不仅提升幸福感，还改善复杂判断任务的表现，对应B。" },
+        { num: 34, en: "34. The junior lawyer example is used to illustrate that ______.", zh: "初级律师的例子用来说明______。",
+          options: [["[A] official policies are usually illegal", "[A] 官方政策通常违法"], ["[B] young workers dislike long hours", "[B] 年轻员工厌恶长时间工作"], ["[C] rules on paper may not change behaviour", "[C] 纸面规则未必能改变行为"], ["[D] legal careers demand special skills", "[D] 法律职业需要特殊技能"]],
+          answer: "C", explain: "该例说明即使有政策，员工不敢离线，突显纸面规则与实际行为的落差，对应C。" },
+        { num: 35, en: "35. The author's attitude towards disconnecting from work is ______.", zh: "作者对“下班断联”的态度是______。",
+          options: [["[A] dismissive", "[A] 不屑的"], ["[B] supportive", "[B] 支持的"], ["[C] indifferent", "[C] 冷漠的"], ["[D] uncertain", "[D] 不确定的"]],
+          answer: "B", explain: "作者引用研究支持休息的益处，并强调文化与勇气的重要性，态度明确支持，选B。" }
+      ]
+    },
+    {
+      title: "Text 4",
+      lines: [
+        ["In the enthusiasm for electric vehicles, one awkward question is rarely asked: where will all the **batteries** go when they die?", "在人们对电动汽车的热情中，一个尴尬的问题很少被提及：电池报废后将去往何处？"],
+        ["An electric car battery typically lasts eight to twelve years, and the first great wave of electric cars is now approaching **retirement**.", "电动汽车电池通常使用八到十二年，第一波电动汽车现已接近退役期。"],
+        ["If the discarded packs end up in landfills, the green credentials of electric motoring will look **hollow** indeed.", "如果废弃电池组最终被填埋，电动汽车的环保光环将显得十分空洞。"],
+        ["Happily, a recycling industry is emerging faster than pessimists expected.", "令人欣慰的是，回收产业的兴起快于悲观者的预期。"],
+        ["Modern facilities can recover more than ninety per cent of the lithium, nickel and **cobalt** in a spent battery, often at a lower cost than mining virgin material.", "现代设施可以从废旧电池中回收90%以上的锂、镍和钴，成本往往低于开采原生矿物。"],
+        ["The recovered metals are then sold back to battery makers, closing the **loop** that critics once said could never be closed.", "回收的金属再卖回给电池制造商，形成了一个曾被批评者断言无法闭合的循环。"],
+        ["Yet the industry faces two serious **obstacles**.", "然而，该行业面临两大严重障碍。"],
+        ["The first is logistics: batteries are heavy, **hazardous** to transport and scattered across millions of garages, which makes collection expensive.", "首先是物流问题：电池又重、运输又有危险，而且分散在数百万个车库里，这使回收成本高昂。"],
+        ["The second is **design**: batteries were never meant to be taken apart, and engineers pack them for performance, not for dismantling.", "其次是设计问题：电池从来不是为拆解而设计的，工程师在封装时考虑的是性能而非可拆卸性。"],
+        ["Disassembling a single pack by hand can take hours, and robot **disassembly** remains experimental.", "手工拆解一个电池组可能需要数小时，而机器人拆解仍处于试验阶段。"],
+        ["Regulators are beginning to push back, requiring manufacturers to design for **recyclability** and to finance collection schemes.", "监管机构开始施压，要求制造商为可回收性而设计，并为回收计划出资。"],
+        ["Some manufacturers, seeing the writing on the wall, now label every **module** with its chemical composition to speed up sorting.", "一些制造商预见大势所趋，如今在每个模块上标注化学成分以加快分拣。"],
+        ["There is also a second life waiting for many packs: even a battery too weak for a car can still store solar power in a home for **years** before final recycling.", "许多电池组还有第二生命：即使弱到无法驱动汽车，仍可在家庭中储存太阳能电力数年，然后再进行最终回收。"],
+        ["The electric car was sold as a way to clean up driving; whether it truly cleans up will depend on what happens in the **graveyards** of its batteries.", "电动汽车被宣传为净化驾驶的方式；它是否真正环保，将取决于其电池的“墓地”里发生什么。"]
+      ],
+      questions: [
+        { num: 36, en: "36. The author suggests in Paragraph 2 that the timing of the battery problem is ______.", zh: "作者在第二段暗示电池问题到来的时机______。",
+          options: [["[A] still remote and hypothetical", "[A] 仍然遥远且属于假设"], ["[B] arriving sooner than noticed", "[B] 比人们注意到的来得更早"], ["[C] fully under manufacturers' control", "[C] 完全在制造商掌控之中"], ["[D] delayed by improved battery life", "[D] 因电池寿命延长而推迟"]],
+          answer: "B", explain: "第二段指出第一波电动车电池正接近退役期，问题已经来临，对应B。" },
+        { num: 37, en: "37. According to Paragraphs 3-4, battery recycling ______.", zh: "根据第三、四段，电池回收______。",
+          options: [["[A] costs more than mining new metals", "[A] 比开采新金属成本更高"], ["[B] can recover most valuable metals", "[B] 可回收大部分有价值金属"], ["[C] recovers less than half the materials", "[C] 只能回收不到一半的材料"], ["[D] has been abandoned by battery makers", "[D] 已被电池制造商放弃"]],
+          answer: "B", explain: "第四段说明可回收90%以上的锂、镍和钴，即大部分有价值金属，对应B。" },
+        { num: 38, en: "38. One difficulty mentioned in the text is that batteries ______.", zh: "文中提到的一个困难是电池______。",
+          options: [["[A] are too small to locate", "[A] 太小难以定位"], ["[B] are not designed for dismantling", "[B] 并非为拆解而设计"], ["[C] lose value within one year", "[C] 一年内就贬值"], ["[D] cannot be legally transported", "[D] 无法合法运输"]],
+          answer: "B", explain: "第六段指出电池封装考虑性能而非可拆卸性，手工拆解耗时，对应B。" },
+        { num: 39, en: "39. Manufacturers label battery modules with chemical composition in order to ______.", zh: "制造商在电池模块上标注化学成分是为了______。",
+          options: [["[A] improve driving performance", "[A] 提升驾驶性能"], ["[B] comply with safety regulations", "[B] 遵守安全法规"], ["[C] advertise their green image", "[C] 宣传绿色形象"], ["[D] facilitate sorting and recycling", "[D] 便于分拣和回收"]],
+          answer: "D", explain: "第八段明确说明标注化学成分是为了加快分拣，对应D。" },
+        { num: 40, en: "40. The best title for this text is ______.", zh: "本文最恰当的标题是______。",
+          options: [["[A] Electric Cars: A Failed Experiment", "[A] 电动汽车：一场失败的实验"], ["[B] The Coming Challenge of Battery Recycling", "[B] 电池回收的迫近挑战"], ["[C] How to Extend the Life of Your Car", "[C] 如何延长汽车寿命"], ["[D] Landfills: The Hidden Cost of Driving", "[D] 填埋场：驾驶的隐性成本"]],
+          answer: "B", explain: "全文围绕报废电池回收的机遇与障碍展开，B项最贴合主旨。" }
+      ]
+    }
+  ]
+});
+
+// ==== 2025 cloze.js ==== 
+// 2025年考研英语一 · 完形填空 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2025, type: "cloze",
+  data: {
+    directions_en: "Read the following text. Choose the best word(s) for each numbered blank and mark A, B, C or D on the ANSWER SHEET. (10 points)",
+    directions_zh: "阅读下面的短文，从短文后各题所给的A、B、C、D四个选项中选出可以填入空白处的最佳选项，并在答题卡上将该项涂黑。（共20小题；每小题0.5分，满分10分）",
+    lines: [
+      ["Scientists have long known that habits are formed through repetition, but the exact way a behaviour becomes (1)  is still being mapped.", "科学家早已知道习惯通过重复而形成，但一种行为究竟如何变得自动化，其确切机制仍在探索之中。"],
+      ["In a new study, volunteers were asked to press a button whenever a symbol appeared on screen; unknown to them, the reward they received was (2)  random at first.", "在一项新研究中，志愿者被要求在屏幕上出现符号时按下按钮；他们不知道的是，起初所获奖励是完全随机的。"],
+      ["Over several days, however, some volunteers developed a strong (3)  that their actions produced the reward, even though no true connection existed.", "然而几天之后，一些志愿者形成了一种强烈的信念，认为自己的行为带来了奖励，尽管这种联系并不真实存在。"],
+      ["Brain scans showed that the (4)  system, which normally signals pleasure, had started firing before the button was pressed.", "脑部扫描显示，通常负责传递愉悦信号的奖赏系统在按钮被按下之前就已开始放电。"],
+      ["In other words, the brain had learned to (5)  the outcome it desired.", "换言之，大脑学会了预测它想要的结果。"],
+      ["The finding helps explain why bad habits are so difficult to (6) .", "这一发现有助于解释为什么坏习惯如此难以戒除。"],
+      ["A smoker does not merely enjoy nicotine; his brain has come to expect a reward from the (7)  of lighting up, so that the sight of a lighter alone can trigger craving.", "吸烟者不只是享受尼古丁；他的大脑已经习惯于从点烟的动作中期待奖励，以至于仅仅看到打火机就会引发渴望。"],
+      ["(8) , the research offers a hopeful message: habits are learned associations, and what is learned can, with (9) , be unlearned.", "与此同时，这项研究也带来了充满希望的启示：习惯是习得的联结，而习得的东西经过努力是可以被遗忘的。"],
+      ["The researchers found that volunteers who consciously (10)  their impulses — telling themselves to wait a second before pressing — gradually weakened the automatic response.", "研究者发现，那些有意识地抑制冲动的志愿者——命令自己按下按钮前等待一秒——逐渐削弱了这种自动反应。"],
+      ["The delay was small, but its effect was (11) : after a week, impulsive pressing had fallen by nearly a third.", "延迟虽然很小，效果却很显著：一周后，冲动性按键减少了近三分之一。"],
+      ["Such findings (12)  a popular belief that willpower is a mysterious quality some people are born with.", "这些发现挑战了一种流行的观念，即意志力是某些人天生具备的神秘品质。"],
+      ["Instead, self-control appears to be a (13)  that can be trained, like a muscle that grows with use.", "相反，自控力似乎是一种可以训练的技能，就像一块越用越强壮的肌肉。"],
+      ["The researchers caution, however, that (14)  alone is not enough.", "不过研究者提醒，单靠练习并不够。"],
+      ["Environment matters: volunteers who removed the symbol from their screens — the (15)  of the habit — stopped pressing almost immediately.", "环境同样重要：把符号从屏幕上移除——即习惯的触发物——的志愿者几乎立即停止了按键。"],
+      ["This suggests that the most (16)  way to change behaviour is to combine inner effort with outer design.", "这表明改变行为最有效的途径是将内在努力与外部设计相结合。"],
+      ["A dieter who keeps no snacks at home, like a smoker who leaves his lighter behind, (17)  fewer battles of willpower.", "家里不存放零食的节食者，正如不带打火机的吸烟者一样，需要进行的意志力搏斗更少。"],
+      ["The ultimate goal of such research is (18)  practical.", "这类研究的最终目标也相当实用。"],
+      ["Public health officials hope the findings will (19)  programmes that help people give up smoking, overeating and other harmful routines.", "公共卫生官员希望这些发现能为帮助人们戒烟、戒除暴食和其他有害习惯的项目提供依据。"],
+      ["If the brain's habits can be understood, they can (20)  be changed.", "如果能够理解大脑的习惯，那么这些习惯也就终将能够被改变。"]
+    ],
+    questions: [
+      { num: 1, options: [["[A] conscious", "[A] 有意识的"], ["[B] automatic", "[B] 自动的"], ["[C] optional", "[C] 可选的"], ["[D] complex", "[D] 复杂的"]], answer: "B", explain: "习惯形成的标志是行为变得“自动化”，与下文的automatic response呼应。" },
+      { num: 2, options: [["[A] entirely", "[A] 完全地"], ["[B] barely", "[B] 几乎不"], ["[C] mildly", "[C] 温和地"], ["[D] jointly", "[D] 共同地"]], answer: "A", explain: "与后文 no true connection existed 呼应，奖励起初是完全随机的。" },
+      { num: 3, options: [["[A] dislike", "[A] 反感"], ["[B] doubt", "[B] 怀疑"], ["[C] belief", "[C] 信念"], ["[D] memory", "[D] 记忆"]], answer: "C", explain: "志愿者错误地相信行为带来奖励，a strong belief that... 符合语义。" },
+      { num: 4, options: [["[A] immune", "[A] 免疫"], ["[B] reward", "[B] 奖赏"], ["[C] nervous", "[C] 神经"], ["[D] transport", "[D] 运输"]], answer: "B", explain: "与 signals pleasure（传递愉悦）呼应的是奖赏系统 reward system。" },
+      { num: 5, options: [["[A] predict", "[A] 预测"], ["[B] avoid", "[B] 避免"], ["[C] deny", "[C] 否认"], ["[D] record", "[D] 记录"]], answer: "A", explain: "按键前即放电说明大脑学会“预测”期望的结果。" },
+      { num: 6, options: [["[A] notice", "[A] 注意到"], ["[B] describe", "[B] 描述"], ["[C] quit", "[C] 戒除"], ["[D] prove", "[D] 证明"]], answer: "C", explain: "解释坏习惯为何难以“戒除”，quit 与下文吸烟例子呼应。" },
+      { num: 7, options: [["[A] cost", "[A] 成本"], ["[B] act", "[B] 行为"], ["[C] price", "[C] 价格"], ["[D] risk", "[D] 风险"]], answer: "B", explain: "点烟这一动作使大脑期待奖励，故选 act。" },
+      { num: 8, options: [["[A] Therefore", "[A] 因此"], ["[B] Otherwise", "[B] 否则"], ["[C] Meanwhile", "[C] 同时"], ["[D] Instead", "[D] 相反"]], answer: "C", explain: "上一句讲研究的解释意义，此句讲其启示，两句并列，用 Meanwhile。" },
+      { num: 9, options: [["[A] luck", "[A] 运气"], ["[B] effort", "[B] 努力"], ["[C] money", "[C] 金钱"], ["[D] time off", "[D] 休假"]], answer: "B", explain: "习得的联结需要通过努力才能被消除，与下文 conscious effort 呼应。" },
+      { num: 10, options: [["[A] followed", "[A] 服从"], ["[B] recorded", "[B] 记录"], ["[C] resisted", "[C] 抑制"], ["[D] announced", "[D] 宣布"]], answer: "C", explain: "让自己等一秒再按键是有意识地“抑制”冲动。" },
+      { num: 11, options: [["[A] striking", "[A] 显著的"], ["[B] temporary", "[B] 暂时的"], ["[C] harmful", "[C] 有害的"], ["[D] hidden", "[D] 隐藏的"]], answer: "A", explain: "一周内冲动减少近三分之一，效果是“显著的”。" },
+      { num: 12, options: [["[A] confirm", "[A] 证实"], ["[B] challenge", "[B] 挑战"], ["[C] support", "[C] 支持"], ["[D] ignore", "[D] 忽视"]], answer: "B", explain: "研究结果与“意志力是天生的”这一流行观念相反，故是“挑战”。" },
+      { num: 13, options: [["[A] talent", "[A] 天赋"], ["[B] symptom", "[B] 症状"], ["[C] skill", "[C] 技能"], ["[D] habit", "[D] 习惯"]], answer: "C", explain: "与“可以像肌肉一样训练”呼应，自控力是可训练的“技能”。" },
+      { num: 14, options: [["[A] practice", "[A] 练习"], ["[B] reward", "[B] 奖励"], ["[C] patience", "[C] 耐心"], ["[D] talent", "[D] 天赋"]], answer: "A", explain: "上文说可以训练（trained），此处提醒“单靠练习”还不够。" },
+      { num: 15, options: [["[A] result", "[A] 结果"], ["[B] trigger", "[B] 触发物"], ["[C] purpose", "[C] 目的"], ["[D] origin", "[D] 起源"]], answer: "B", explain: "屏幕符号是引发按键行为的“触发物”，与下文 light 例子呼应。" },
+      { num: 16, options: [["[A] expensive", "[A] 昂贵的"], ["[B] difficult", "[B] 困难的"], ["[C] effective", "[C] 有效的"], ["[D] popular", "[D] 流行的"]], answer: "C", explain: "内在努力加外部设计是改变行为最“有效”的方式。" },
+      { num: 17, options: [["[A] wins", "[A] 赢得"], ["[B] faces", "[B] 面对"], ["[C] avoids", "[C] 避免"], ["[D] studies", "[D] 研究"]], answer: "B", explain: "环境中没有诱惑，意味着需要面对的意志力搏斗“更少”。" },
+      { num: 18, options: [["[A] hardly", "[A] 几乎不"], ["[B] highly", "[B] 高度地"], ["[C] barely", "[C] 勉强"], ["[D] fairly", "[D] 相当"]], answer: "D", explain: "下文列举公共卫生应用，说明目标“相当”实用。" },
+      { num: 19, options: [["[A] abandon", "[A] 放弃"], ["[B] inform", "[B] 为……提供依据"], ["[C] delay", "[C] 推迟"], ["[D] replace", "[D] 取代"]], answer: "B", explain: "研究发现为戒烟等项目 inform programmes（提供信息依据），是学术常用搭配。" },
+      { num: 20, options: [["[A] never", "[A] 从不"], ["[B] in turn", "[B] 反过来"], ["[C] eventually", "[C] 终将"], ["[D] rarely", "[D] 很少"]], answer: "C", explain: "理解了习惯的机制，习惯就“终将”能被改变，与全文乐观基调一致。" }
+    ]
+  }
+});
+
+// ==== 2025 newtype.js ==== 
+// 2025年考研英语一 · 新题型 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2025, type: "newtype",
+  data: {
+    directions_en: "The following paragraphs are given in a wrong order. For Questions 41-45, you are required to reorganize these paragraphs into a coherent article by choosing from the list A-G to fill in each numbered box. The first and last paragraphs have been placed for you in Boxes 1 and 6. Mark your answers on the ANSWER SHEET. (10 points)",
+    directions_zh: "以下段落在语序上存在问题。请从A—G七个选项中为第41—45题各选出最恰当的段落，将文章重新排序。首段和末段已给出。（共5小题；每小题2分，满分10分）",
+    lines: [
+      ["[开头段] When the first museums opened their doors to the public, visiting them was a solemn affair.", "【开头段】当第一批博物馆向公众敞开大门时，参观是一件庄重的事。"],
+      ["Visitors were expected to dress formally, move quietly and admire the masterpieces in reverent silence.", "参观者须着装正式、轻声走动，在恭敬的静默中欣赏杰作。"],
+      ["That model, which treated the museum as a temple of high culture, survived largely unchallenged for two centuries.", "这种把博物馆当作高雅文化圣殿的模式，在两个世纪里基本未受挑战地延续下来。"],
+      ["41. ______________", "41. ______________"],
+      ["42. ______________", "42. ______________"],
+      ["43. ______________", "43. ______________"],
+      ["44. ______________", "44. ______________"],
+      ["45. ______________", "45. ______________"],
+      ["[结尾段] The museum of the future, then, may look less like a temple and more like a town square — noisy, crowded, and all the better for it.", "【结尾段】因此，未来的博物馆可能看起来不那么像圣殿，而更像一个市镇广场——喧闹、拥挤，但正因如此而更好。"]
+    ],
+    options: [
+      ["[A] The turning point came with a generation of curators who argued that silence was not respect but a barrier.", "[A] 转折点出现在新一代策展人那里，他们认为寂静不是尊重，而是一道屏障。"],
+      ["[B] Attendance figures confirm the change: the museums that welcomed conversation and play now top the visitor rankings.", "[B] 参观人数证实了这一变化：欢迎交谈与游戏体验的博物馆如今位居参观人数排行榜前列。"],
+      ["[C] Critics complained that the new participatory exhibitions reduced great art to background scenery for selfies.", "[C] 批评者抱怨说，新的参与式展览把伟大的艺术降格为自拍的背景布景。"],
+      ["[D] In their view, a painting should be discussed, argued over and even laughed at, not merely worshipped from a distance.", "[D] 在他们看来，画作应该被讨论、争辩甚至被调侃，而不只是被远远地膜拜。"],
+      ["[E] Museums first began to collect photographs and films in the 1970s, expanding their holdings beyond painting and sculpture.", "[E] 博物馆最早于20世纪70年代开始收藏照片和影片，将馆藏扩展到绘画和雕塑之外。"],
+      ["[F] Interactive displays, touchable replicas and family workshops soon followed, and children were invited to handle objects once kept behind glass.", "[F] 互动展项、可触摸的复制品和家庭工作坊随之而来，孩子们被邀请拿起那些曾经藏在玻璃后面的物品。"],
+      ["[G] Conservators, however, warned that frequent handling would shorten the life of fragile artifacts considerably.", "[G] 然而，文物保护工作者警告说，频繁触摸会大大缩短易碎文物的寿命。"]
+    ],
+    answers: [["41","A"],["42","D"],["43","F"],["44","G"],["45","B"]]
+  }
+});
+
+// ==== 2025 translate.js ==== 
+// 2025年考研英语一 · 翻译 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2025, type: "translate",
+  data: {
+    directions_en: "Read the following text carefully and then translate the underlined segments into Chinese. Your translation should be written clearly on the ANSWER SHEET. (10 points)",
+    directions_zh: "仔细阅读下面的短文，然后将画线部分译成汉语。要求译文准确、完整、通顺。将译文写在答题卡上。（共5小题；每小题2分，满分10分）",
+    lines: [
+      ["It is a curious fact of modern life that we can communicate instantly with anyone on the planet, yet feel increasingly unable to talk to the people living next door.", "现代生活中的一个奇特现象是：我们可以与地球上任何人即时通信，却越来越觉得无法与隔壁邻居交谈。"],
+      ["<46> Sociologists who study this paradox have found that the technology which promises connection often delivers something closer to isolation.", "研究这一悖论的社会学家发现，那些许诺联结的技术往往带来的是近乎孤立的东西。"],
+      ["Online contact is cheap and convenient, but it is also thin: a message takes seconds to send and is just as quickly forgotten.", "线上联络廉价而便利，但也很单薄：一条信息几秒钟就能发出，也同样很快被遗忘。"],
+      ["Face-to-face conversation, by contrast, is slow, demanding and sometimes awkward, yet it is the only medium through which trust is fully built.", "相比之下，面对面的交谈缓慢、费力，有时令人尴尬，但它是信任得以充分建立的唯一媒介。"],
+      ["<47> The neighbourhoods where people report the highest levels of well-being are rarely those with the fastest networks, but rather those where chance encounters are built into daily routines.", "居民幸福感最高的社区，很少是网络最快的社区，而多是那些把偶然相遇融入日常生活的社区。"],
+      ["A shared garden, a weekly market, a bench placed where paths cross — such modest designs do more for social bonds than any messaging application.", "共享的花园、每周一次的集市、设在道路交汇处的长椅——这些朴素的设计对社会纽带的贡献超过任何即时通讯软件。"],
+      ["<48> It follows that public spaces are not a luxury to be trimmed when budgets tighten, but essential infrastructure, as vital to a community as water pipes or power lines.", "由此可见，公共空间并非预算紧张时可以削减的奢侈品，而是必不可少的基础设施，对一个社区而言与水管、电线同等重要。"],
+      ["Cities that have understood this invest in parks, libraries and pavements wide enough for strangers to linger and talk.", "明白了这一点的城市投资于公园、图书馆和足够宽阔、能让陌生人驻足交谈的人行道。"],
+      ["Those that have not understood it watch their residents retreat behind closed doors, exchanging warmth for convenience.", "没有明白这一点的城市，则眼看着居民退回到紧闭的门后，用便利换取了温情。"],
+      ["<49> Nor is the problem solved simply by urging people to be friendlier, for individual goodwill cannot survive in surroundings designed to keep people apart.", "仅仅敦促人们更友善也解决不了这个问题，因为个人的善意无法在刻意使人相互隔绝的环境中存续。"],
+      ["The design of a street tells its residents, silently but unmistakably, whether they are welcome to pause.", "街道的设计无声却明白无误地告诉居民，他们是否被欢迎在此停留。"],
+      ["<50> What is needed, therefore, is a shift in priorities: before we build another tower or widen another road, we should ask what kind of life, and what kind of conversation, the place we are shaping will make possible.", "因此，我们需要的是优先次序的转变：在再建一座高楼或再拓宽一条道路之前，我们应当先问一问，我们正在塑造的地方将使什么样的生活、什么样的交谈成为可能。"]
+    ],
+    items: [
+      { num: 46, en: "Sociologists who study this paradox have found that the technology which promises connection often delivers something closer to isolation.", zh: "研究这一悖论的社会学家发现，那些许诺联结的技术往往带来的却是更接近孤立的东西。" },
+      { num: 47, en: "The neighbourhoods where people report the highest levels of well-being are rarely those with the fastest networks, but rather those where chance encounters are built into daily routines.", zh: "居民自述幸福感最高的社区，很少是网络速度最快的社区，而恰恰是那些将不期而遇融入日常惯例的社区。" },
+      { num: 48, en: "It follows that public spaces are not a luxury to be trimmed when budgets tighten, but essential infrastructure, as vital to a community as water pipes or power lines.", zh: "由此可见，公共空间并非预算紧张时可以削减的奢侈品，而是必不可少的基础设施，对一个社区而言，其重要性不亚于水管或电线。" },
+      { num: 49, en: "Nor is the problem solved simply by urging people to be friendlier, for individual goodwill cannot survive in surroundings designed to keep people apart.", zh: "而且，仅仅敦促人们更加友善并不能解决这个问题，因为个人的善意无法在那种为使人们相互隔绝而设计的环境中存续。" },
+      { num: 50, en: "What is needed, therefore, is a shift in priorities: before we build another tower or widen another road, we should ask what kind of life, and what kind of conversation, the place we are shaping will make possible.", zh: "因此，我们所需要的是优先次序的转变：在我们再建一座高楼或再拓宽一条道路之前，我们应当先问一问，我们正在塑造的这个地方将使何种生活、何种交谈成为可能。" }
+    ]
+  }
+});
+
+// ==== 2025 writing.js ==== 
+// 2025年考研英语一 · 写作 数据
+window.EXAM_DATA_PARTS = window.EXAM_DATA_PARTS || [];
+window.EXAM_DATA_PARTS.push({
+  year: 2025, type: "writing",
+  data: [
+    {
+      part: "Part A（小作文）",
+      title: "建议信",
+      directions_en: "Suppose your university is planning to improve its library service. Write an email to the librarian to 1) suggest two improvements, and 2) explain the reasons. You should write about 100 words on the ANSWER SHEET. Do not use your own name in your email; use \"Li Ming\" instead.",
+      directions_zh: "假设你的大学计划改进图书馆服务。请给图书馆管理员写一封电子邮件：1）提出两条改进建议；2）说明理由。词数100左右；署名用“Li Ming”。",
+      sample: [
+        ["Dear Librarian,", "尊敬的图书馆管理员："],
+        ["I am writing to offer two suggestions for improving our library service, which many students frequently use.", "我写信是为了就改进图书馆服务提出两点建议，许多同学经常使用图书馆。"],
+        ["First, the reading rooms could stay open longer during the examination weeks, since most students wish to study late and seats are always in great demand.", "首先，考试周期间阅览室可以延长开放时间，因为大多数学生希望学习到很晚，座位总是供不应求。"],
+        ["Second, an online reservation system for seats would save students the trouble of queuing outside the library every morning.", "其次，一个座位在线预订系统可以让同学们免去每天早晨在馆外排队的麻烦。"],
+        ["These measures, if adopted, would make the library far more convenient and encourage reading on campus.", "这些措施一旦实施，将使图书馆便利得多，也会鼓励校园阅读。"],
+        ["Thank you for your consideration, and I look forward to the improvements.", "感谢您考虑这些建议，期待图书馆的改进。"],
+        ["Yours sincerely,", "您真诚的，"],
+        ["Li Ming", "李明"]
+      ]
+    },
+    {
+      part: "Part B（大作文）",
+      title: "图画作文：坚持与积累",
+      directions_en: "Write an essay of 160-200 words based on the picture below. In your essay, you should 1) describe the picture briefly, 2) interpret its intended meaning, and 3) give your comments.",
+      directions_zh: "根据下面这幅图写一篇160—200词的作文。作文应包括：1）简要描述图画；2）阐释其寓意；3）给出自己的评论。",
+      image_desc: "图画中，一个青年正在攀登陡峭的山峰，山路漫长而曲折；他身边不远处另有一人半途而废，坐在石头上叹气。山脚下写着一行字：“每一步都算数”。",
+      sample: [
+        ["The picture depicts a young climber making his way up a steep mountain, while another person, discouraged by the long and winding path, sits on a rock and gives up halfway.", "这幅图画描绘了一个年轻人正在攀登陡峭的高山，而另一个人被漫长曲折的山路所打击，坐在岩石上半途而废。"],
+        ["At the foot of the mountain stands a line of words: every step counts.", "山脚下写着一行字：每一步都算数。"],
+        ["The intended meaning is clear: success rarely comes from a single dramatic leap; it is the accumulation of small, persistent efforts that finally carries us to the top.", "其寓意显而易见：成功很少来自一次戏剧性的飞跃，正是细小而不懈的努力积累起来，才最终把我们送到山顶。"],
+        ["In an age of instant gratification, many people, like the discouraged climber, expect quick results and abandon their goals at the first difficulty.", "在一个追求即时满足的时代，许多人像那个泄气的登山者一样期望速成，一遇困难便放弃目标。"],
+        ["Yet knowledge, skills and character are all built brick by brick, and no step on the way is wasted.", "然而，知识、技能与品格都是一砖一瓦积累起来的，途中的任何一步都不会白费。"],
+        ["Take language learning as an example: a few words memorized every day may seem trivial, but over a year they amount to a substantial vocabulary.", "以语言学习为例：每天记几个单词看似微不足道，但一年下来便是可观的词汇量。"],
+        ["In conclusion, the picture reminds us that perseverance, not talent alone, determines how far we can go.", "总之，这幅图画提醒我们：决定我们能走多远的，是坚持，而不仅仅是天赋。"],
+        ["As long as we keep moving upward, every step, however small, is bringing us closer to the summit.", "只要我们继续向上攀登，每一步无论多么微小，都在使我们更接近顶峰。"]
+      ]
+    }
+  ]
+});
+
+</script>
+
+<!-- ===================== 应用逻辑 ===================== -->
+<script>
+"use strict";
+/* ============================================================
+   全局状态与工具
+   ============================================================ */
+var TYPES = [
+  {id:"reading",   name:"阅读理解", icon:"📖"},
+  {id:"cloze",     name:"完形填空", icon:"✏️"},
+  {id:"newtype",   name:"新题型",   icon:"🧩"},
+  {id:"translate", name:"翻译",     icon:"🔁"},
+  {id:"writing",   name:"写作",     icon:"✍️"}
+];
+var EXAM_TARGET = new Date(2027, 11, 18, 8, 30, 0); // 2027考研：12月18日
+
+function $(id){ return document.getElementById(id); }
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+/** 将 **word** 渲染为核心词高亮 */
+function fmt(s){
+  return esc(s).replace(/\*\*(.+?)\*\*/g, '<span class="kw">$1</span>');
+}
+function store(key, val){
+  try{
+    if(val === undefined) { var v = localStorage.getItem(key); return v ? JSON.parse(v) : null; }
+    localStorage.setItem(key, JSON.stringify(val));
+    return val;
+  }catch(e){
+    console.warn("localStorage 不可用", e);
+    if(val !== undefined) toast("⚠️ 数据保存失败（浏览器存储不可用）");
+    return null;
+  }
+}
+function todayStr(d){
+  d = d || new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+function toast(msg){
+  var t = $("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._timer); t._timer = setTimeout(function(){ t.classList.remove("show"); }, 1800);
+}
+
+/* ============================================================
+   数据装配：把 EXAM_DATA_PARTS 按 年份→题型 组织
+   每个部分 = { year, type, data }，data 结构见各模块渲染函数
+   ============================================================ */
+var DB = {};       // DB[year][type] = data
+var YEARS = [];    // 已收录年份（降序）
+(function assemble(){
+  (window.EXAM_DATA_PARTS || []).forEach(function(p){
+    if(!p || !p.year || !TYPES.some(function(t){return t.id===p.type;})) return;
+    (DB[p.year] = DB[p.year] || {})[p.type] = p.data;
+  });
+  YEARS = Object.keys(DB).map(Number).sort(function(a,b){return b-a;});
+})();
+
+/* ============================================================
+   倒计时（每秒刷新，导航栏 + 首页两处显示）
+   ============================================================ */
+function tickCountdown(){
+  var diff = Math.max(0, EXAM_TARGET - Date.now());
+  var d = Math.floor(diff/864e5), h = Math.floor(diff%864e5/36e5),
+      m = Math.floor(diff%36e5/6e4), s = Math.floor(diff%6e4/1e3);
+  var txt = d + " 天 " + h + " 时 " + m + " 分 " + s + " 秒";
+  var a = $("cd-text"), b = $("cd-text-big");
+  if(a) a.textContent = txt;
+  if(b) b.textContent = "⏳ 距离 2027 考研还有 " + txt;
+}
+setInterval(tickCountdown, 1000); tickCountdown();
+
+/* ============================================================
+   主题 / 字体 / 翻译显示 —— 均持久化
+   ============================================================ */
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  $("theme-btn").textContent = t === "dark" ? "☀️" : "🌙";
+  store("ky_theme", t);
+}
+function toggleTheme(){ applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"); }
+function changeFont(dir){
+  var size = Math.min(22, Math.max(13, (parseInt(localStorage.getItem("ky_font")) || 16) + dir));
+  localStorage.setItem("ky_font", size);
+  document.documentElement.style.fontSize = size + "px";
+}
+function toggleZh(){
+  document.body.classList.toggle("zh-hidden");
+  var hidden = document.body.classList.contains("zh-hidden");
+  store("ky_zh_hidden", hidden);
+  $("zh-toggle").classList.toggle("on", hidden);
+}
+
+/* ============================================================
+   收藏系统：ky_favs = ["2025:reading", ...]
+   ============================================================ */
+function favKey(){ return "ky_favs"; }
+function getFavs(){ return store(favKey()) || []; }
+function isFav(year, type){ return getFavs().indexOf(year + ":" + type) >= 0; }
+function toggleFav(year, type){
+  var favs = getFavs(), k = year + ":" + type, i = favs.indexOf(k);
+  if(i >= 0){ favs.splice(i,1); toast("已取消收藏"); } else { favs.push(k); toast("已收藏 ⭐"); }
+  store(favKey(), favs); renderFavs();
+  // 同步内容页星标与收藏按钮状态
+  document.querySelectorAll('[data-fav="' + k + '"],[data-fav2="' + k + '"]').forEach(function(el){
+    if(el.id === "paper-fav") el.textContent = isFav(year, type) ? "★ 已收藏" : "☆ 收藏本题";
+    el.classList.toggle("on", isFav(year, type));
+    if(el.classList.contains("fav-star")) el.textContent = isFav(year, type) ? "★" : "☆";
+  });
+}
+function renderFavs(){
+  var box = $("fav-list"), favs = getFavs();
+  if(!favs.length){ box.innerHTML = '<div class="empty-tip" style="padding:12px 0;font-size:.8rem">暂无收藏</div>'; return; }
+  box.innerHTML = "";
+  favs.forEach(function(k){
+    var parts = k.split(":"), year = parts[0], type = parts[1];
+    var t = TYPES.filter(function(t){ return t.id === type; })[0];
+    if(!t) return; // 过滤无效收藏项
+    var tName = t.name;
+    var div = document.createElement("div");
+    div.className = "fav-item";
+    div.innerHTML = '<span>' + esc(year) + ' ' + esc(tName) + '</span><span class="del" title="删除">✕</span>';
+    div.querySelector("span").onclick = function(){ openPaper(year, type); };
+    div.querySelector(".del").onclick = function(e){ e.stopPropagation(); toggleFav(year, type); };
+    box.appendChild(div);
+  });
+}
+
+/* ============================================================
+   每日任务系统
+   规则：阅读1 + 完形1 + 新题型1 + 翻译1 + 写作1
+   按日期确定性分配：seed = 日期天数 → 依次从收录年份中取模，
+   保证同一天所有人看到同一套任务，且每天不同。
+   ============================================================ */
+function dailyPlan(){
+  var now = new Date();
+  var day = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 864e5);
+  return TYPES.map(function(t, i){
+    var year = YEARS.length ? YEARS[(day + i * 3) % YEARS.length] : null;
+    return { type: t.id, name: t.name, icon: t.icon, year: year };
+  });
+}
+function doneStore(){ return store("ky_done") || {}; }          // {"2026-09-06": ["reading",...]}
+function markDone(year, type){
+  var all = doneStore(), td = todayStr();
+  var arr = all[td] = all[td] || [];
+  if(arr.indexOf(type) < 0) arr.push(type);
+  store("ky_done", all);
+  // 5 项全完成 → 自动打卡
+  if(arr.length >= 5){
+    var ck = store("ky_checkins") || {};
+    if(!ck[td]){ ck[td] = 1; store("ky_checkins", ck); toast("🎉 今日 5 项全部完成，打卡成功！"); }
+  } else {
+    toast("✓ 已记录完成（" + arr.length + "/5）");
+  }
+  renderHome(); renderTodayBtnState();
+}
+function isDoneToday(type){ return (doneStore()[todayStr()] || []).indexOf(type) >= 0; }
+
+/* ============================================================
+   首页渲染：今日任务 + 进度条 + 打卡日历 + 总体进度
+   ============================================================ */
+function renderHome(){
+  $("today-date").textContent = todayStr();
+  // 今日任务
+  var plan = dailyPlan(), box = $("today-tasks");
+  box.innerHTML = "";
+  plan.forEach(function(t){
+    var done = isDoneToday(t.type);
+    var div = document.createElement("div");
+    div.className = "task-item" + (done ? " done" : "");
+    div.innerHTML = '<div class="t-name">' + t.icon + " " + t.name + '</div>' +
+      '<div class="t-detail">' + (t.year ? t.year + " 年英语一真题" : "暂无数据") + '</div>' +
+      '<div class="t-go">' + (done ? "查看内容 →" : "开始学习 →") + '</div>';
+    div.onclick = function(){ if(t.year) openPaper(t.year, t.type); else toast("该模块暂未收录"); };
+    box.appendChild(div);
+  });
+  // 进度条
+  var n = (doneStore()[todayStr()] || []).length;
+  $("tp-bar").style.width = (n / 5 * 100) + "%";
+  $("tp-text").textContent = "今日进度 " + n + "/5" + (n >= 5 ? " · 已打卡 ✅" : "");
+  renderCalendar(); renderStats();
+}
+function renderTodayBtnState(){ renderHome(); }
+
+/* ---- 打卡月历 ---- */
+var calY = new Date().getFullYear(), calM = new Date().getMonth();
+function calMove(d){ calM += d; if(calM < 0){ calM = 11; calY--; } if(calM > 11){ calM = 0; calY++; } renderCalendar(); }
+function renderCalendar(){
+  $("cal-title").textContent = calY + " 年 " + (calM + 1) + " 月";
+  var first = new Date(calY, calM, 1), startWd = first.getDay();
+  var days = new Date(calY, calM + 1, 0).getDate();
+  var ck = store("ky_checkins") || {};
+  var wds = ["日","一","二","三","四","五","六"], html = wds.map(function(w){ return '<div class="cal-wd">' + w + '</div>'; }).join("");
+  for(var i = 0; i < startWd; i++) html += '<div class="cal-day"></div>';
+  for(var d = 1; d <= days; d++){
+    var ds = calY + "-" + String(calM+1).padStart(2,"0") + "-" + String(d).padStart(2,"0");
+    var cls = "cal-day";
+    if(ds === todayStr()) cls += " today";
+    if(ck[ds]) cls += " checked";
+    html += '<div class="' + cls + '">' + d + '</div>';
+  }
+  $("calendar").innerHTML = html;
+  var total = Object.keys(ck).length;
+  $("stat-line").innerHTML = "累计打卡 <b>" + total + "</b> 天 · 今日任务完成 <b>" +
+    (doneStore()[todayStr()] || []).length + "</b>/5";
+}
+
+/* ---- 总体进度统计 ---- */
+function renderStats(){
+  var total = 0;
+  YEARS.forEach(function(y){ TYPES.forEach(function(t){ if(DB[y][t.id]) total++; }); });
+  $("stat-papers").textContent = total;
+  var html = '<div style="display:flex;flex-wrap:wrap;gap:8px">';
+  YEARS.forEach(function(y){
+    var done = TYPES.filter(function(t){ return DB[y][t.id]; }).length;
+    html += '<span class="key-chip">' + y + ' 年：' + done + '/5 模块</span>';
+  });
+  $("stat-overall").innerHTML = html + "</div>";
+}
+
+/* ============================================================
+   侧边栏：年份 + 题型筛选
+   ============================================================ */
+var curYear = null, curType = null;
+function renderSidebar(){
+  var yg = $("year-grid"); yg.innerHTML = "";
+  YEARS.forEach(function(y){
+    var b = document.createElement("button");
+    b.className = "year-btn" + (y === curYear ? " active" : "");
+    b.textContent = y;
+    b.onclick = function(){ curYear = y; renderSidebar(); renderTypeList(); openPaper(curYear, curType || "reading"); };
+    yg.appendChild(b);
+  });
+  renderTypeList();
+}
+function renderTypeList(){
+  var tl = $("type-list"); tl.innerHTML = "";
+  TYPES.forEach(function(t){
+    var has = curYear && DB[curYear] && DB[curYear][t.id];
+    var b = document.createElement("button");
+    b.className = "type-btn" + (t.id === curType ? " active" : "");
+    b.innerHTML = '<span>' + t.icon + " " + t.name + '</span><span class="badge">' + (has ? "有" : "—") + '</span>';
+    b.onclick = function(){
+      if(!has){ toast("暂无 " + curYear + " 年该模块数据"); return; }
+      curType = t.id; renderTypeList(); openPaper(curYear, t.id);
+    };
+    tl.appendChild(b);
+  });
+}
+
+/* ============================================================
+   视图切换 & 内容页
+   ============================================================ */
+function switchView(v){
+  document.querySelectorAll(".view").forEach(function(el){ el.classList.remove("active"); });
+  $("view-" + v).classList.add("active");
+  window.scrollTo(0, 0);
+  closeSidebar();
+}
+function openPaper(year, type){
+  curYear = Number(year); curType = type;
+  renderSidebar();
+  var tName = (TYPES.filter(function(t){return t.id===type;})[0] || {}).name || "未知模块";
+  var data = DB[curYear] && DB[curYear][type];
+  var html = '';
+  html += '<div class="paper-head">' +
+    '<h1>' + curYear + ' 年 英语一 · ' + tName + '</h1>' +
+    '<div class="meta">双语逐行对照 · 核心词汇加粗 · 点击选项查看答案</div>' +
+    '<div class="paper-actions">' +
+      '<button class="pbtn" data-fav="' + curYear + ':' + type + '" id="paper-fav">☆ 收藏本题</button>' +
+      '<button class="pbtn" id="paper-done">' + (isDoneToday(type) ? "✓ 已完成今日任务" : "标记完成今日任务") + '</button>' +
+    '</div></div>';
+  html += '<div id="paper-body">';
+  if(!data){ html += '<div class="empty-tip">该模块数据待收录，敬请期待</div>'; }
+  else {
+    if(type === "reading") html += renderReading(data);
+    else if(type === "cloze") html += renderCloze(data);
+    else if(type === "newtype") html += renderNewtype(data);
+    else if(type === "translate") html += renderTranslate(data);
+    else if(type === "writing") html += renderWriting(data);
+  }
+  html += '</div>';
+  $("view-paper").innerHTML = html;
+  bindPaperEvents(curYear, type, data);
+  switchView("paper");
+}
+function bindPaperEvents(year, type, data){
+  // 收藏星标状态
+  var favBtn = $("paper-fav");
+  var sync = function(){ var on = isFav(year, type); favBtn.textContent = on ? "★ 已收藏" : "☆ 收藏本题"; favBtn.classList.toggle("on", on); };
+  favBtn.onclick = function(){ toggleFav(year, type); sync(); }; sync();
+  // 完成任务按钮
+  $("paper-done").onclick = function(){
+    if(!isDoneToday(type)){
+      markDone(year, type);
+      this.textContent = "✓ 已完成今日任务";
+      this.classList.add("on");
+    } else toast("今日该模块已完成");
+  };
+  // 选项点击 → 揭晓答案
+  document.querySelectorAll("#paper-body .q-block").forEach(function(qb){
+    var ans = qb.getAttribute("data-answer");
+    qb.querySelectorAll(".opt").forEach(function(opt){
+      opt.onclick = function(){
+        if(qb.classList.contains("revealed")) return;
+        qb.classList.add("revealed");
+        if(opt.getAttribute("data-k") === ans) opt.classList.add("correct");
+        else { opt.classList.add("wrong"); qb.querySelectorAll('.opt[data-k="' + ans + '"]').forEach(function(o){ o.classList.add("correct"); }); }
+      };
+    });
+  });
+  // 迷你星标（每个 passage 标题上的收藏）
+  document.querySelectorAll("#paper-body .fav-star").forEach(function(st){
+    var k = st.getAttribute("data-fav2");
+    if(isFav(k.split(":")[0], k.split(":")[1])) st.classList.add("on");
+    st.onclick = function(){ toggleFav(k.split(":")[0], k.split(":")[1]); };
+  });
+}
+
+/* ---- 双语行渲染器 ---- */
+function bilines(lines){
+  return (lines || []).map(function(p){
+    return '<div class="biline"><div class="en">' + fmt(p[0]) + '</div><div class="zh">' + fmt(p[1]) + '</div></div>';
+  }).join("");
+}
+function dirBox(en, zh){
+  return (en || zh) ? '<div class="dir-box"><b>Directions：</b>' + fmt(en || "") +
+    '<div class="zh" style="margin-top:4px">' + fmt(zh || "") + '</div></div>' : "";
+}
+function passageBox(title, inner, favK){
+  var star = favK ? '<button class="fav-star" data-fav2="' + favK + '" title="收藏">☆</button>' : "";
+  return '<div class="passage"><h3>' + esc(title) + star + '</h3>' + inner + '</div>';
+}
+function answerKeyChips(list){
+  return '<details class="answer-key"><summary>📋 查看本篇答案</summary><div class="keys">' +
+    list.map(function(k){ return '<span class="key-chip">' + esc(k[0]) + '：' + esc(k[1]) + '</span>'; }).join("") +
+    '</div></details>';
+}
+
+/* ---- 阅读理解 ---- */
+function renderReading(passages){
+  return passages.map(function(t, ti){
+    var qHtml = (t.questions || []).map(function(q){
+      return qBlockHtml(q);
+    }).join("");
+    var keys = t.questions.map(function(q){ return [q.num, q.answer]; });
+    return passageBox(t.title, bilines(t.lines) + '<div class="q-blocks">' + qHtml + '</div>' + answerKeyChips(keys),
+      curYear + ":reading");
+  }).join("");
+}
+/* ---- 题目块（阅读/完形共用）---- */
+function qBlockHtml(q){
+  var opts = (q.options || []).map(function(o){
+    var k = o[0].match(/^\[(.)\]/);
+    return '<div class="opt" data-k="' + (k ? k[1] : "?") + '">' +
+      '<div class="o-en">' + fmt(o[0]) + '</div><div class="o-zh">' + fmt(o[1]) + '</div></div>';
+  }).join("");
+  var qTitle = fmt(q.en || ("第 " + q.num + " 题")) + (q.zh ? '<div class="zh" style="font-weight:400;color:var(--fg2);font-size:.9em">' + fmt(q.zh) + '</div>' : "");
+  return '<div class="q-block" data-answer="' + esc(q.answer || "") + '">' +
+    '<div class="q-title">' + qTitle + '</div>' + opts +
+    '<div class="q-explain">💡 ' + fmt(q.explain || "") + '</div></div>';
+}
+/* ---- 完形填空 ---- */
+function renderCloze(d){
+  var qHtml = (d.questions || []).map(qBlockHtml).join("");
+  var keys = (d.questions || []).map(function(q){ return [q.num, q.answer]; });
+  return passageBox("Use of English（完形填空）",
+    dirBox(d.directions_en, d.directions_zh) + bilines(d.lines) +
+    '<div class="q-blocks">' + qHtml + '</div>' + answerKeyChips(keys));
+}
+/* ---- 新题型 ---- */
+function renderNewtype(d){
+  var optHtml = (d.options || []).map(function(o){
+    return '<div class="biline"><div class="en">' + fmt(o[0]) + '</div><div class="zh">' + fmt(o[1]) + '</div></div>';
+  }).join("");
+  var keys = (d.answers || []).map(function(a){ return [a[0], a[1]]; });
+  return passageBox("Part B（新题型）",
+    dirBox(d.directions_en, d.directions_zh) + bilines(d.lines) +
+    '<div style="margin:12px 0 6px;font-weight:600;color:var(--pri)">备选选项：</div>' + optHtml +
+    answerKeyChips(keys));
+}
+/* ---- 翻译 ---- */
+function renderTranslate(d){
+  var itemHtml = (d.items || []).map(function(it){
+    return '<div class="q-block"><div class="q-title">' + esc(it.num) + '. ' + fmt(it.en) + '</div>' +
+      '<div class="zh" style="color:var(--fg2)">📝 参考译文：' + fmt(it.zh) + '</div></div>';
+  }).join("");
+  return passageBox("Part C（翻译）",
+    dirBox(d.directions_en, d.directions_zh) + bilines(d.lines) + itemHtml);
+}
+/* ---- 写作 ---- */
+function renderWriting(parts){
+  return parts.map(function(w){
+    var inner = dirBox(w.directions_en, w.directions_zh) +
+      (w.image_desc ? '<div class="dir-box">🖼️ ' + fmt(w.image_desc) + '</div>' : "") +
+      '<div class="sample-box"><div class="s-label">✨ 参考范文（逐行对照）</div>' + bilines(w.sample) + '</div>';
+    return passageBox(w.part + (w.title ? " · " + w.title : ""), inner);
+  }).join("");
+}
+
+/* ============================================================
+   移动端侧边栏抽屉 & 回到顶部
+   ============================================================ */
+function closeSidebar(){ $("sidebar").classList.remove("open"); $("sidebar-mask").classList.remove("show"); }
+$("hamburger").onclick = function(){
+  $("sidebar").classList.toggle("open");
+  $("sidebar-mask").classList.toggle("show");
+};
+window.addEventListener("scroll", function(){
+  $("back-top").style.display = window.scrollY > 400 ? "block" : "none";
+});
+
+/* ============================================================
+   启动：恢复偏好 → 渲染
+   ============================================================ */
+(function init(){
+  var t = store("ky_theme");
+  applyTheme(t || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+  document.documentElement.style.fontSize = (parseInt(localStorage.getItem("ky_font")) || 16) + "px";
+  if(store("ky_zh_hidden")) { document.body.classList.add("zh-hidden"); $("zh-toggle").classList.add("on"); }
+  if(YEARS.length){ curYear = YEARS[0]; curType = "reading"; }
+  renderSidebar(); renderHome(); renderFavs();
+})();
+</script>
+
+<!-- ============================================================
+【数据扩展说明】如何批量导入更多年份真题：
+1. 在源码上方「真题数据区」的 <script> 中，按以下结构追加：
+   window.EXAM_DATA_PARTS.push({
+     year: 2024, type: "reading",          // type ∈ reading|cloze|newtype|translate|writing
+     data: [ ... ]                          // 结构参照现有年份的同 type 数据
+   });
+2. 双语行统一为二维数组 ["英文（**核心词**加粗）", "对应中文"]，一行英文配一行中文；
+   题目结构 {num, en, zh, options:[[..]x4], answer, explain}。
+3. 也可将每年数据写为独立 JS 文件，用构建脚本合并（仓库 build.py 即为此用途）。
+4. 覆盖 1998-2025 全部年份只需按年按模块 push，前端侧边栏/每日任务/进度统计自动识别。
+
+【GitHub Pages 部署步骤】
+1. 登录 GitHub（https://github.com），新建一个公开仓库，例如 kaoyan-english；
+2. 将本文件重命名为 index.html，上传到仓库根目录（网页端 Add file → Upload files 即可，
+   或命令行：git init && git add index.html && git commit -m "init" && git push）；
+3. 打开仓库 Settings → 左侧 Pages → Branch 选择 main（或 master）分支、目录选 / (root)，保存；
+4. 等待 1-3 分钟部署完成，页面会显示访问地址，如 https://<用户名>.github.io/kaoyan-english/；
+5. 任意设备（电脑/平板/手机）打开该链接即可使用；打卡与进度数据保存在各设备本地 localStorage。
+============================================================ -->
+</body>
+</html>
