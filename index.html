@@ -118,6 +118,30 @@ body{
 .dict-chip .x{color:var(--fg2); margin-left:4px}
 .dict-err{color:var(--accent); font-size:.84rem}
 #dict-result,.dict-card{overflow-wrap:anywhere} /* 超长输入防横向撑破 */
+/* ---------- 生词库 ---------- */
+.wb-side-summary{font-size:.78rem; color:var(--fg2); margin-top:6px}
+.wb-side-summary .wb-open{display:inline-block; margin-top:5px; color:var(--pri2); font-weight:600; cursor:pointer; font-size:.82rem}
+.wb-card{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:14px 18px; margin-bottom:12px; box-shadow:var(--shadow)}
+.wb-item{border:1px solid var(--line); border-radius:10px; padding:12px 16px; margin-bottom:10px; background:var(--bg3)}
+.wb-item .wb-head{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
+.wb-item .wb-word{font-size:1.1rem; font-weight:700; color:var(--pri)}
+.wb-item .wb-phon{color:var(--fg2); font-size:.85rem}
+.wb-item .wb-year{background:var(--pri); color:#fff; border-radius:999px; padding:0 9px; font-size:.72rem; font-weight:600}
+.wb-item .wb-year.none{background:var(--fg2)}
+.wb-item .wb-del{margin-left:auto; background:none; border:none; color:var(--fg2); cursor:pointer; font-size:.95rem}
+.wb-item .wb-del:hover{color:var(--accent)}
+.wb-item .wb-tr{margin-top:6px; font-size:.88rem}
+.wb-item .wb-tr div{padding:1px 0}
+.wb-item .wb-speak{display:flex; gap:6px; margin-top:7px}
+.wb-item .wb-speak button{background:var(--bg2); border:1px solid var(--line); color:var(--pri); border-radius:7px; padding:3px 11px; cursor:pointer; font-size:.8rem}
+.wb-item .wb-speak button:hover{border-color:var(--pri)}
+.wb-sent{margin-top:8px; border-left:3px solid var(--pri2); background:var(--bg2); border-radius:0 8px 8px 0; padding:8px 12px; font-size:.84rem}
+.wb-sent .s-en{color:var(--fg)}
+.wb-sent .s-zh{color:var(--fg2); font-size:.92em; margin-top:2px}
+.wb-sent .s-label{font-size:.72rem; color:var(--pri2); font-weight:700; margin-bottom:3px}
+.wb-add{background:var(--pri); color:#fff; border:none; border-radius:7px; padding:4px 12px; cursor:pointer; font-size:.82rem; flex:1}
+.wb-add:hover{background:var(--pri2)}
+.wb-add.on{background:#3a9e5f}
 .fav-item{font-size:.82rem; padding:6px 8px; background:var(--bg3); border-radius:7px; cursor:pointer; display:flex; justify-content:space-between; gap:4px; align-items:center}
 .fav-item .del{color:var(--fg2); cursor:pointer; padding:0 3px}
 .fav-item .del:hover{color:var(--accent)}
@@ -281,6 +305,11 @@ footer{max-width:1400px; margin:0 auto; padding:20px; text-align:center; color:v
       </div>
       <div id="dict-result"><div class="dict-tip">输入生词即可查询中文释义、音标，并真人朗读</div></div>
     </div>
+    <div class="side-title">📒 生词库 <span id="wb-count" class="badge"></span></div>
+    <div id="wb-side">
+      <div class="dict-tip" id="wb-side-tip">查词后点击「加入生词库」，自动附真题年份与原句</div>
+      <div class="wb-side-summary"><span class="wb-open" onclick="renderWordbook();switchView('wordbook')">📚 打开生词库 →</span></div>
+    </div>
     <div class="side-title">⭐ 我的收藏</div>
     <div id="fav-list"><div class="empty-tip" style="padding:12px 0;font-size:.8rem">暂无收藏</div></div>
   </aside>
@@ -329,6 +358,20 @@ footer{max-width:1400px; margin:0 auto; padding:20px; text-align:center; color:v
         </div>
         <div class="ptext" style="margin-top:8px;color:var(--fg2);font-size:.8rem" id="sync-status">打卡数据默认保存在本机浏览器；配置 Supabase 后可多设备同步。</div>
       </div>
+    </section>
+
+    <!-- 视图：生词库 -->
+    <section class="view" id="view-wordbook">
+      <div class="paper-head">
+        <h1>📒 我的生词库</h1>
+        <div class="meta" id="wb-head-meta">0 词</div>
+        <div class="paper-actions">
+          <button class="pbtn" onclick="renderWordbook()">🔄 刷新</button>
+          <button class="pbtn" onclick="wbClear()">🗑 清空生词库</button>
+          <button class="pbtn" onclick="exportJSON()">⬇️ 随学习数据导出</button>
+        </div>
+      </div>
+      <div id="wb-list"></div>
     </section>
 
     <!-- 视图：真题内容 -->
@@ -9706,13 +9749,138 @@ function renderWriting(parts){
 }
 
 /* ============================================================
+   生词库：查词时一键收藏，附真题年份 + 真题原句
+   存储：ky_wordbook = [{w, ph, tr, year, sent, sentZh, ts}]（按加入时间倒序）
+   原句来源：① 阅读区双击查词时自动捕获所在句 ② 加入时全库检索真题例句
+   ============================================================ */
+var dictContext = null; // 双击查词时捕获 {year, sent, sentZh}
+function wbAll(){ return store("ky_wordbook") || []; }
+function wbFind(w){ return wbAll().filter(function(x){ return x.w === w; })[0] || null; }
+function wbCount(){ return wbAll().length; }
+function wbSyncSide(){
+  var n = wbCount(), el = $("wb-count");
+  if(el) el.textContent = n ? n + " 词" : "";
+  var tip = $("wb-side-tip");
+  if(tip && !n){ tip.textContent = "查词后点击「加入生词库」，自动附真题年份与原句"; tip.style.display = ""; }
+  else if(tip){ tip.style.display = "none"; }
+}
+/** 全库检索真题例句：返回第一条包含该词（含常见词形）的双语句。
+    优先级：阅读正文 > 翻译正文 > 新题型/完形 > 写作范文（正文句最典型） */
+function wbFindSentence(word){
+  if(!window.DB) return null;
+  var re = null;
+  try{ re = new RegExp("\\b" + word.replace(/[-'\\]/g, "\\$&") + "(?:s|es|ed|d|ing)?\\b", "i"); }
+  catch(e){ return null; }
+  var TYPE_PRI = { reading: 0, translate: 1, newtype: 2, cloze: 3, writing: 4 };
+  var queue = [];
+  YEARS.forEach(function(y){
+    TYPES.forEach(function(t){
+      var d = DB[y] && DB[y][t.id];
+      if(!d) return;
+      var lineSets = [];
+      if(t.id === "reading"){ d.forEach(function(p){ lineSets.push(p.lines); }); }
+      else if(t.id === "writing"){ d.forEach(function(p){ lineSets.push(p.sample || []); }); }
+      else { lineSets.push(d.lines || []); }
+      lineSets.forEach(function(lines){
+        queue.push({ year: y, pri: TYPE_PRI[t.id] || 9, lines: lines || [] });
+      });
+    });
+  });
+  queue.sort(function(a, b){ return a.pri - b.pri; });
+  var found = null;
+  queue.some(function(q){
+    return q.lines.some(function(pair){
+      if(pair && pair[0] && re.test(pair[0].replace(/\*\*/g, ""))){
+        found = { year: q.year, sent: pair[0].replace(/\*\*/g, ""), sentZh: pair[1] || "" };
+        return true;
+      }
+      return false;
+    });
+  });
+  return found;
+}
+function addToWordbook(word){
+  // word：词头（原始查询形式），释义/音标从 DICT 取
+  var base = word;
+  var rel = DICT_FORMS[word]; if(rel) base = rel.split("|")[0];
+  if(DICT[base]){ /* base 已是词头 */ } else if(DICT[word]){ base = word; }
+  var e = DICT[base];
+  if(!e){ toast("本地无释义，无法加入（可先查到释义再加入）"); return; }
+  if(wbFind(word)){ toast("「" + word + "」已在生词库中"); return; }
+  var item = { w: word, ph: e.ph || "", tr: e.tr, year: null, sent: "", sentZh: "", ts: Date.now() };
+  // 优先用双击查词捕获的真题原句
+  if(dictContext && dictContext.sent && new RegExp("\\b" + word, "i").test(dictContext.sent)){
+    item.year = dictContext.year; item.sent = dictContext.sent; item.sentZh = dictContext.sentZh;
+  } else {
+    var ex = wbFindSentence(base);
+    if(ex){ item.year = ex.year; item.sent = ex.sent; item.sentZh = ex.sentZh; }
+  }
+  var all = wbAll(); all.unshift(item);
+  if(store("ky_wordbook", all) === null) return; // 存储失败已提示
+  toast("✅ 已加入生词库" + (item.year ? "（" + item.year + " 年真题）" : ""));
+  wbSyncSide();
+  var btn = document.querySelector("#dict-result .wb-add");
+  if(btn){ btn.textContent = "✓ 已在生词库"; btn.classList.add("on"); btn.disabled = true; }
+}
+function wbDel(w){
+  var all = wbAll().filter(function(x){ return x.w !== w; });
+  store("ky_wordbook", all);
+  renderWordbook(); wbSyncSide(); toast("已删除「" + w + "」");
+}
+function wbClear(){
+  if(!wbCount()){ toast("生词库已是空的"); return; }
+  if(!confirm("确定清空生词库（" + wbCount() + " 词）？此操作不可恢复")) return;
+  store("ky_wordbook", []);
+  renderWordbook(); wbSyncSide(); toast("生词库已清空");
+}
+function renderWordbook(){
+  var all = wbAll(), list = $("wb-list");
+  $("wb-head-meta").textContent = all.length + " 词 · 点开见释义/音标/朗读/真题原句 · 数据保存在本机";
+  if(!all.length){
+    list.innerHTML = '<div class="empty-tip">生词库是空的——去侧边栏查词，点击「加入生词库」开始积累吧</div>';
+    return;
+  }
+  list.innerHTML = all.map(function(it, i){
+    return '<div class="wb-item">' +
+      '<div class="wb-head">' +
+        '<span class="wb-word">' + esc(it.w) + '</span>' +
+        (it.ph ? '<span class="wb-phon">/' + esc(it.ph) + '/</span>' : "") +
+        (it.year ? '<span class="wb-year">' + esc(it.year) + ' 真题</span>' : '<span class="wb-year none">未定位年份</span>') +
+        '<button class="wb-del" data-del="' + esc(it.w) + '" title="删除">✕</button>' +
+      '</div>' +
+      '<div class="wb-tr">' + String(it.tr || "").split("；").map(function(s){ return "<div>" + esc(s) + "</div>"; }).join("") + '</div>' +
+      '<div class="wb-speak">' +
+        '<button data-speak="' + esc(it.w) + '" data-accent="us">🔊 美音</button>' +
+        '<button data-speak="' + esc(it.w) + '" data-accent="uk">🔊 英音</button>' +
+      '</div>' +
+      (it.sent
+        ? '<div class="wb-sent"><div class="s-label">📖 ' + (it.year ? esc(it.year) + " 年真题原句" : "真题原句") + '</div>' +
+          '<div class="s-en">' + esc(it.sent) + '</div>' +
+          (it.sentZh ? '<div class="s-zh">' + esc(it.sentZh) + '</div>' : "") + '</div>'
+        : '<div class="wb-sent"><div class="s-label">📖 真题原句</div><div class="s-en" style="color:var(--fg2)">全部真题中未出现该词（超纲词），朗读与释义不受影响</div></div>') +
+    '</div>';
+  }).join("");
+}
+(function bindWordbook(){
+  var list = $("wb-list");
+  if(!list) return;
+  list.addEventListener("click", function(e){
+    var del = e.target.closest ? e.target.closest("[data-del]") : null;
+    if(del){ wbDel(del.dataset.del); return; }
+    var sp = e.target.closest ? e.target.closest("[data-speak]") : null;
+    if(sp){ dictSpeak(sp.dataset.speak, sp.dataset.accent); }
+  });
+})();
+
+/* ============================================================
    数据导入导出 & Supabase 同步（可选）
    Supabase 建表 SQL：
    create table kaoyan_sync (k text primary key, v jsonb, updated_at timestamptz default now());
    ============================================================ */
 function collectData(){
   return { checkins: store("ky_checkins") || {}, done: store("ky_done") || {},
-           favs: getFavs(), settings: { theme: store("ky_theme"), font: parseInt(localStorage.getItem("ky_font")) || 16 },
+           favs: getFavs(), wordbook: wbAll(),
+           settings: { theme: store("ky_theme"), font: parseInt(localStorage.getItem("ky_font")) || 16 },
            exported_at: new Date().toISOString() };
 }
 function exportJSON(){
@@ -9732,6 +9900,13 @@ function importJSON(input){
       if(d.checkins) store("ky_checkins", d.checkins);
       if(d.done) store("ky_done", d.done);
       if(d.favs) store("ky_favs", d.favs);
+      if(d.wordbook){
+        // 合并导入（按词头去重，保留较新条目）
+        var cur = {}; wbAll().forEach(function(x){ cur[x.w] = x; });
+        (d.wordbook || []).forEach(function(x){ if(!x || !x.w) return; if(!cur[x.w] || (x.ts || 0) > (cur[x.w].ts || 0)) cur[x.w] = x; });
+        store("ky_wordbook", Object.keys(cur).map(function(k){ return cur[k]; }));
+        wbSyncSide();
+      }
       toast("✅ 导入成功"); renderHome(); renderFavs();
     }catch(e){ toast("导入失败：文件格式不正确"); }
   };
@@ -9905,8 +10080,9 @@ function dictRenderLocal(word, base, extraTr, rel){
     '<div class="d-senses">' + e.tr.split("；").map(function(s){ return "<div>" + esc(s) + "</div>"; }).join("") + '</div>' +
     (extraTr ? '<div class="d-senses" style="color:var(--fg2)">' + extraTr.split("；").map(function(s){ return "<div>" + esc(s) + "</div>"; }).join("") + '</div>' : "") +
     '<div class="dict-speak">' +
-      '<button class="sp" data-speak="' + esc(base) + '" data-accent="us">🔊 美音朗读</button>' +
-      '<button class="sp" data-speak="' + esc(base) + '" data-accent="uk">🔊 英音朗读</button>' +
+      '<button class="sp" data-speak="' + esc(base) + '" data-accent="us">🔊 美音</button>' +
+      '<button class="sp" data-speak="' + esc(base) + '" data-accent="uk">🔊 英音</button>' +
+      '<button class="wb-add" data-add="' + esc(word) + '"' + (wbFind(word) ? ' disabled>✓ 已在生词库' : '>➕ 加入生词库') + '</button>' +
     '</div>';
   html += '<details class="dict-online" id="dict-online"><summary>加载在线补充（英文释义/真人音频）…</summary><div id="dict-online-body"></div></details>';
   html += '</div>';
@@ -10028,24 +10204,52 @@ function dictLookup(raw){
   if(!input) return;
   input.addEventListener("keydown", function(e){ if(e.key === "Enter") dictLookup(input.value); });
   $("dict-go").addEventListener("click", function(){ dictLookup(input.value); });
-  // 结果区事件委托（data-w 查词 / data-speak 朗读 / data-audio 真人音频 / 清空历史），避免内联 onclick 的转义问题
+  // 结果区事件委托（data-w 查词 / data-speak 朗读 / data-add 加入生词库 / data-audio 真人音频 / 清空历史），避免内联 onclick 的转义问题
   $("dict-result").addEventListener("click", function(e){
     var t = e.target;
     if(t.id === "dict-hist-clear"){ dictClearHistory(); return; }
     var au = t.closest ? t.closest("[data-audio]") : null;
     if(au){ dictPlayAudio(au); return; }
+    var add = t.closest ? t.closest("[data-add]") : null;
+    if(add){ addToWordbook(add.dataset.add); return; }
     t = t.closest ? (t.closest("[data-w]") || t.closest("[data-speak]")) : null;
     if(!t) return;
     if(t.dataset.speak){ dictSpeak(t.dataset.speak, t.dataset.accent); }
     else if(t.dataset.w){ dictLookup(t.dataset.w); }
   });
-  // 阅读区双击/选中查词
-  document.getElementById("main").addEventListener("dblclick", function(){
+  // 阅读区双击/选中查词，并自动捕获所在真题原句（含年份）
+  document.getElementById("main").addEventListener("dblclick", function(e){
     var sel = (window.getSelection() || "").toString().trim();
     if(sel && /^(?=.*[a-zA-Z])[a-zA-Z'-]+$/.test(sel)){
+      dictContext = null;
+      // 从选区锚点向上找 .biline，取该行英文原句与中文翻译（句子级切分，避免整段）
+      try{
+        var node = window.getSelection().anchorNode;
+        var host = node && (node.nodeType === 1 ? node : node.parentElement).closest(".biline");
+        if(host){
+          var en = host.querySelector(".en"), zh = host.querySelector(".zh");
+          if(en && node.nodeType === 3){
+            var full = en.textContent, off = node.textContent.length && (window.getSelection().anchorOffset || 0);
+            // anchorNode 可能是 .en 的子节点（如核心词 span），折算到整段文本中的近似位置
+            var approx = full.indexOf(node.textContent.slice(0, 3)) >= 0 ? full.indexOf(node.textContent.slice(0, 3)) + off : off;
+            var parts = full.replace(/([.!?])\s+/g, "$1\n").split("\n"), acc = 0, sentence = full;
+            for(var si = 0; si < parts.length; si++){
+              if(approx <= acc + parts[si].length){ sentence = parts[si].trim(); break; }
+              acc += parts[si].length + 1;
+            }
+            dictContext = { year: curYear, sent: sentence, sentZh: zh ? zh.textContent.trim() : "" };
+          } else if(en){
+            dictContext = { year: curYear, sent: en.textContent.trim(), sentZh: zh ? zh.textContent.trim() : "" };
+          }
+        }
+      }catch(err){ /* 捕获失败不影响查词 */ }
       dictLookup(sel);
       if(window.innerWidth <= 900){ $("sidebar").classList.add("open"); $("sidebar-mask").classList.add("show"); }
     }
+  });
+  // 手动输入查词时清空原句上下文（保留年份线索由 addToWordbook 全库检索）
+  $("dict-input").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ dictContext = null; }
   });
 })();
 
@@ -10070,7 +10274,7 @@ window.addEventListener("scroll", function(){
   document.documentElement.style.fontSize = (parseInt(localStorage.getItem("ky_font")) || 16) + "px";
   if(store("ky_zh_hidden")) { document.body.classList.add("zh-hidden"); $("zh-toggle").classList.add("on"); }
   if(YEARS.length){ curYear = YEARS[0]; curType = "reading"; }
-  renderSidebar(); renderHome(); renderFavs();
+  renderSidebar(); renderHome(); renderFavs(); wbSyncSide();
 })();
 </script>
 
