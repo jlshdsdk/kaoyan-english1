@@ -122,15 +122,20 @@ body{
 .wb-side-summary{font-size:.78rem; color:var(--fg2); margin-top:6px}
 .wb-side-summary .wb-open{display:inline-block; margin-top:5px; color:var(--pri2); font-weight:600; cursor:pointer; font-size:.82rem}
 .wb-card{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:14px 18px; margin-bottom:12px; box-shadow:var(--shadow)}
-.wb-item{border:1px solid var(--line); border-radius:10px; padding:12px 16px; margin-bottom:10px; background:var(--bg3)}
-.wb-item .wb-head{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
-.wb-item .wb-word{font-size:1.1rem; font-weight:700; color:var(--pri)}
+.wb-item{border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg3); overflow:hidden}
+.wb-item .wb-head{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; padding:9px 14px; cursor:pointer; user-select:none}
+.wb-item .wb-head:hover{background:var(--bg2)}
+.wb-item .wb-word{font-size:1.02rem; font-weight:700; color:var(--pri)}
+.wb-item .wb-arrow{color:var(--fg2); font-size:.8rem; transition:transform .2s; margin-left:2px}
+.wb-item.open .wb-arrow{transform:rotate(90deg)}
 .wb-item .wb-phon{color:var(--fg2); font-size:.85rem}
 .wb-item .wb-year{background:var(--pri); color:#fff; border-radius:999px; padding:0 9px; font-size:.72rem; font-weight:600}
 .wb-item .wb-year.none{background:var(--fg2)}
 .wb-item .wb-del{margin-left:auto; background:none; border:none; color:var(--fg2); cursor:pointer; font-size:.95rem}
 .wb-item .wb-del:hover{color:var(--accent)}
-.wb-item .wb-tr{margin-top:6px; font-size:.88rem}
+.wb-body{display:none; border-top:1px dashed var(--line); padding:10px 16px 12px}
+.wb-item.open .wb-body{display:block}
+.wb-item .wb-tr{margin-top:2px; font-size:.88rem}
 .wb-item .wb-tr div{padding:1px 0}
 .wb-item .wb-speak{display:flex; gap:6px; margin-top:7px}
 .wb-item .wb-speak button{background:var(--bg2); border:1px solid var(--line); color:var(--pri); border-radius:7px; padding:3px 11px; cursor:pointer; font-size:.8rem}
@@ -139,6 +144,12 @@ body{
 .wb-sent .s-en{color:var(--fg)}
 .wb-sent .s-zh{color:var(--fg2); font-size:.92em; margin-top:2px}
 .wb-sent .s-label{font-size:.72rem; color:var(--pri2); font-weight:700; margin-bottom:3px}
+/* 分页 */
+.wb-pager{display:flex; align-items:center; justify-content:center; gap:5px; flex-wrap:wrap; margin-top:14px}
+.wb-pager button{background:var(--bg3); border:1px solid var(--line); color:var(--fg); border-radius:7px; padding:4px 11px; cursor:pointer; font-size:.85rem}
+.wb-pager button.cur{background:var(--pri); color:#fff; border-color:var(--pri); font-weight:700}
+.wb-pager button:disabled{opacity:.4; cursor:default}
+.wb-pager button:hover:not(:disabled):not(.cur){border-color:var(--pri); color:var(--pri)}
 .wb-add{background:var(--pri); color:#fff; border:none; border-radius:7px; padding:4px 12px; cursor:pointer; font-size:.82rem; flex:1}
 .wb-add:hover{background:var(--pri2)}
 .wb-add.on{background:#3a9e5f}
@@ -9833,42 +9844,81 @@ function wbClear(){
   store("ky_wordbook", []);
   renderWordbook(); wbSyncSide(); toast("生词库已清空");
 }
+var WB_PAGE_SIZE = 15;
+function wbCurPage(){ return Math.max(1, parseInt(store("ky_wb_page")) || 1); }
+function wbTotalPages(){ return Math.max(1, Math.ceil(wbCount() / WB_PAGE_SIZE)); }
+function wbGoPage(p){
+  var total = wbTotalPages();
+  store("ky_wb_page", Math.min(Math.max(1, p), total));
+  renderWordbook();
+}
 function renderWordbook(){
   var all = wbAll(), list = $("wb-list");
-  $("wb-head-meta").textContent = all.length + " 词 · 点开见释义/音标/朗读/真题原句 · 数据保存在本机";
+  var total = wbTotalPages();
+  var page = Math.min(wbCurPage(), total); // 删除后页码超界自动回落
+  var slice = all.slice((page - 1) * WB_PAGE_SIZE, page * WB_PAGE_SIZE);
+  $("wb-head-meta").textContent = all.length + " 词 · 第 " + page + "/" + total + " 页 · 点击词条展开详情 · 数据保存在本机";
   if(!all.length){
     list.innerHTML = '<div class="empty-tip">生词库是空的——去侧边栏查词，点击「加入生词库」开始积累吧</div>';
     return;
   }
-  list.innerHTML = all.map(function(it, i){
-    return '<div class="wb-item">' +
-      '<div class="wb-head">' +
+  list.innerHTML = slice.map(function(it){
+    return '<div class="wb-item" data-item="' + esc(it.w) + '">' +
+      '<div class="wb-head" data-open="1">' +
+        '<span class="wb-arrow">▶</span>' +
         '<span class="wb-word">' + esc(it.w) + '</span>' +
-        (it.ph ? '<span class="wb-phon">/' + esc(it.ph) + '/</span>' : "") +
         (it.year ? '<span class="wb-year">' + esc(it.year) + ' 真题</span>' : '<span class="wb-year none">未定位年份</span>') +
         '<button class="wb-del" data-del="' + esc(it.w) + '" title="删除">✕</button>' +
       '</div>' +
-      '<div class="wb-tr">' + String(it.tr || "").split("；").map(function(s){ return "<div>" + esc(s) + "</div>"; }).join("") + '</div>' +
-      '<div class="wb-speak">' +
-        '<button data-speak="' + esc(it.w) + '" data-accent="us">🔊 美音</button>' +
-        '<button data-speak="' + esc(it.w) + '" data-accent="uk">🔊 英音</button>' +
+      '<div class="wb-body">' +
+        (it.ph ? '<div class="wb-phon">/' + esc(it.ph) + '/</div>' : "") +
+        '<div class="wb-tr">' + String(it.tr || "").split("；").map(function(s){ return "<div>" + esc(s) + "</div>"; }).join("") + '</div>' +
+        '<div class="wb-speak">' +
+          '<button data-speak="' + esc(it.w) + '" data-accent="us">🔊 美音</button>' +
+          '<button data-speak="' + esc(it.w) + '" data-accent="uk">🔊 英音</button>' +
+        '</div>' +
+        (it.sent
+          ? '<div class="wb-sent"><div class="s-label">📖 ' + (it.year ? esc(it.year) + " 年真题原句" : "真题原句") + '</div>' +
+            '<div class="s-en">' + esc(it.sent) + '</div>' +
+            (it.sentZh ? '<div class="s-zh">' + esc(it.sentZh) + '</div>' : "") + '</div>'
+          : '<div class="wb-sent"><div class="s-label">📖 真题原句</div><div class="s-en" style="color:var(--fg2)">全部真题中未出现该词（超纲词），朗读与释义不受影响</div></div>') +
       '</div>' +
-      (it.sent
-        ? '<div class="wb-sent"><div class="s-label">📖 ' + (it.year ? esc(it.year) + " 年真题原句" : "真题原句") + '</div>' +
-          '<div class="s-en">' + esc(it.sent) + '</div>' +
-          (it.sentZh ? '<div class="s-zh">' + esc(it.sentZh) + '</div>' : "") + '</div>'
-        : '<div class="wb-sent"><div class="s-label">📖 真题原句</div><div class="s-en" style="color:var(--fg2)">全部真题中未出现该词（超纲词），朗读与释义不受影响</div></div>') +
     '</div>';
   }).join("");
+  // 分页条
+  if(total > 1){
+    var btns = '<button ' + (page <= 1 ? "disabled" : "") + ' data-page="' + (page - 1) + '">‹ 上一页</button>';
+    var pages = [];
+    for(var p = 1; p <= total; p++){
+      if(p === 1 || p === total || Math.abs(p - page) <= 2) pages.push(p);
+      else if(pages[pages.length - 1] !== "…") pages.push("…");
+    }
+    pages.forEach(function(p){
+      btns += (p === "…")
+        ? '<span style="color:var(--fg2)">…</span>'
+        : '<button class="' + (p === page ? "cur" : "") + '" data-page="' + p + '">' + p + '</button>';
+    });
+    btns += '<button ' + (page >= total ? "disabled" : "") + ' data-page="' + (page + 1) + '">下一页 ›</button>';
+    list.innerHTML += '<div class="wb-pager">' + btns + '</div>';
+  }
 }
 (function bindWordbook(){
   var list = $("wb-list");
   if(!list) return;
   list.addEventListener("click", function(e){
     var del = e.target.closest ? e.target.closest("[data-del]") : null;
-    if(del){ wbDel(del.dataset.del); return; }
+    if(del){ e.stopPropagation(); wbDel(del.dataset.del); return; }
+    var pg = e.target.closest ? e.target.closest("[data-page]") : null;
+    if(pg){ wbGoPage(parseInt(pg.dataset.page)); return; }
     var sp = e.target.closest ? e.target.closest("[data-speak]") : null;
-    if(sp){ dictSpeak(sp.dataset.speak, sp.dataset.accent); }
+    if(sp){ dictSpeak(sp.dataset.speak, sp.dataset.accent); return; }
+    var head = e.target.closest ? e.target.closest("[data-open]") : null;
+    if(head){
+      // 手风琴：同时只展开一个词条
+      var item = head.parentElement, wasOpen = item.classList.contains("open");
+      list.querySelectorAll(".wb-item.open").forEach(function(x){ x.classList.remove("open"); });
+      if(!wasOpen) item.classList.add("open");
+    }
   });
 })();
 
