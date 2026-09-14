@@ -112,12 +112,25 @@ test('Favorites, daily check-in, calendar and preferences persist',async t=>{
  const restored=setup(t,{stored:{ky_theme:'dark',ky_font:17,ky_zh_hidden:true,ky_favs:['2025:reading']}}).w;
  assert.equal(restored.document.documentElement.dataset.theme,'dark');assert.equal(restored.document.documentElement.style.fontSize,'17px');assert.ok(restored.document.body.classList.contains('zh-hidden'));assert.ok(restored.isFav(2025,'reading'));
 });
-test('Old saved vocabulary migrates to sentence context; pagination keeps entries',async t=>{
+test('Old saved vocabulary migrates to sentence context; pagination keeps 20 entries per page',async t=>{
  const parts=json('data/2025.json'),p=parts.find(x=>x.type==='reading').data[0].lines.find(x=>x[0].includes('Employers surveyed'));
  const {w}=setup(t,{stored:{ky_wordbook:[{w:'covet',ph:'',tr:'vt. 贪求',year:2025,sent:p[0].replace(/\*\*/g,''),sentZh:'旧译文',ts:1}]}});
  w.switchView('wordbook');w.renderWordbook();await until(()=>w.wbFind('covet').contentVersion);assert.match(w.wbFind('covet').tr,/最看重/);assert.notEqual(w.wbFind('covet').sentZh,'旧译文');
- const list=Array.from({length:31},(_,i)=>({w:'test'+i,tr:'测试',ts:i}));w.store('ky_wordbook',list);w.wbGoPage(2);assert.equal(w.$('wb-list').querySelectorAll('.wb-item').length,15);assert.equal(w.$('wb-list').querySelector('.wb-item').dataset.item,'test15');
- w.wbGoPage(3);assert.equal(w.$('wb-list').querySelectorAll('.wb-item').length,1);w.wbDel('test30');assert.equal(w.$('wb-list').querySelectorAll('.wb-item').length,15);
+ const visibleWords=()=>Array.from(w.$('wb-list').querySelectorAll('.wb-item'),item=>item.dataset.item);
+ for(const count of [20,21,41]){
+  const list=Array.from({length:count},(_,i)=>({w:'test'+i,tr:'测试',ts:i}));w.store('ky_wordbook',list);w.wbGoPage(1);
+  const total=Math.ceil(count/20);assert.equal(w.wbTotalPages(),total);assert.equal(Boolean(w.$('wb-list').querySelector('.wb-pager')),total>1);
+  for(let page=1;page<=total;page++){
+   assert.deepEqual(visibleWords(),list.slice((page-1)*20,page*20).map(item=>item.w),count+' words, page '+page);
+   assert.ok(w.$('wb-head-meta').textContent.includes('第 '+page+'/'+total+' 页'));
+   if(page<total)w.$('wb-list').querySelector('.wb-pager button:last-child').click();
+  }
+  assert.equal(w.wbCount(),count,'Pagination retains every saved entry');
+ }
+ w.$('wb-list').querySelector('[data-del="test40"]').click();
+ assert.equal(w.wbCount(),40);assert.equal(w.wbTotalPages(),2);
+ assert.deepEqual(visibleWords(),Array.from({length:20},(_,i)=>'test'+(i+20)));
+ assert.ok(w.$('wb-head-meta').textContent.includes('第 2/2 页'));assert.equal(w.$('wb-list').querySelector('.wb-pager .cur').dataset.page,'2');
 });
 test('JSON backup round-trip restores study state and merges contextual vocabulary',async t=>{
  const {w}=setup(t);await w.openPaper(2025,'reading');await w.dictLookup('argue');w.addToWordbook('argue');w.toggleFav(2025,'reading');w.markDone(2025,'reading');

@@ -457,7 +457,7 @@ function wbClear(){
   store("ky_wordbook", []);
   renderWordbook(); wbSyncSide(); toast("生词库已清空");
 }
-var WB_PAGE_SIZE = 15;
+var WB_PAGE_SIZE = 20;
 /** 从释义文本提取词性缩写（n. / vt. / adj. …），供折叠头部显示；pl. 等非词性标记过滤 */
 function wbPosTags(tr){
   var MAP = { "a": "adj.", "ad": "adv.", "adv": "adv.", "adj": "adj." };
@@ -486,7 +486,7 @@ function renderWordbook(){
   var page = Math.min(wbCurPage(), total); // 删除后页码超界自动回落
   var slice = all.slice((page - 1) * WB_PAGE_SIZE, page * WB_PAGE_SIZE);
   studyRefreshSaved(slice);
-  $("wb-head-meta").textContent = all.length + " 词 · 第 " + page + "/" + total + " 页 · 点击词条展开详情 · 数据保存在本机";
+  $("wb-head-meta").textContent = all.length + " 词 · 每页 " + WB_PAGE_SIZE + " 词 · 第 " + page + "/" + total + " 页 · 点击词条展开详情 · 数据保存在本机";
   if(!all.length){
     list.innerHTML = '<div class="empty-tip">生词库是空的——去侧边栏查词，点击「加入生词库」开始积累吧</div>';
     return;
