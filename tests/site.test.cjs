@@ -87,6 +87,22 @@ test('Source-specific lookup, inflections, phrases, current paper priority and s
  await w.dictLookup('battery',battery);assert.match(w.$('dict-result').textContent,/译文对应义（参考）/);assert.equal(w.studyReference('battery',battery),'电池');w.addToWordbook('battery');assert.equal(w.wbFind('battery').contextKind,'translation-match');
  w.switchView('home');await w.dictLookup('covet');assert.ok(w.studyLastLookup.context);assert.ok(w.studyIndex);
 });
+test('Sector uses the actual industry or public-sector context and upgrades old saved definitions',async t=>{
+ const old={w:'sector',tr:'n. 扇形, 部门, 部分',generalTr:'n. 扇形, 部门, 部分',year:2025,type:'reading',sentenceId:'128.data.0.lines.10#0',sent:'Critics also overlook the economic value of the arts sector itself.',sentZh:'批评者还忽视了艺术产业本身的经济价值。',contentVersion:'20260914-context-v1',ts:1};
+ const {w}=setup(t,{stored:{ky_wordbook:[old]}});
+ await w.openPaper(2025,'reading');await w.dictLookup('sector');
+ assert.equal(w.studyLastLookup.context.id,old.sentenceId);assert.match(w.$('dict-result').querySelector('.d-context-sense').textContent,/行业、产业/);
+ assert.match(w.DICT.sector.tr,/行业, 产业/);
+ w.switchView('wordbook');w.renderWordbook();await until(()=>w.wbFind('sector').contentVersion===w.SITE_MANIFEST.version);
+ const saved=w.wbFind('sector');assert.equal(saved.sent,old.sent);assert.equal(saved.ts,old.ts);assert.equal(w.wbCount(),1);assert.match(saved.contextTr,/艺术行业/);assert.match(saved.generalTr,/行业, 产业/);assert.equal(saved.contextKind,'reviewed');
+ await w.studyLoadYear(2012);
+ const publicContext=w.studySentences['63.data.3.lines.0#3'];await w.dictLookup('sector',publicContext);assert.equal(w.studyLastLookup.context.id,publicContext.id);assert.match(w.$('dict-result').querySelector('.d-context-sense').textContent,/公共部门/);
+ const plural=w.studySentences['128.data.1.questions.3.options.3#0'];await w.dictLookup('sectors',plural);assert.equal(w.studyLastLookup.context.id,plural.id);assert.match(w.$('dict-result').querySelector('.d-context-sense').textContent,/行业/);
+ for(const year of [2000,2010,2017,2020])await w.studyLoadYear(year);
+ const contexts=Object.values(w.studySentences).filter(s=>/\bsectors?\b/i.test(s.en));assert.equal(contexts.length,29);
+ for(const s of contexts)assert.ok(w.studySense('sector',s),s.id);
+ assert.equal(w.WB_PAGE_SIZE,20);
+});
 test('Lookup failures can retry and stale suggestions cannot replace the newest query',async t=>{
  let fail=true;
  const {w}=setup(t,{fetcher:async(url,opts,local)=>{if(url.includes('dictionary.json')&&fail){fail=false;throw Error('offline');}return local(url);}});

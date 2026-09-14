@@ -187,7 +187,8 @@ async function studyRefreshSaved(items){
       var ctx=candidates.find(function(s){return studySense(studyNormalize(it.w),s);}) || candidates[0];
       if(!ctx) return;
       var reviewed=studySense(studyNormalize(it.w),ctx),sense=reviewed || studyReference(studyNormalize(it.w),ctx);
-      if(sense){it.generalTr=it.generalTr || it.tr;it.contextTr=sense;it.tr=sense;it.contextKind=reviewed?'reviewed':'translation-match';}
+      var currentEntry=studyEntry(studyNormalize(it.w));
+      if(sense){it.generalTr=currentEntry ? currentEntry.entry.tr : it.generalTr || it.tr;it.contextTr=sense;it.tr=sense;it.contextKind=reviewed?'reviewed':'translation-match';}
       it.sent=ctx.sent;it.sentZh=ctx.sentZh;it.sentenceId=ctx.id;it.type=ctx.type;it.contentVersion=SITE_MANIFEST.version;changed=true;
     });
     if(changed && store("ky_wordbook",all)!==null && $("view-wordbook").classList.contains("active")) renderWordbook();
