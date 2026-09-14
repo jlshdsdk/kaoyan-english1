@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>考研英语一真题带学 · 1998-2025</title>
 <meta name="description" content="考研英语一历年真题带学网站：逐句对照翻译、每日打卡、考研倒计时">
-<link rel="stylesheet" href="styles.css?v=20260914-context-v1">
+<link rel="stylesheet" href="styles.css?v=20260914-learning-v1">
 </head>
 <body>
 
@@ -93,8 +93,8 @@
           <button class="pbtn" onclick="document.getElementById('import-file').click()">⬆️ 导入学习数据</button>
           <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(this)">
           <button class="pbtn" onclick="syncSettings()">⚙️ Supabase 同步设置</button>
-          <button class="pbtn" onclick="supabasePush()">☁️ 上传打卡记录</button>
-          <button class="pbtn" onclick="supabasePull()">⬇️ 拉取打卡记录</button>
+          <button class="pbtn" onclick="supabasePush()">☁️ 上传学习记录</button>
+          <button class="pbtn" onclick="supabasePull()">⬇️ 拉取学习记录</button>
         </div>
         <div class="ptext" style="margin-top:8px;color:var(--fg2);font-size:.8rem" id="sync-status">打卡数据默认保存在本机浏览器；配置 Supabase 后可多设备同步。</div>
       </div>
@@ -128,6 +128,7 @@
 <!-- Static assets and year files must be deployed together; see README.md. -->
 <script defer src="manifest.js?v=20260914-sector-v1"></script>
 <script defer src="study.js?v=20260914-sector-v1"></script>
-<script defer src="app.js?v=20260914-wordbook20-v1"></script>
+<script defer src="learning.js?v=20260914-learning-v1"></script>
+<script defer src="app.js?v=20260914-learning-v1"></script>
 </body>
 </html>

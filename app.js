@@ -305,6 +305,7 @@ function renderPaperBody(year, type, tName){
   html += '</div>';
   $("view-paper").innerHTML = html;
   bindPaperEvents(curYear, type, data);
+  learningRefresh();
   switchView("paper");
 }
 function bindPaperEvents(year, type, data){
@@ -347,9 +348,9 @@ function dirBox(en, zh, sentences){
   return (en || zh) ? '<div class="dir-box"><b>Directions：</b>' +
     (sentences || [{en:en || "",zh:zh || ""}]).map(studySentenceHtml).join("") + '</div>' : "";
 }
-function passageBox(title, inner, favK){
+function passageBox(title, inner, favK, learningK){
   var star = favK ? '<button class="fav-star" data-fav2="' + favK + '" title="收藏">☆</button>' : "";
-  return '<div class="passage"><h3>' + esc(title) + star + '</h3>' + inner + '</div>';
+  return '<div class="passage"><h3>' + esc(title) + star + '</h3>' + (learningK?learningControl(learningK,title):'') + inner + '</div>';
 }
 function answerKeyChips(list){
   return '<details class="answer-key"><summary>📋 查看本篇答案</summary><div class="keys">' +
@@ -365,7 +366,7 @@ function renderReading(passages){
     }).join("");
     var keys = t.questions.map(function(q){ return [q.num, q.answer]; });
     return passageBox(t.title, bilines(t.lines) + '<div class="q-blocks">' + qHtml + '</div>' + answerKeyChips(keys),
-      curYear + ":reading");
+      curYear + ":reading", curYear + ':reading:' + (ti+1));
   }).join("");
 }
 /* ---- 题目块（阅读/完形共用）---- */
@@ -385,13 +386,13 @@ function renderCloze(d){
   var keys = (d.questions || []).map(function(q){ return [q.num, q.answer]; });
   return passageBox("Use of English（完形填空）",
     dirBox(d.directions_en, d.directions_zh, d.directionSentences) + bilines(d.lines) +
-    '<div class="q-blocks">' + qHtml + '</div>' + answerKeyChips(keys));
+    '<div class="q-blocks">' + qHtml + '</div>' + answerKeyChips(keys), null, curYear+':cloze:1');
 }
 /* ---- 新题型 ---- */
 function renderNewtype(d){
   var keys = (d.answers || []).map(function(a){return [a[0],a[1]];});
   return passageBox("Part B（新题型）",dirBox(d.directions_en,d.directions_zh,d.directionSentences) + bilines(d.lines) +
-    '<div style="margin:12px 0 6px;font-weight:600;color:var(--pri)">备选选项：</div>' + bilines(d.options) + answerKeyChips(keys));
+    '<div style="margin:12px 0 6px;font-weight:600;color:var(--pri)">备选选项：</div>' + bilines(d.options) + answerKeyChips(keys), null, curYear+':newtype:1');
 }
 
 /* ---- 翻译 ---- */
@@ -400,16 +401,16 @@ function renderTranslate(d){
     return '<div class="q-block"><div class="s-label">' + esc(it.num) + '. 参考译文</div>' +
       (it.sentences || [{en:it.en,zh:it.zh}]).map(studySentenceHtml).join("") + '</div>';
   }).join("");
-  return passageBox("Part C（翻译）",dirBox(d.directions_en,d.directions_zh,d.directionSentences) + bilines(d.lines) + items);
+  return passageBox("Part C（翻译）",dirBox(d.directions_en,d.directions_zh,d.directionSentences) + bilines(d.lines) + items, null, curYear+':translate:1');
 }
 
 /* ---- 写作 ---- */
 function renderWriting(parts){
-  return parts.map(function(w){
+  return parts.map(function(w, wi){
     var inner = dirBox(w.directions_en, w.directions_zh, w.directionSentences) +
       (w.image_desc ? '<div class="dir-box">🖼️ ' + fmt(w.image_desc) + '</div>' : "") +
       '<div class="sample-box"><div class="s-label">✨ 参考范文（逐句对照）</div>' + bilines(w.sample) + '</div>';
-    return passageBox(w.part + (w.title ? " · " + w.title : ""), inner);
+    return passageBox(w.part + (w.title ? " · " + w.title : ""), inner, null, curYear+':writing:'+(wi+1));
   }).join("");
 }
 
@@ -560,7 +561,7 @@ function renderWordbook(){
    ============================================================ */
 function collectData(){
   return { checkins: store("ky_checkins") || {}, done: store("ky_done") || {},
-           favs: getFavs(), wordbook: wbAll(),
+           favs: getFavs(), wordbook: wbAll(), studyMarks:learningMarks(),
            settings: { theme: store("ky_theme"), font: parseInt(localStorage.getItem("ky_font")) || 16, zhHidden:!!store("ky_zh_hidden") },
            exported_at: new Date().toISOString() };
 }
@@ -582,6 +583,8 @@ function importJSON(input){
       ["checkins","done"].forEach(function(k){if(d[k] && (typeof d[k]!=="object" || Array.isArray(d[k])))throw new Error("进度格式错误");});
       if(d.favs && (!Array.isArray(d.favs) || d.favs.some(function(x){return typeof x!=="string";})))throw new Error("收藏格式错误");
       if(d.wordbook && (!Array.isArray(d.wordbook) || d.wordbook.some(function(x){return !x || typeof x.w!=="string";})))throw new Error("生词库格式错误");
+      var mergedMarks=d.studyMarks===undefined?null:learningMerge(learningMarks(),d.studyMarks);
+      if(mergedMarks && store('ky_study_marks',mergedMarks)===null){toast('导入未完成：学习标记保存失败');return;}
       if(d.checkins) store("ky_checkins", d.checkins);
       if(d.done) store("ky_done", d.done);
       if(d.favs) store("ky_favs", d.favs);
@@ -602,6 +605,7 @@ function importJSON(input){
         }
       }
       if($('view-wordbook').classList.contains('active'))renderWordbook();
+      learningRefresh();
       toast("✅ 导入成功"); renderHome(); renderFavs();
     }catch(e){ toast("导入失败：文件格式不正确"); }
   };
@@ -628,8 +632,8 @@ function sbTable(){
 function supabasePush(){
   var c = sbTable(); if(!c) return;
   var d = collectData();
-  var rows = ["checkins", "done", "favs"].map(function(k){
-    return { k: k, v: d[k], updated_at: new Date().toISOString() };
+  var rows = ["checkins", "done", "favs", "study_marks"].map(function(k){
+    return { k: k, v: k==='study_marks'?d.studyMarks:d[k], updated_at: new Date().toISOString() };
   });
   var st = $("sync-status");
   st.textContent = "⏳ 正在上传…";
@@ -649,10 +653,14 @@ function supabasePull(){
     headers: { "apikey": c.key, "Authorization": "Bearer " + c.key }
   }).then(function(r){ return r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)); })
     .then(function(rows){
+      var incomingMarks=rows.filter(function(row){return row.k==='study_marks';}).reduce(function(all,row){return learningMerge(all,row.v);},{});
+      if(Object.keys(incomingMarks).length && store('ky_study_marks',learningMerge(learningMarks(),incomingMarks))===null)throw new Error('学习标记保存失败');
       var merged = 0;
       rows.forEach(function(row){
         var local = store("ky_" + (row.k === "favs" ? "favs" : row.k));
-        if(row.k === "favs"){
+        if(row.k === 'study_marks'){
+          merged++;
+        } else if(row.k === "favs"){
           var a = local || [], b = row.v || [];
           var set = {}; a.concat(b).forEach(function(x){ set[x] = 1; });
           store("ky_favs", Object.keys(set)); merged++;
@@ -664,6 +672,7 @@ function supabasePull(){
       });
       st.textContent = "✅ 拉取并合并成功（" + merged + " 项）";
       renderHome(); renderFavs();
+      learningRefresh();
     })
     .catch(function(e){ st.textContent = "❌ 拉取失败：" + e.message; });
 }
@@ -923,4 +932,5 @@ window.addEventListener("scroll", function(){
   if(store("ky_zh_hidden")) { document.body.classList.add("zh-hidden"); $("zh-toggle").classList.add("on"); }
   if(YEARS.length){ curYear = YEARS[0]; curType = "reading"; }
   renderSidebar(); renderHome(); renderFavs(); wbSyncSide();
+  learningBind();
 })();

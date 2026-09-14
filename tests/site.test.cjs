@@ -15,7 +15,7 @@ function setup(t,{fetcher,stored={}}={}){
  const local=async url=>({ok:true,json:async()=>json(new URL(url,w.location.href).pathname.replace('/kaoyan-english1/',''))});
  w.fetch=async(url,options)=>{requests.push([url,options]);return fetcher?fetcher(url,options,local):local(url);};
  for(const [k,v]of Object.entries(stored))w.localStorage.setItem(k,JSON.stringify(v));
- for(const name of ['manifest.js','study.js','app.js']){const script=w.document.createElement('script');script.textContent=read(name);w.document.body.appendChild(script);}
+ for(const name of ['manifest.js','study.js','learning.js','app.js']){const script=w.document.createElement('script');script.textContent=read(name);w.document.body.appendChild(script);}
  t.after(()=>{dom.window.close();assert.deepEqual(errors,[],'No uncaught runtime errors');});
  return {w,requests,dom};
 }
@@ -49,11 +49,20 @@ test('All source English, module structures and answers are preserved; every tra
 });
 test('Homepage is lazy; all 133 modules render and one year fetch is reused',async t=>{
  const {w,requests}=setup(t);assert.equal(requests.length,0);assert.equal(w.DICT,null);assert.equal(w.$('stat-papers').textContent,'133');
- let count=0;
+ let count=0,questionCount=0;const learningKeys=new Set();
  for(const y of w.YEARS)for(const type of w.SITE_MANIFEST.years[y]){
   await w.openPaper(y,type);assert.match(w.$('view-paper').textContent,new RegExp(y+' 年'));assert.ok(w.$('paper-body').querySelector('.biline'),y+':'+type);count++;
+  const part=json('data/'+y+'.json').find(p=>p.type===type),expected=['reading','writing'].includes(type)?part.data.length:1;
+  const records=Array.from(w.$('paper-body').querySelectorAll('.learning-record'));
+  assert.equal(records.length,expected,y+':'+type+' has one record per major question');
+  records.forEach((record,i)=>{
+   const key=y+':'+type+':'+(i+1);assert.equal(record.dataset.learningKey,key);assert.ok(!learningKeys.has(key));learningKeys.add(key);
+   const button=record.querySelector('[data-learning-toggle]'),date=record.querySelector('input[data-learning-date]');
+   assert.ok(button,key+' has a toggle');assert.match(button.textContent,/未学习/);assert.equal(button.getAttribute('aria-pressed'),'false');
+   assert.ok(date,key+' has a date input');assert.equal(date.type,'date');assert.ok(date.disabled);assert.equal(date.value,'');
+  });questionCount+=records.length;
  }
- assert.equal(count,133);assert.equal(requests.length,28);assert.equal(w.DICT,null);
+ assert.equal(count,133);assert.equal(questionCount,242);assert.equal(requests.length,28);assert.equal(w.DICT,null);
 });
 test('Navigation races, leaving a loading page and failed-year retry',async t=>{
  let release,fail=true;
@@ -163,4 +172,122 @@ test('Optional online/audio failures leave local study usable; sync uses only ex
  await w.dictLookup('covet');const body=w.$('dict-online-body');w.dictOnlineLookup('covet',body,false);await until(()=>body.textContent.includes('暂时不可用'));assert.match(w.$('dict-result').textContent,/最看重/);
  let spoken=0;w.Audio=function(){this.play=()=>Promise.reject(Error('offline'));};w.SpeechSynthesisUtterance=function(){};w.speechSynthesis={getVoices:()=>[],speak:()=>spoken++};w.dictSpeak('covet','us');await until(()=>spoken>0);
  assert.equal(requests.filter(x=>x[0].includes('sync.example')).length,0);w.sbSave('https://sync.example.test','test-key');w.supabasePush();await until(()=>w.$('sync-status').textContent.includes('上传成功'));w.supabasePull();await until(()=>w.$('sync-status').textContent.includes('合并成功'));assert.ok(w.isFav(2025,'reading'));
+});
+
+function learningControl(w,key){
+ const record=w.document.querySelector('.learning-record[data-learning-key="'+key+'"]');assert.ok(record,'Visible learning record '+key);
+ return {record,button:record.querySelector('[data-learning-toggle]'),date:record.querySelector('[data-learning-date]')};
+}
+function plain(value){return JSON.parse(JSON.stringify(value));}
+async function importBackup(w,data){
+ w.$('toast').textContent='';
+ w.importJSON({files:[new w.File([JSON.stringify(data)],'learning-backup.json',{type:'application/json'})],value:'learning-backup.json'});
+ await until(()=>/导入成功|导入失败|导入未完成/.test(w.$('toast').textContent));
+}
+
+test('Major-question learning status and editable dates persist independently of daily check-ins',async t=>{
+ const {w}=setup(t);await w.openPaper(2025,'reading');
+ let first=learningControl(w,'2025:reading:1'),second=learningControl(w,'2025:reading:2');
+ first.button.click();assert.equal(first.button.getAttribute('aria-pressed'),'true');assert.match(first.button.textContent,/已学习/);
+ assert.equal(first.date.disabled,false);assert.equal(first.date.value,w.todayStr());assert.equal(second.button.getAttribute('aria-pressed'),'false');
+ assert.equal(w.localStorage.getItem('ky_done'),null,'Learning a question does not check in a whole module');
+ assert.equal(w.localStorage.getItem('ky_checkins'),null,'Learning a question does not add a daily check-in');
+ first.date.value='2024-02-29';first.date.dispatchEvent(new w.Event('change',{bubbles:true}));
+ let saved=JSON.parse(w.localStorage.getItem('ky_study_marks'))['2025:reading:1'];
+ assert.equal(saved.studied,true);assert.equal(saved.date,'2024-02-29');assert.ok(Number.isFinite(saved.updatedAt)&&saved.updatedAt>0);
+ for(const invalid of ['2026-02-30','']){
+  first.date.value=invalid;first.date.dispatchEvent(new w.Event('change',{bubbles:true}));
+  assert.equal(first.date.value,'2024-02-29','Invalid or empty dates restore the saved date');
+  assert.deepEqual(JSON.parse(w.localStorage.getItem('ky_study_marks'))['2025:reading:1'],saved);
+ }
+ w.markDone(2025,'reading');assert.equal(second.button.getAttribute('aria-pressed'),'false','Daily check-in does not mark other questions learned');
+ await w.openPaper(2025,'writing');const writing=learningControl(w,'2025:writing:2');writing.button.click();
+ assert.equal(learningControl(w,'2025:writing:1').button.getAttribute('aria-pressed'),'false');
+ await w.openPaper(2024,'reading');assert.equal(learningControl(w,'2024:reading:1').button.getAttribute('aria-pressed'),'false');
+ await w.openPaper(2025,'reading');first=learningControl(w,'2025:reading:1');assert.equal(first.date.value,'2024-02-29');
+ const restored=setup(t,{stored:{ky_study_marks:JSON.parse(w.localStorage.getItem('ky_study_marks'))}}).w;
+ await restored.openPaper(2025,'reading');assert.equal(learningControl(restored,'2025:reading:1').date.value,'2024-02-29');
+ assert.equal(learningControl(restored,'2025:reading:2').button.getAttribute('aria-pressed'),'false');
+ await restored.openPaper(2025,'writing');assert.equal(learningControl(restored,'2025:writing:2').button.getAttribute('aria-pressed'),'true');
+ first.button.click();assert.equal(first.button.getAttribute('aria-pressed'),'false');assert.equal(first.date.value,'');assert.equal(first.date.disabled,true);
+ const cleared=JSON.parse(w.localStorage.getItem('ky_study_marks'))['2025:reading:1'];assert.equal(cleared.studied,false);assert.equal(cleared.date,null);assert.ok(cleared.updatedAt>=saved.updatedAt);
+ await w.openPaper(2025,'writing');await w.openPaper(2025,'reading');assert.equal(learningControl(w,'2025:reading:1').button.getAttribute('aria-pressed'),'false');
+ assert.ok(w.isDoneToday('reading'),'Clearing a question preserves the separate daily check-in');
+});
+
+test('Cross-tab storage changes refresh visible learning controls',async t=>{
+ const {w}=setup(t);await w.openPaper(2025,'reading');
+ const marks={'2025:reading:1':{studied:true,date:'2026-09-10',updatedAt:100}};
+ w.localStorage.setItem('ky_study_marks',JSON.stringify(marks));
+ w.dispatchEvent(new w.StorageEvent('storage',{key:'ky_study_marks',newValue:JSON.stringify(marks),storageArea:w.localStorage}));
+ await until(()=>learningControl(w,'2025:reading:1').date.value==='2026-09-10');
+ assert.equal(learningControl(w,'2025:reading:1').button.getAttribute('aria-pressed'),'true');
+ assert.equal(learningControl(w,'2025:reading:2').button.getAttribute('aria-pressed'),'false');
+ marks['2025:reading:1']={studied:false,date:null,updatedAt:101};
+ w.localStorage.setItem('ky_study_marks',JSON.stringify(marks));w.dispatchEvent(new w.StorageEvent('storage',{key:'ky_study_marks',newValue:JSON.stringify(marks),storageArea:w.localStorage}));
+ await until(()=>learningControl(w,'2025:reading:1').button.getAttribute('aria-pressed')==='false');
+ assert.equal(learningControl(w,'2025:reading:1').date.value,'');assert.equal(learningControl(w,'2025:reading:1').date.disabled,true);
+});
+
+test('Downloaded JSON backs up learning dates; imports merge timestamps and preserve newer unlearned marks',async t=>{
+ const initial={
+  '2025:reading:1':{studied:true,date:'2026-09-10',updatedAt:100},
+  '2025:reading:2':{studied:false,date:null,updatedAt:300}
+ };
+ const {w}=setup(t,{stored:{ky_study_marks:initial}});await w.openPaper(2025,'reading');
+ let downloaded,downloadName,revoked;
+ w.URL.createObjectURL=blob=>{downloaded=blob;return 'blob:learning-backup';};w.URL.revokeObjectURL=url=>{revoked=url;};
+ w.HTMLAnchorElement.prototype.click=function(){downloadName=this.download;};
+ w.exportJSON();assert.ok(downloaded instanceof w.Blob);assert.match(downloadName,/\.json$/);assert.equal(revoked,'blob:learning-backup');
+ const text=await new Promise((resolve,reject)=>{const reader=new w.FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsText(downloaded);});
+ const backup=JSON.parse(text);assert.deepEqual(backup.studyMarks,initial);assert.deepEqual(plain(w.collectData().studyMarks),initial);
+ const restored=setup(t).w;await restored.openPaper(2025,'reading');await importBackup(restored,backup);
+ assert.match(restored.$('toast').textContent,/导入成功/);assert.deepEqual(plain(restored.learningMarks()),initial);
+ assert.equal(learningControl(restored,'2025:reading:1').date.value,'2026-09-10','Import refreshes already visible controls');
+ const incoming={
+  '2025:reading:1':{studied:true,date:'2026-09-11',updatedAt:200},
+  '2025:reading:2':{studied:true,date:'2026-09-09',updatedAt:200},
+  '2025:writing:1':{studied:true,date:'2026-09-08',updatedAt:150}
+ };
+ await importBackup(restored,{studyMarks:incoming});assert.match(restored.$('toast').textContent,/导入成功/);
+ const merged=plain(restored.learningMarks());assert.deepEqual(merged['2025:reading:1'],incoming['2025:reading:1']);assert.deepEqual(merged['2025:reading:2'],initial['2025:reading:2']);assert.deepEqual(merged['2025:writing:1'],incoming['2025:writing:1']);
+ await importBackup(restored,{favs:['2024:reading'],done:{},checkins:{}});assert.match(restored.$('toast').textContent,/导入成功/);assert.deepEqual(plain(restored.learningMarks()),merged,'Old backups do not erase question history');
+ await importBackup(restored,{studyMarks:{'2025:reading:1':{studied:true,date:'2026-02-30',updatedAt:999}}});
+ assert.deepEqual(plain(restored.learningMarks()),merged,'An impossible imported date never overwrites a valid mark');
+});
+
+test('Supabase transfers question marks and merges newer changes without reviving cancelled marks',async t=>{
+ const local={
+  '2025:reading:1':{studied:false,date:null,updatedAt:300},
+  '2025:reading:2':{studied:true,date:'2026-09-08',updatedAt:100}
+ };
+ let remote=[{k:'study_marks',v:{
+  '2025:reading:1':{studied:true,date:'2026-09-07',updatedAt:200},
+  '2025:reading:2':{studied:true,date:'2026-09-11',updatedAt:200},
+  '2025:writing:2':{studied:true,date:'2026-09-10',updatedAt:150}
+ }}];
+ const {w,requests}=setup(t,{stored:{ky_study_marks:local},fetcher:async(url,opts,fetchLocal)=>url.startsWith('https://sync.example.test')?{ok:true,json:async()=>remote}:fetchLocal(url)});
+ await w.openPaper(2025,'reading');w.sbSave('https://sync.example.test','test-key');w.supabasePush();await until(()=>w.$('sync-status').textContent.includes('上传成功'));
+ const sent=JSON.parse(requests.find(([url,opts])=>url.startsWith('https://sync.example.test')&&opts.method==='POST')[1].body);
+ assert.deepEqual(sent.find(row=>row.k==='study_marks')?.v,local);
+ w.supabasePull();await until(()=>w.$('sync-status').textContent.includes('合并成功'));
+ const marks=plain(w.learningMarks());assert.deepEqual(marks['2025:reading:1'],local['2025:reading:1']);assert.deepEqual(marks['2025:reading:2'],remote[0].v['2025:reading:2']);assert.deepEqual(marks['2025:writing:2'],remote[0].v['2025:writing:2']);
+ assert.equal(learningControl(w,'2025:reading:1').button.getAttribute('aria-pressed'),'false');assert.equal(learningControl(w,'2025:reading:2').date.value,'2026-09-11');
+ remote=[{k:'favs',v:['2024:reading']}];w.supabasePull();await until(()=>w.$('sync-status').textContent.includes('合并成功'));assert.deepEqual(plain(w.learningMarks()),marks,'Older cloud data without marks preserves local history');
+});
+
+test('Storage failure leaves question state intact and never reports a successful import or sync',async t=>{
+ const original={'2025:reading:1':{studied:true,date:'2026-09-10',updatedAt:100}};
+ const incoming={'2025:reading:1':{studied:false,date:null,updatedAt:200}};
+ const {w}=setup(t,{stored:{ky_study_marks:original},fetcher:async(url,opts,fetchLocal)=>url.startsWith('https://sync.example.test')?{ok:true,json:async()=>[{k:'study_marks',v:incoming}]}:fetchLocal(url)});
+ await w.openPaper(2025,'reading');w.sbSave('https://sync.example.test','test-key');
+ const storageProto=w.Storage.prototype,setItem=storageProto.setItem;
+ storageProto.setItem=function(key,value){if(key==='ky_study_marks')throw new w.DOMException('No storage space','QuotaExceededError');return setItem.call(this,key,value);};
+ try{
+  const control=learningControl(w,'2025:reading:1');w.$('toast').textContent='';control.button.click();
+  assert.deepEqual(plain(w.learningMarks()),original);assert.equal(control.button.getAttribute('aria-pressed'),'true');assert.equal(control.date.value,'2026-09-10');assert.match(w.$('toast').textContent,/失败|不可用/);
+  control.date.value='2026-09-11';control.date.dispatchEvent(new w.Event('change',{bubbles:true}));assert.equal(control.date.value,'2026-09-10');assert.deepEqual(plain(w.learningMarks()),original);
+  await importBackup(w,{studyMarks:incoming});assert.match(w.$('toast').textContent,/失败/);assert.doesNotMatch(w.$('toast').textContent,/导入成功/);assert.deepEqual(plain(w.learningMarks()),original);
+  w.supabasePull();await until(()=>/失败|合并成功/.test(w.$('sync-status').textContent));assert.match(w.$('sync-status').textContent,/失败/);assert.doesNotMatch(w.$('sync-status').textContent,/合并成功/);assert.deepEqual(plain(w.learningMarks()),original);
+ }finally{storageProto.setItem=setItem;}
 });

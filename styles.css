@@ -298,6 +298,14 @@ footer{max-width:1400px; margin:0 auto; padding:20px; text-align:center; color:v
 .source-note { margin-top: 5px; color: var(--fg2); font-size: .78rem; line-height: 1.65; }
 .sentence-focus { outline: 2px solid var(--pri); outline-offset: 5px; border-radius: 4px; }
 .en, .zh, .d-word, .wb-tr { overflow-wrap: anywhere; }
+.learning-record{margin:0 0 16px;padding:0 0 12px;border-bottom:1px solid var(--line)}
+.learning-toggle{min-width:100px;font-weight:600}
+.learning-date-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:8px;font-size:.8rem;color:var(--fg2)}
+.learning-date-row input{min-width:145px;max-width:100%;padding:4px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg2);color:var(--fg);font:inherit;color-scheme:light}
+.learning-date-row input:disabled{opacity:.6}
+.learning-save-note{font-size:.75rem}
+html[data-theme="dark"] .learning-date-row input{color-scheme:dark}
+.learning-record button:focus-visible,.learning-date-row input:focus-visible{outline:2px solid var(--pri);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition:none !important}
