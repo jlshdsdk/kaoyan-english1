@@ -37,7 +37,7 @@ function learningControl(key,title){
   return '<div class="learning-record" data-learning-key="'+esc(key)+'">' +
     '<button type="button" class="pbtn learning-toggle" data-learning-toggle aria-pressed="false" title="标记'+esc(title)+'的学习状态">未学习</button>' +
     '<div class="learning-date-row"><label for="'+dateId+'">学习日期</label>' +
-    '<input type="date" id="'+dateId+'" data-learning-date aria-label="'+esc(title)+'的学习日期" disabled>' +
+    '<input type="date" id="'+dateId+'" data-learning-date aria-label="'+esc(title)+'的学习日期" title="学习日期，修改后自动保存" disabled>' +
     '<span class="learning-save-note">尚未记录</span></div></div>';
 }
 function learningRefresh(){

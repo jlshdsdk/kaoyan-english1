@@ -350,7 +350,7 @@ function dirBox(en, zh, sentences){
 }
 function passageBox(title, inner, favK, learningK){
   var star = favK ? '<button class="fav-star" data-fav2="' + favK + '" title="收藏">☆</button>' : "";
-  return '<div class="passage"><h3>' + esc(title) + star + '</h3>' + (learningK?learningControl(learningK,title):'') + inner + '</div>';
+  return '<div class="passage"><div class="passage-header"><h3><span class="passage-title" title="'+esc(title)+'">' + esc(title) + '</span>' + star + '</h3>' + (learningK?learningControl(learningK,title):'') + '</div>' + inner + '</div>';
 }
 function answerKeyChips(list){
   return '<details class="answer-key"><summary>📋 查看本篇答案</summary><div class="keys">' +
